@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react';
 
 const API_BASE = 'https://psgc.cloud/api';
 
+// Cache NCR barangays locally to avoid slow repeated network requests (1,710 records)
+let ncrBarangaysCache = null;
+
 export function usePSGC() {
   const [regions, setRegions] = useState([]);
   const [provinces, setProvinces] = useState([]);
@@ -100,9 +103,15 @@ export function usePSGC() {
       // NCR city codes in this API start with '13' (e.g. 1380600000)
       // but in psgc.cloud, NCR city barangays are stored under the NCR region (1300000000)
       if (cityCode.startsWith("13")) {
-        const res = await fetch(`${API_BASE}/regions/1300000000/barangays`);
-        if (!res.ok) throw new Error('Failed to fetch NCR barangays');
-        const allBrgys = await res.json();
+        let allBrgys = [];
+        if (ncrBarangaysCache) {
+          allBrgys = ncrBarangaysCache;
+        } else {
+          const res = await fetch(`${API_BASE}/regions/1300000000/barangays`);
+          if (!res.ok) throw new Error('Failed to fetch NCR barangays');
+          allBrgys = await res.json();
+          ncrBarangaysCache = allBrgys; // Store in persistent local cache
+        }
         // Filter by the first 6 digits of the cityCode (e.g., '138060' for Manila City)
         data = allBrgys.filter(b => b.code.startsWith(cityCode.substring(0, 6)));
       } else {

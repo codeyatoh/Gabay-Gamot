@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { usePSGC } from "@/hooks/usePSGC";
 import logoUrl from "@/assets/images/gabay-gamot-logo-sm.png";
@@ -187,44 +188,39 @@ export function SignUpPage() {
       const container = document.getElementById("map-container");
       if (!container) return;
 
-      import("mapbox-gl").then((mapboxglModule) => {
-        const mapboxgl = mapboxglModule.default;
-        mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN || MAPBOX_DUMMY_TOKEN;
+      mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN || MAPBOX_DUMMY_TOKEN;
 
-        const initialLng = parseFloat(longitude) || 120.9842; // default to Manila
-        const initialLat = parseFloat(latitude) || 14.5995;
+      const initialLng = parseFloat(longitude) || 120.9842; // default to Manila
+      const initialLat = parseFloat(latitude) || 14.5995;
 
-        const map = new mapboxgl.Map({
-          container: "map-container",
-          style: mapStyle === "streets" ? STREETS_STYLE : SATELLITE_STYLE,
-          center: [initialLng, initialLat],
-          zoom: parseFloat(longitude) && parseFloat(latitude) ? 14 : 9,
-        });
-
-        map.addControl(new mapboxgl.NavigationControl(), "top-right");
-
-        const marker = new mapboxgl.Marker({
-          draggable: true,
-          color: "#0b6b35",
-        })
-          .setLngLat([initialLng, initialLat])
-          .addTo(map);
-
-        marker.on("dragend", () => {
-          const lngLat = marker.getLngLat();
-          setLongitude(lngLat.lng.toFixed(6));
-          setLatitude(lngLat.lat.toFixed(6));
-        });
-
-        map.on("load", () => {
-          map.resize();
-        });
-
-        mapRef.current = map;
-        markerRef.current = marker;
-      }).catch((err) => {
-        console.error("Mapbox dynamic import failed:", err);
+      const map = new mapboxgl.Map({
+        container: "map-container",
+        style: mapStyle === "streets" ? STREETS_STYLE : SATELLITE_STYLE,
+        center: [initialLng, initialLat],
+        zoom: parseFloat(longitude) && parseFloat(latitude) ? 14 : 9,
       });
+
+      map.addControl(new mapboxgl.NavigationControl(), "top-right");
+
+      const marker = new mapboxgl.Marker({
+        draggable: true,
+        color: "#0b6b35",
+      })
+        .setLngLat([initialLng, initialLat])
+        .addTo(map);
+
+      marker.on("dragend", () => {
+        const lngLat = marker.getLngLat();
+        setLongitude(lngLat.lng.toFixed(6));
+        setLatitude(lngLat.lat.toFixed(6));
+      });
+
+      map.on("load", () => {
+        map.resize();
+      });
+
+      mapRef.current = map;
+      markerRef.current = marker;
     }, 300);
 
     return () => {
