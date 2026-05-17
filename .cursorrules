@@ -1,0 +1,42 @@
+# GabayGamot AI Agent Directives
+
+You are an expert AI programming assistant. You will strictly follow these rules to ensure the GabayGamot codebase remains highly organized, professional, and visually stunning.
+
+## 1. Core Tech Stack
+- **Frontend Framework:** React 19+ with Vite.
+- **Styling:** Tailwind CSS.
+- **UI Library:** Shadcn UI + Radix Primitives.
+- **Icons:** `lucide-react`.
+- **State/Routing:** (Follow project conventions, default to React hooks).
+
+## 2. Extremely Strict Design Philosophy
+AESTHETICS ARE VERY IMPORTANT. If the UI looks simple, basic, or like a generic SaaS template, you have FAILED.
+- **Color Palette:** Focus on clean, modern healthcare aesthetics.
+  - Base: Soft creams, whites, or extremely light slate/zinc (`#ffffff`, `#fcfdfa`, `slate-50`).
+  - Primary Accent: Medical Greens (`#0b6b35`, `#083f24`).
+  - Borders: Very subtle and soft (`border-slate-100`, `border-[#e5f0e1]`).
+- **Readability Over Effects:** **DO NOT** use heavy glassmorphism (`bg-white/50 backdrop-blur`) if it causes background text to bleed through and ruin readability. Use solid or highly opaque backgrounds (`bg-white/95 backdrop-blur-md`) for overlays.
+- **Premium Components:** Customize Shadcn UI primitives extensively. Do not just copy-paste default cards or alerts. Add subtle shadows (`shadow-sm`, `shadow-panel`), rounded corners (`rounded-xl`, `rounded-2xl`), and elegant padding.
+- **Animations:** Keep them calm, smooth, and purposeful.
+  - Interactions: under 300ms (`transition duration-150`).
+  - Reveals: 500ms-700ms (`fade-up`, `ease-out`).
+  - **NO bouncy or flashy effects.**
+
+## 3. Component Architecture & Code Quality
+- **Component Size:** Prefer small, focused components over massive files.
+- **Naming Convention:** Use `PascalCase` for component files (e.g., `HeroSection.jsx`).
+- **File Structure:**
+  - `src/components/common/` - Highly reusable base components.
+  - `src/components/layout/` - Headers, Footers, Navbars.
+  - `src/components/ui/` - Shadcn UI/Radix primitives.
+  - `src/pages/` - Full page assemblies.
+- **Import Paths:** Use absolute aliased imports (e.g., `import { Button } from "@/components/ui/button"`).
+- **Cleanliness:** Remove unused imports, variables, and console logs before finalizing. Zero lint errors.
+
+## 4. AI Agent Behavior Guidelines
+- **No Laziness:** Never write `// TODO: implement this`. If asked to build a feature, write the complete, production-ready code.
+- **No Placeholders:** If you need an image or visual, generate it or build a beautiful CSS/Tailwind-based layout representation instead of a gray square.
+- **Responsiveness First:** Every single component MUST look flawless on mobile, tablet, and desktop. Always implement `lg:`, `md:`, and `sm:` variants properly.
+- **Verify Before Coding:** Always check existing files (like `globals.css`, `tailwind.config.js`, or the `.agent` folder) to align with existing design tokens and configurations before inventing new ones.
+
+Follow these rules unconditionally for every prompt, update, or feature addition.

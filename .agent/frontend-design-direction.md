@@ -16,14 +16,18 @@ The UI should not feel like a generic SaaS template. Shadcn UI is the component 
 - Light interface with controlled color accents
 - Aesthetic without being decorative-heavy
 
-## Color Direction
+## Color Direction & Material
 
-Use a restrained palette:
+Use a restrained, highly readable palette:
 
-- base: white, off-white, slate, zinc, or neutral
-- primary accent: medical green or teal
-- secondary accent: soft blue or cyan
-- alert/support accents: amber, red, and emerald only when meaningful
+- base: soft cream/white (`#fcfdfa`, `slate-50`), off-white, zinc, or neutral.
+- primary accent: deep medical green (`#0b6b35`, `#083f24`) or teal.
+- secondary accent: soft blue or cyan.
+- alert/support accents: amber, red, and emerald only when meaningful.
+
+Materials & Backgrounds:
+- **NO Heavy Glassmorphism:** Never use extreme blurs (e.g., `bg-white/50 backdrop-blur-xl`) if it causes text underneath to bleed through and clash with the foreground text.
+- Use near-opaque or solid backgrounds (`bg-white/95 backdrop-blur-md` or `bg-[#fcfdfa]`) for menus, overlays, and floating cards to guarantee 100% text readability.
 
 Avoid:
 
@@ -32,6 +36,7 @@ Avoid:
 - one-note all-green layouts
 - heavy purple/blue SaaS gradients
 - dark mode as the default landing page style
+- messy overlapping transparencies
 
 ## Shadcn UI Usage
 

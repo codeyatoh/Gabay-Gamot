@@ -1,12 +1,15 @@
 # Coding Guidelines
 
-## General
+## General (Strict AI Enforcement)
 
-- Keep the project beginner friendly.
-- Use clear file and component names.
-- Prefer small components instead of one very large file.
-- Keep comments short and only add them when they help explain non-obvious code.
+- **Zero-laziness policy:** Always write complete, production-ready code. Never leave `// TODO` or placeholder comments when asked to implement a feature.
+- **Responsiveness First:** Every component MUST be flawless on mobile, tablet, and desktop (`lg:`, `md:`, `sm:`).
+- Keep the project highly organized and beginner friendly.
+- Use clear file and component names (PascalCase for React components).
+- Prefer small, focused components instead of one very large file.
+- Keep comments short and only add them when they help explain non-obvious logic.
 - Follow `.agent/security-guidelines.md` when adding backend, Firebase, auth, upload, or API features.
+- Always check existing design tokens (`globals.css`, `tailwind.config.js`) before inventing new ones.
 
 ## Frontend
 
