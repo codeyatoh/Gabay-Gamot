@@ -103,7 +103,7 @@ export function Navbar() {
               <div className="flex w-full flex-col gap-3 border-t border-slate-100 pt-3 sm:flex-row sm:items-center lg:w-fit lg:border-0 lg:pt-0">
                 <Button
                   variant="ghost"
-                  className="justify-start rounded-xl border border-white/70 bg-white/80 text-[#083f24] shadow-sm backdrop-blur-md transition hover:border-[#cfe3c7] hover:bg-[#eef8e9] hover:text-[#083f24] lg:justify-center"
+                  className="justify-start rounded-xl border border-[#b8d8aa] bg-white/92 text-[#083f24] shadow-sm backdrop-blur-md transition hover:border-[#0b6b35]/40 hover:bg-[#eef8e9] hover:text-[#083f24] lg:justify-center"
                 >
                   Login
                 </Button>
