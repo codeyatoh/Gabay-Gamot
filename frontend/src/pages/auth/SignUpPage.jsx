@@ -23,7 +23,8 @@ import { SearchableSelect } from "@/components/reui/SearchableSelect";
 
 // Backend API base — Mapbox token is stored server-side only, never exposed to browser
 const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
-const MAPBOX_STREETS_STYLE = "mapbox://styles/mapbox/streets-v12";
+// Premium Mapbox styles
+const MAPBOX_STREETS_STYLE = "mapbox://styles/mapbox/navigation-day-v1";
 const MAPBOX_SATELLITE_STYLE = "mapbox://styles/mapbox/satellite-streets-v12";
 
 const validProofs = [
@@ -189,6 +190,23 @@ export function SignUpPage() {
 
       map.on("load", () => {
         map.resize();
+        // Enable 3D buildings on streets view
+        if (mapStyle === "streets") {
+          map.addLayer({
+            id: "3d-buildings",
+            source: "composite",
+            "source-layer": "building",
+            filter: ["==", "extrude", "true"],
+            type: "fill-extrusion",
+            minzoom: 14,
+            paint: {
+              "fill-extrusion-color": "#aaa",
+              "fill-extrusion-height": ["get", "height"],
+              "fill-extrusion-base": ["get", "min_height"],
+              "fill-extrusion-opacity": 0.6
+            }
+          });
+        }
       });
 
       mapRef.current = map;
@@ -248,12 +266,30 @@ export function SignUpPage() {
     if (!mapRef.current) return;
     const nextStyle = mapStyle === "streets" ? "satellite" : "streets";
     setMapStyle(nextStyle);
+
+    // Must use diff:false when switching between styles with different sprites
+    // to avoid "Unable to perform style diff: Unimplemented: setSprite" error
     mapRef.current.setStyle(
-      nextStyle === "streets" ? MAPBOX_STREETS_STYLE : MAPBOX_SATELLITE_STYLE
+      nextStyle === "streets" ? MAPBOX_STREETS_STYLE : MAPBOX_SATELLITE_STYLE,
+      { diff: false }
     );
-    setTimeout(() => {
-      if (mapRef.current) mapRef.current.resize();
-    }, 200);
+
+    // Re-add marker after style rebuild (setStyle removes all layers + markers)
+    mapRef.current.once("style.load", () => {
+      if (!mapRef.current || !markerRef.current) return;
+      const lngLat = markerRef.current.getLngLat();
+      markerRef.current.remove();
+      const newMarker = new mapboxgl.Marker({ draggable: true, color: "#0b6b35" })
+        .setLngLat(lngLat)
+        .addTo(mapRef.current);
+      newMarker.on("dragend", () => {
+        const pos = newMarker.getLngLat();
+        setLongitude(pos.lng.toFixed(6));
+        setLatitude(pos.lat.toFixed(6));
+      });
+      markerRef.current = newMarker;
+      mapRef.current.resize();
+    });
   };
 
   const [locating, setLocating] = useState(false);
