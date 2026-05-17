@@ -8,4 +8,4 @@
 - Use Tailwind CSS for styling.
 - Use Shadcn UI as the main UI component system.
 - Keep the folder structure beginner friendly.
-
+- Treat security as a core requirement from the start, including rate limiting, role-based access, validation, safe uploads, and secret management.

@@ -6,6 +6,7 @@
 - Use clear file and component names.
 - Prefer small components instead of one very large file.
 - Keep comments short and only add them when they help explain non-obvious code.
+- Follow `.agent/security-guidelines.md` when adding backend, Firebase, auth, upload, or API features.
 
 ## Frontend
 
@@ -19,6 +20,17 @@
 - Put page-level components in `frontend/src/pages/`.
 - Keep animation subtle, smooth, and purposeful.
 - Prefer custom GabayGamot product visuals over generic placeholder cards.
+- Do not put private API keys in frontend code.
+- Protect private routes once authentication is added.
+
+## Backend
+
+- Validate request bodies before using them.
+- Add rate limits to auth, OCR, AI, and other API routes before public deployment.
+- Keep API keys and credentials in `.env`.
+- Never commit real secrets to GitHub.
+- Use auth and role middleware for protected routes.
+- Enforce barangay-based access on server-side logic.
 
 ## Component Naming
 

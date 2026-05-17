@@ -28,3 +28,14 @@
 - [ ] Referral page
 - [ ] Reports and analytics
 
+## Security Tasks
+
+- [ ] Add `.env.example`
+- [ ] Add backend rate limiting
+- [ ] Add auth verification middleware
+- [ ] Add role authorization middleware
+- [ ] Add Zod validation schemas
+- [ ] Add safe OCR upload file limits
+- [ ] Add Firestore security rules
+- [ ] Review CORS allowed origins
+- [ ] Confirm no real secrets are committed
