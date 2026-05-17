@@ -17,6 +17,7 @@ import {
   StepperTitle,
   StepperTrigger,
 } from "@/components/reui/stepper";
+import { SearchableSelect } from "@/components/reui/SearchableSelect";
 
 const validProofs = [
   "Authorization letter for the Barangay Health Center",
@@ -315,98 +316,60 @@ export function SignUpPage() {
                         {/* Region Select */}
                         <div className="space-y-2">
                           <Label htmlFor="region" className="block text-sm text-left">Region</Label>
-                          <select
-                            name="region"
-                            id="region"
+                          <SearchableSelect
                             value={selectedRegion}
                             onChange={handleRegionChange}
-                            disabled={loadingRegions || regions.length === 0}
-                            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background cursor-pointer transition-all active:scale-[0.99] dark:bg-zinc-950 dark:border-white/10 dark:text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0b6b35] disabled:cursor-not-allowed disabled:opacity-50"
-                          >
-                            <option value="">
-                              {loadingRegions ? "Loading regions..." : "Select Region"}
-                            </option>
-                            {regions.map((r) => (
-                              <option key={r.code} value={r.code}>
-                                {r.name}
-                              </option>
-                            ))}
-                          </select>
+                            options={regions.map(r => ({ code: r.code, name: r.name }))}
+                            placeholder="Select Region"
+                            searchPlaceholder="Search region..."
+                            disabled={regions.length === 0}
+                            loading={loadingRegions}
+                          />
                         </div>
 
                         {/* Province Select */}
                         <div className="space-y-2">
                           <Label htmlFor="province" className="block text-sm text-left">Province</Label>
-                          <select
-                            name="province"
-                            id="province"
+                          <SearchableSelect
                             value={selectedProvince}
                             onChange={handleProvinceChange}
+                            options={provinces.map(p => ({ code: p.code, name: p.name }))}
+                            placeholder={selectedProvince === "N/A" ? "N/A - Metro Manila" : "Select Province"}
+                            searchPlaceholder="Search province..."
                             disabled={
-                              loadingProvinces || 
                               !selectedRegion || 
                               (provinces.length === 0 && selectedRegion && selectedProvince === "N/A")
                             }
-                            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background cursor-pointer transition-all active:scale-[0.99] dark:bg-zinc-950 dark:border-white/10 dark:text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0b6b35] disabled:cursor-not-allowed disabled:opacity-50"
-                          >
-                            <option value="">
-                              {loadingProvinces 
-                                ? "Loading provinces..." 
-                                : selectedProvince === "N/A" 
-                                  ? "N/A - Metro Manila" 
-                                  : "Select Province"
-                              }
-                            </option>
-                            {provinces.map((p) => (
-                              <option key={p.code} value={p.code}>
-                                {p.name}
-                              </option>
-                            ))}
-                          </select>
+                            loading={loadingProvinces}
+                          />
                         </div>
 
                         {/* City/Municipality Select */}
                         <div className="space-y-2">
                           <Label htmlFor="cityMunicipality" className="block text-sm text-left">City / Municipality</Label>
-                          <select
-                            name="cityMunicipality"
-                            id="cityMunicipality"
+                          <SearchableSelect
                             value={selectedCity}
                             onChange={handleCityChange}
-                            disabled={loadingCities || !selectedRegion || (selectedProvince === "" && selectedProvince !== "N/A")}
-                            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background cursor-pointer transition-all active:scale-[0.99] dark:bg-zinc-950 dark:border-white/10 dark:text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0b6b35] disabled:cursor-not-allowed disabled:opacity-50"
-                          >
-                            <option value="">
-                              {loadingCities ? "Loading cities..." : "Select City / Municipality"}
-                            </option>
-                            {cities.map((c) => (
-                              <option key={c.code} value={c.code}>
-                                {c.name}
-                              </option>
-                            ))}
-                          </select>
+                            options={cities.map(c => ({ code: c.code, name: c.name }))}
+                            placeholder="Select City / Municipality"
+                            searchPlaceholder="Search city or municipality..."
+                            disabled={!selectedRegion || (selectedProvince === "" && selectedProvince !== "N/A")}
+                            loading={loadingCities}
+                          />
                         </div>
 
                         {/* Barangay Select */}
                         <div className="space-y-2">
                           <Label htmlFor="barangay" className="block text-sm text-left">Barangay</Label>
-                          <select
-                            name="barangay"
-                            id="barangay"
+                          <SearchableSelect
                             value={selectedBarangay}
                             onChange={handleBarangayChange}
-                            disabled={loadingBarangays || !selectedCity}
-                            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background cursor-pointer transition-all active:scale-[0.99] dark:bg-zinc-950 dark:border-white/10 dark:text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0b6b35] disabled:cursor-not-allowed disabled:opacity-50"
-                          >
-                            <option value="">
-                              {loadingBarangays ? "Loading barangays..." : "Select Barangay"}
-                            </option>
-                            {barangays.map((b) => (
-                              <option key={b.code} value={b.code}>
-                                {b.name}
-                              </option>
-                            ))}
-                          </select>
+                            options={barangays.map(b => ({ code: b.code, name: b.name }))}
+                            placeholder="Select Barangay"
+                            searchPlaceholder="Search barangay..."
+                            disabled={!selectedCity}
+                            loading={loadingBarangays}
+                          />
                         </div>
                       </div>
                       <div className="space-y-2">
