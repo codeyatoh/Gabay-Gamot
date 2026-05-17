@@ -1,4 +1,4 @@
-import { IconTrendingDown, IconTrendingUp, IconAlertTriangle } from "@tabler/icons-react"
+import { IconTrendingUp, IconAlertTriangle } from "@tabler/icons-react"
 
 import { Badge } from "@/components/ui/badge"
 import {
@@ -12,22 +12,22 @@ import {
 
 export function SectionCards() {
   return (
-    <div className="grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card *:data-[slot=card]:shadow-xs lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4 dark:*:data-[slot=card]:bg-card">
-      <Card className="@container/card">
+    <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 sm:grid-cols-2 xl:grid-cols-4">
+      <Card className="bg-gradient-to-t from-primary/5 to-card shadow-sm">
         <CardHeader>
           <CardDescription>Health Centers</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+          <CardTitle className="text-3xl font-semibold tabular-nums">
             142
           </CardTitle>
           <CardAction>
             <Badge variant="outline">
-              <IconTrendingUp className="size-4" />
+              <IconTrendingUp className="size-4 mr-1" />
               +5.2%
             </Badge>
           </CardAction>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="line-clamp-1 flex gap-2 font-medium">
+          <div className="flex gap-2 font-medium">
             Active and verified centers <IconTrendingUp className="size-4" />
           </div>
           <div className="text-muted-foreground">
@@ -35,22 +35,22 @@ export function SectionCards() {
           </div>
         </CardFooter>
       </Card>
-      
-      <Card className="@container/card">
+
+      <Card className="bg-gradient-to-t from-primary/5 to-card shadow-sm">
         <CardHeader>
           <CardDescription>Pending Approvals</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+          <CardTitle className="text-3xl font-semibold tabular-nums">
             18
           </CardTitle>
           <CardAction>
             <Badge variant="outline" className="text-amber-500 border-amber-500/20 bg-amber-500/10">
-              <IconAlertTriangle className="size-4" />
+              <IconAlertTriangle className="size-4 mr-1" />
               Requires action
             </Badge>
           </CardAction>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="line-clamp-1 flex gap-2 font-medium">
+          <div className="flex gap-2 font-medium">
             New registration requests
           </div>
           <div className="text-muted-foreground">
@@ -59,42 +59,42 @@ export function SectionCards() {
         </CardFooter>
       </Card>
 
-      <Card className="@container/card">
+      <Card className="bg-gradient-to-t from-primary/5 to-card shadow-sm">
         <CardHeader>
           <CardDescription>Total Illness Cases</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+          <CardTitle className="text-3xl font-semibold tabular-nums">
             12,450
           </CardTitle>
           <CardAction>
             <Badge variant="outline" className="text-rose-500 border-rose-500/20 bg-rose-500/10">
-              <IconTrendingUp className="size-4" />
+              <IconTrendingUp className="size-4 mr-1" />
               +12.5%
             </Badge>
           </CardAction>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="line-clamp-1 flex gap-2 font-medium">
+          <div className="flex gap-2 font-medium">
             Spike detected <IconTrendingUp className="size-4" />
           </div>
           <div className="text-muted-foreground">Recorded across all centers</div>
         </CardFooter>
       </Card>
 
-      <Card className="@container/card">
+      <Card className="bg-gradient-to-t from-primary/5 to-card shadow-sm">
         <CardHeader>
           <CardDescription>Inventory Risks</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+          <CardTitle className="text-3xl font-semibold tabular-nums">
             24
           </CardTitle>
           <CardAction>
             <Badge variant="outline" className="text-rose-500 border-rose-500/20 bg-rose-500/10">
-              <IconTrendingUp className="size-4" />
+              <IconAlertTriangle className="size-4 mr-1" />
               +3 alerts
             </Badge>
           </CardAction>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="line-clamp-1 flex gap-2 font-medium">
+          <div className="flex gap-2 font-medium">
             Critical stock levels <IconAlertTriangle className="size-4" />
           </div>
           <div className="text-muted-foreground">Requires immediate restock</div>

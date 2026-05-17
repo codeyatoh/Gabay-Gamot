@@ -164,14 +164,14 @@ export function ChartAreaInteractive() {
   })
 
   return (
-    <Card className="@container/card">
+    <Card>
       <CardHeader>
         <CardTitle>Recorded Health Cases</CardTitle>
         <CardDescription>
-          <span className="hidden @[540px]/card:block">
+          <span className="hidden sm:block">
             Cases reported by all Health Centers
           </span>
-          <span className="@[540px]/card:hidden">Total Cases</span>
+          <span className="sm:hidden">Total Cases</span>
         </CardDescription>
         <CardAction>
           <ToggleGroup
@@ -179,7 +179,7 @@ export function ChartAreaInteractive() {
             value={timeRange}
             onValueChange={(val) => { if(val) setTimeRange(val) }}
             variant="outline"
-            className="hidden *:data-[slot=toggle-group-item]:px-4! @[767px]/card:flex"
+            className="hidden md:flex"
           >
             <ToggleGroupItem value="90d">Last 3 months</ToggleGroupItem>
             <ToggleGroupItem value="30d">Last 30 days</ToggleGroupItem>
@@ -187,8 +187,7 @@ export function ChartAreaInteractive() {
           </ToggleGroup>
           <Select value={timeRange} onValueChange={setTimeRange}>
             <SelectTrigger
-              className="flex w-40 **:data-[slot=select-value]:block **:data-[slot=select-value]:truncate @[767px]/card:hidden"
-              size="sm"
+              className="flex w-40 md:hidden"
               aria-label="Select a value"
             >
               <SelectValue placeholder="Last 3 months" />
