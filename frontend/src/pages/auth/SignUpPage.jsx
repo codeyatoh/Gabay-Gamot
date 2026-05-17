@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import mapboxgl from 'mapbox-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
+import maplibregl from 'maplibre-gl';
+import 'maplibre-gl/dist/maplibre-gl.css';
 import { usePSGC } from "@/hooks/usePSGC";
 import logoUrl from "@/assets/images/gabay-gamot-logo-sm.png";
 import { Button } from "@/components/ui/button";
@@ -21,7 +21,7 @@ import {
 } from "@/components/reui/stepper";
 import { SearchableSelect } from "@/components/reui/SearchableSelect";
 
-const MAPBOX_DUMMY_TOKEN = "pk.eyJ1IjoiZHVtbXkiLCJhIjoiY2x3ZDUifQ.dummy";
+// MapLibre GL JS requires no access token — fully open-source, token-free
 
 const STREETS_STYLE = {
   version: 8,
@@ -188,21 +188,21 @@ export function SignUpPage() {
       const container = document.getElementById("map-container");
       if (!container) return;
 
-      mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN || MAPBOX_DUMMY_TOKEN;
-
       const initialLng = parseFloat(longitude) || 120.9842; // default to Manila
       const initialLat = parseFloat(latitude) || 14.5995;
 
-      const map = new mapboxgl.Map({
+      const map = new maplibregl.Map({
         container: "map-container",
         style: mapStyle === "streets" ? STREETS_STYLE : SATELLITE_STYLE,
         center: [initialLng, initialLat],
         zoom: parseFloat(longitude) && parseFloat(latitude) ? 14 : 9,
+        attributionControl: false,
       });
 
-      map.addControl(new mapboxgl.NavigationControl(), "top-right");
+      map.addControl(new maplibregl.NavigationControl(), "top-right");
+      map.addControl(new maplibregl.AttributionControl({ compact: true }), "bottom-left");
 
-      const marker = new mapboxgl.Marker({
+      const marker = new maplibregl.Marker({
         draggable: true,
         color: "#0b6b35",
       })
