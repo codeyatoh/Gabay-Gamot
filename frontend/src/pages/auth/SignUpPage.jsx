@@ -5,7 +5,7 @@ import logoUrl from "@/assets/images/gabay-gamot-logo-sm.png";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CheckIcon, Locate } from 'lucide-react';
+import { CheckIcon, Locate, Layers } from 'lucide-react';
 import {
   Stepper,
   StepperContent,
@@ -148,7 +148,7 @@ export function SignUpPage() {
 
         const map = new mapboxgl.Map({
           container: "map-container",
-          style: "mapbox://styles/mapbox/streets-v12",
+          style: mapStyle === "streets" ? "mapbox://styles/mapbox/streets-v12" : "mapbox://styles/mapbox/satellite-streets-v12",
           center: [initialLng, initialLat],
           zoom: parseFloat(longitude) && parseFloat(latitude) ? 14 : 9,
         });
@@ -221,6 +221,19 @@ export function SignUpPage() {
         console.error("Geocoding failed:", err);
       });
   }, [selectedRegion, selectedProvince, selectedCity, selectedBarangay, currentStep]);
+
+  const [mapStyle, setMapStyle] = useState("streets"); // "streets" or "satellite"
+
+  const toggleMapStyle = () => {
+    if (!mapRef.current) return;
+    const nextStyle = mapStyle === "streets" ? "satellite" : "streets";
+    setMapStyle(nextStyle);
+    mapRef.current.setStyle(
+      nextStyle === "streets"
+        ? "mapbox://styles/mapbox/streets-v12"
+        : "mapbox://styles/mapbox/satellite-streets-v12"
+    );
+  };
 
   const [locating, setLocating] = useState(false);
 
@@ -575,6 +588,16 @@ export function SignUpPage() {
 
                     {/* Map Area */}
                     <div className="relative overflow-hidden rounded-lg border border-slate-200 dark:border-white/10 shadow-md">
+                      {/* Map Style Switcher Overlay */}
+                      <button
+                        type="button"
+                        onClick={toggleMapStyle}
+                        className="absolute top-3 left-3 z-10 rounded-md bg-white/95 dark:bg-zinc-900/95 border dark:border-white/10 px-3 py-2 text-[10px] font-bold shadow-md backdrop-blur-sm transition-all hover:bg-white dark:hover:bg-zinc-900 active:scale-[0.97] text-[#0b6b35] dark:text-[#16a34a] flex items-center gap-1.5 cursor-pointer uppercase tracking-wider"
+                      >
+                        <Layers className="h-3.5 w-3.5" />
+                        <span>{mapStyle === "streets" ? "Satellite View" : "Streets View"}</span>
+                      </button>
+
                       <div 
                         id="map-container" 
                         className="h-80 w-full bg-slate-100 dark:bg-zinc-900 transition-all"
