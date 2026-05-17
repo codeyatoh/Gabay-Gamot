@@ -37,7 +37,7 @@ export function Navbar() {
           className={cn(
             "mx-auto mt-2 max-w-7xl transition-all duration-300",
             isScrolled &&
-              "max-w-5xl rounded-2xl border border-[#cfe3c7] bg-white/78 px-3 shadow-panel backdrop-blur-xl"
+              "max-w-5xl rounded-2xl border border-[#cfe3c7] bg-white/86 px-3 shadow-panel backdrop-blur-xl"
           )}
         >
           <div className="relative flex flex-wrap items-center justify-between gap-3 py-3">
@@ -101,7 +101,10 @@ export function Navbar() {
               </div>
 
               <div className="flex w-full flex-col gap-3 border-t border-slate-100 pt-3 sm:flex-row sm:items-center lg:w-fit lg:border-0 lg:pt-0">
-                <Button variant="ghost" className="justify-start text-slate-700 lg:justify-center">
+                <Button
+                  variant="ghost"
+                  className="justify-start rounded-xl border border-white/70 bg-white/80 text-[#083f24] shadow-sm backdrop-blur-md transition hover:border-[#cfe3c7] hover:bg-[#eef8e9] hover:text-[#083f24] lg:justify-center"
+                >
                   Login
                 </Button>
                 <Button className={cn("bg-[#0b6b35] text-white shadow-panel hover:bg-[#08552b]", isScrolled && "lg:hidden")}>
