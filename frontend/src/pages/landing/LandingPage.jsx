@@ -1,10 +1,6 @@
-import { CtaSection } from "@/components/landing/CtaSection";
+import { FaqSection } from "@/components/landing/FaqSection";
 import { FeaturesSection } from "@/components/landing/FeaturesSection";
 import { HeroSection } from "@/components/landing/HeroSection";
-import { ProblemSolutionSection } from "@/components/landing/ProblemSolutionSection";
-import { RolesSection } from "@/components/landing/RolesSection";
-import { TechnologySection } from "@/components/landing/TechnologySection";
-import { WorkflowSection } from "@/components/landing/WorkflowSection";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 
@@ -14,12 +10,8 @@ export function LandingPage() {
       <Navbar />
       <main className="pt-16">
         <HeroSection />
-        <ProblemSolutionSection />
         <FeaturesSection />
-        <WorkflowSection />
-        <RolesSection />
-        <TechnologySection />
-        <CtaSection />
+        <FaqSection />
       </main>
       <Footer />
     </div>

@@ -8,9 +8,7 @@ import logoUrl from "@/assets/images/gabay-gamot-logo-sm.png";
 
 const navItems = [
   { label: "Features", href: "#features" },
-  { label: "Workflow", href: "#workflow" },
-  { label: "Roles", href: "#roles" },
-  { label: "Technology", href: "#technology" },
+  { label: "FAQs", href: "#faqs" },
 ];
 
 export function Navbar() {
