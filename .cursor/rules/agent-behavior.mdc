@@ -5,7 +5,10 @@ globs: *
 # AI Agent Behavior Guidelines
 - **No Laziness:** Never write `// TODO: implement this`. If asked to build a feature, write the complete, production-ready code.
 - **No Placeholders:** If you need an image or visual, generate it or build a beautiful CSS/Tailwind-based layout representation instead of a gray square.
-- **Responsiveness First:** Every single component MUST look flawless on mobile, tablet, and desktop. Always implement `lg:`, `md:`, and `sm:` variants properly.
+- **Responsiveness First:** Every single component MUST look flawless from 320px mobile through tablet, desktop, large desktop, and ultra-wide screens. Always implement `sm:`, `md:`, `lg:`, `xl:`, and `2xl:` variants intentionally when layout or typography needs them.
+- **Audit Before UI Changes:** Before writing UI code, inspect the affected component, parent layout, global CSS, Tailwind config, breakpoint behavior, overflow risk, and existing documentation.
 - **Verify Before Coding:** Always check existing files (like `globals.css`, `tailwind.config.js`, or the `.agent` folder) to align with existing design tokens and configurations before inventing new ones.
+- **Docs Must Move With Code:** Every code, UI, database, API, Firebase, workflow, or behavior change must include a matching update inside the `docs/` folder.
+- **PWA-Safe UI:** Preserve `viewport-fit=cover`, safe-area utilities, hidden scrollbars with scroll functionality, root horizontal overflow protection, and 44px minimum touch targets.
 
 Follow these rules unconditionally for every prompt, update, or feature addition.

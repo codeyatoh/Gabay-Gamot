@@ -3,13 +3,15 @@
 ## General (Strict AI Enforcement)
 
 - **Zero-laziness policy:** Always write complete, production-ready code. Never leave `// TODO` or placeholder comments when asked to implement a feature.
-- **Responsiveness First:** Every component MUST be flawless on mobile, tablet, and desktop (`lg:`, `md:`, `sm:`).
+- **Responsiveness First:** Every component MUST be flawless from 320px mobile through tablet, desktop, large desktop, and ultra-wide screens. Use responsive Tailwind prefixes intentionally (`sm:`, `md:`, `lg:`, `xl:`, `2xl:`) instead of assuming one breakpoint is enough.
 - Keep the project highly organized and beginner friendly.
 - Use clear file and component names (PascalCase for React components).
 - Prefer small, focused components instead of one very large file.
 - Keep comments short and only add them when they help explain non-obvious logic.
 - Follow `.agent/security-guidelines.md` when adding backend, Firebase, auth, upload, or API features.
 - Always check existing design tokens (`globals.css`, `tailwind.config.js`) before inventing new ones.
+- Every code, UI, database, API, Firebase, workflow, or system behavior change MUST include a matching documentation update inside `docs/`.
+- Keep documentation updates close to the changed area: screens in `docs/screens/`, planning decisions in `docs/planning/`, database changes in `docs/database/`, API changes in `docs/api/`, and workflow diagrams in `docs/diagrams/`.
 
 ## Frontend
 
@@ -25,6 +27,15 @@
 - Prefer custom GabayGamot product visuals over generic placeholder cards.
 - Do not put private API keys in frontend code.
 - Protect private routes once authentication is added.
+- Before changing UI, audit the affected component, parent layout, global CSS, Tailwind config, breakpoint behavior, and possible overflow paths.
+- Use fluid layout primitives: `w-full`, `max-w-screen-*`, `minmax(0,...)`, responsive grids, flex wrapping, and constrained inner shells.
+- Avoid unintended horizontal scroll. Root wrappers and page shells should keep `overflow-x-hidden` when appropriate, and fixed/absolute elements must not use careless negative offsets that can bleed outside the viewport.
+- Keep mobile touch targets at least `min-h-11 min-w-11` (44px). Interactive controls should use `cursor-pointer`, `transition-all`, and `active:scale-95` unless a component has a better established interaction pattern.
+- Keep scrollbars visually hidden while preserving scroll functionality. Use the global scrollbar rules and `.scrollbar-none` utility instead of blocking scrolling.
+- Maintain PWA-ready viewport behavior: `viewport-fit=cover`, `pt-safe`, `pb-safe`, `px-safe`, and `env(safe-area-inset-*)` where page edges touch the screen.
+- Auth screens should keep the approved centered card reference structure unless the user explicitly asks for a new layout.
+- Do not scale text with viewport units. Use responsive Tailwind text sizes or established clamp tokens if added later.
+- Media must stay contained with `max-w-full`, `w-full` when needed, and appropriate `object-cover` or `object-contain`.
 
 ## Backend
 

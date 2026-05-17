@@ -68,6 +68,20 @@ Avoid:
 - Keep content scannable and focused.
 - Use asymmetry lightly to make the layout feel custom.
 - Use dashboard-inspired visuals such as inventory panels, stock status, referral previews, and scanning states.
+- Design every layout from 320px upward, then intentionally adapt at `sm`, `md`, `lg`, `xl`, and `2xl`.
+- Prefer `section-shell`, `max-w-screen-xl`, `2xl:max-w-screen-2xl`, `w-full`, flex wrapping, and responsive grid columns over hardcoded widths.
+- Use `minmax(0,...)` in custom grid tracks when content can shrink, especially dashboard cards and multi-column panels.
+- Never allow accidental horizontal scrolling. Avoid negative horizontal offsets on fixed, absolute, or full-width elements unless there is a tested containment wrapper.
+- Page-level wrappers should account for safe areas on mobile and PWA display modes.
+- Mobile/tablet portrait and landscape states must be mentally checked before considering a UI complete.
+
+## PWA & Device Fit
+
+- The viewport meta tag must remain `width=device-width, initial-scale=1.0, viewport-fit=cover`.
+- Preserve global hidden scrollbar behavior while keeping scrolling accessible.
+- Use `pt-safe`, `pb-safe`, `px-safe`, or explicit `env(safe-area-inset-*)` padding for screens that touch device edges.
+- Touch targets must be at least 44px on mobile (`min-h-11 min-w-11`).
+- Use `active:scale-95` and fast transitions for native-feeling touch interactions.
 
 ## Animation Direction
 
@@ -119,6 +133,8 @@ These visuals can be built using Tailwind and Shadcn primitives instead of scree
 - Avoid overly large text inside compact UI panels.
 - Do not use negative letter spacing.
 - Keep paragraph widths readable.
+- Use responsive Tailwind sizes (`text-sm sm:text-base lg:text-lg`, etc.) rather than viewport-width font sizing.
+- Text must not overflow buttons, cards, nav items, badges, or compact panels. Use wrapping, truncation, or layout changes when needed.
 
 ## Icons
 
@@ -137,4 +153,3 @@ Good icon choices:
 - `ShieldCheck`
 
 Icons should support meaning, not decorate randomly.
-

@@ -12,3 +12,6 @@ globs: *.jsx, *.js, *.tsx, *.ts
   - `src/pages/` - Full page assemblies.
 - **Import Paths:** Use absolute aliased imports (e.g., `import { Button } from "@/components/ui/button"`).
 - **Cleanliness:** Remove unused imports, variables, and console logs before finalizing. Zero lint errors.
+- **UI Primitives:** Shared responsive behavior belongs in `src/components/ui/`, `src/styles/globals.css`, or `tailwind.config.js` before being repeated across page components.
+- **Page Shells:** Page-level components must account for safe areas, hidden scrollbars, and horizontal overflow protection.
+- **Docs Sync:** UI architecture, screen behavior, route behavior, and design system changes must be documented in the matching `docs/` folder.

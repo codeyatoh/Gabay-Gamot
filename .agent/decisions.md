@@ -9,3 +9,5 @@
 - Use Shadcn UI as the main UI component system.
 - Keep the folder structure beginner friendly.
 - Treat security as a core requirement from the start, including rate limiting, role-based access, validation, safe uploads, and secret management.
+- Every implementation or behavior change must be reflected in the `docs/` folder, using the matching documentation area for screens, planning, database, API, or diagrams.
+- Treat responsive UI and PWA-ready layout behavior as baseline requirements: safe-area support, hidden scrollbars with scroll preserved, 44px touch targets, no unintended horizontal overflow, and breakpoint-aware Tailwind layouts from 320px through ultra-wide screens.

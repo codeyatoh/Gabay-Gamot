@@ -21,10 +21,10 @@ const inventoryRows = [
 export function ProductPreview() {
   return (
     <div className="relative mx-auto w-full max-w-xl reveal">
-      <div className="absolute -inset-4 rounded-[2rem] bg-[#dff0d2]/55 blur-3xl" />
-      <Card className="relative overflow-hidden rounded-[1.5rem] border-slate-200 bg-white/92 p-4 shadow-soft backdrop-blur">
-        <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-          <div>
+      <div className="absolute -inset-2 rounded-2xl bg-[#dff0d2]/55 blur-3xl sm:-inset-4" />
+      <Card className="relative overflow-hidden rounded-2xl border-slate-200 bg-white/92 p-3 shadow-soft backdrop-blur sm:p-4">
+        <div className="flex flex-col gap-3 border-b border-slate-100 pb-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="min-w-0">
             <p className="text-sm font-semibold text-slate-950">Barangay Inventory</p>
             <p className="text-xs text-slate-500">Live stock and referral signals</p>
           </div>
@@ -34,18 +34,18 @@ export function ProductPreview() {
           </Badge>
         </div>
 
-        <div className="grid gap-4 py-4 md:grid-cols-[1.1fr_0.9fr]">
+        <div className="grid gap-4 py-4 md:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
           <div className="space-y-3">
             {inventoryRows.map((item) => (
               <div
                 key={item.name}
-                className="group flex items-center justify-between rounded-2xl border border-slate-100 bg-slate-50/80 p-3 transition duration-300 hover:-translate-y-0.5 hover:bg-white hover:shadow-panel"
+                className="group flex min-h-14 items-center justify-between gap-3 rounded-2xl border border-slate-100 bg-slate-50/80 p-3 transition duration-300 hover:-translate-y-0.5 hover:bg-white hover:shadow-panel"
               >
                 <div className="flex items-center gap-3">
                   <span className={`h-2.5 w-2.5 rounded-full ${item.color}`} />
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-sm font-medium text-slate-900">{item.name}</p>
-                    <p className="text-xs text-slate-500">{item.stock} units available</p>
+                    <p className="truncate text-xs text-slate-500">{item.stock} units available</p>
                   </div>
                 </div>
                 <span className="text-xs font-semibold text-slate-600">{item.state}</span>
@@ -83,7 +83,7 @@ export function ProductPreview() {
         </div>
       </Card>
 
-      <Card className="relative mx-4 mt-4 rounded-2xl border-sky-100 bg-white p-4 shadow-panel sm:ml-8 sm:w-72">
+      <Card className="relative mx-0 mt-4 rounded-2xl border-sky-100 bg-white p-4 shadow-panel sm:mx-4 sm:ml-8 sm:w-72">
         <div className="flex items-start gap-3">
           <span className="rounded-xl bg-sky-50 p-2 text-sky-700">
             <FileText className="h-4 w-4" />
@@ -102,7 +102,7 @@ export function ProductPreview() {
 
 function PreviewSignal({ icon: Icon, label, value }) {
   return (
-    <div className="rounded-2xl bg-slate-50 p-3">
+    <div className="min-h-24 rounded-2xl bg-slate-50 p-3">
       <div className="mb-3 flex items-center gap-2 text-slate-500">
         <Icon className="h-4 w-4" />
         <span className="text-[11px] font-medium uppercase">{label}</span>

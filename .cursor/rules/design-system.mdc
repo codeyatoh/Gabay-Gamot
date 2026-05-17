@@ -14,3 +14,8 @@ AESTHETICS ARE VERY IMPORTANT. If the UI looks simple, basic, or like a generic 
   - Interactions: under 300ms (`transition duration-150`).
   - Reveals: 500ms-700ms (`fade-up`, `ease-out`).
   - **NO bouncy or flashy effects.**
+- **Responsive System:** Build from 320px upward. Use `w-full`, `max-w-screen-*`, `section-shell`, responsive grid/flex wrapping, and `minmax(0,...)` for shrink-safe custom grid tracks.
+- **No Horizontal Bleed:** Never introduce accidental horizontal scroll. Be careful with fixed/absolute elements, negative margins, `w-screen`, and large decorative layers.
+- **Touch Native:** Interactive elements must feel good on touch devices: at least `min-h-11 min-w-11`, `cursor-pointer`, `transition-all`, and `active:scale-95` unless a component has a specific reason not to.
+- **PWA Ready:** Respect safe areas using `pt-safe`, `pb-safe`, `px-safe`, or `env(safe-area-inset-*)`. Keep scrollbars visually hidden but scrolling functional.
+- **Typography Fit:** Use responsive Tailwind text utilities. Do not use viewport-width font sizing. Text must not overflow compact UI surfaces.

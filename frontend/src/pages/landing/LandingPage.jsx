@@ -9,9 +9,9 @@ import { Navbar } from "@/components/layout/Navbar";
 
 export function LandingPage() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen overflow-x-hidden bg-background pb-safe pt-safe">
       <Navbar />
-      <main className="pt-16">
+      <main className="pt-16 sm:pt-18 lg:pt-20">
         <HeroSection />
         <FeaturesSection />
         <WorkflowSection />

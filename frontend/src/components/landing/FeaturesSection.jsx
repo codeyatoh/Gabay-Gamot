@@ -4,17 +4,17 @@ import React from "react";
 
 export function FeaturesSection() {
     return (
-        <section id="features" className="bg-[#fcfdfa] py-24 dark:bg-[#0d1117] md:py-32">
-            <div className="mx-auto max-w-5xl px-6 section-shell">
+        <section id="features" className="bg-[#fcfdfa] py-16 dark:bg-[#0d1117] sm:py-20 md:py-24 lg:py-28 xl:py-32">
+            <div className="section-shell">
                 <div className="text-center">
-                    <h2 className="text-balance text-4xl font-semibold text-slate-900 dark:text-slate-50 lg:text-5xl">
+                    <h2 className="text-balance text-3xl font-semibold leading-tight text-slate-900 dark:text-slate-50 sm:text-4xl lg:text-5xl">
                         Built for Barangay Centers
                     </h2>
-                    <p className="mx-auto mt-4 max-w-2xl text-slate-600 dark:text-slate-400">
+                    <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-slate-600 dark:text-slate-400 sm:text-base sm:leading-7">
                         A unified ecosystem to streamline medicine coordination, inventory tracking, and patient referrals.
                     </p>
                 </div>
-                <Card className="mx-auto mt-12 grid max-w-sm divide-y overflow-hidden border-[#cfe3c7] shadow-panel *:text-center dark:border-white/10 dark:bg-[#111318] md:mt-16 md:max-w-full md:grid-cols-3 md:divide-x md:divide-y-0">
+                <Card className="mx-auto mt-10 grid w-full max-w-md divide-y overflow-hidden border-[#cfe3c7] shadow-panel *:text-center dark:border-white/10 dark:bg-[#111318] sm:mt-12 md:mt-16 md:max-w-full md:grid-cols-3 md:divide-x md:divide-y-0">
                     <div className="group border-[#cfe3c7]/50 transition-colors duration-300 hover:bg-[#f8fbf5]/50 dark:border-white/5 dark:hover:bg-white/5">
                         <CardHeader className="pb-3">
                             <CardDecorator>
@@ -64,7 +64,7 @@ export function FeaturesSection() {
 
 const CardDecorator = ({ children }) => (
     <div
-        className="relative mx-auto size-36 duration-200 [--color-border:color-mix(in_oklab,#0b6b35_15%,transparent)] group-hover:[--color-border:color-mix(in_oklab,#0b6b35_30%,transparent)] dark:[--color-border:color-mix(in_oklab,#4ade80_22%,transparent)] dark:group-hover:[--color-border:color-mix(in_oklab,#4ade80_40%,transparent)]"
+        className="relative mx-auto size-28 duration-200 [--color-border:color-mix(in_oklab,#0b6b35_15%,transparent)] group-hover:[--color-border:color-mix(in_oklab,#0b6b35_30%,transparent)] dark:[--color-border:color-mix(in_oklab,#4ade80_22%,transparent)] dark:group-hover:[--color-border:color-mix(in_oklab,#4ade80_40%,transparent)] sm:size-32 lg:size-36"
         style={{ maskImage: 'radial-gradient(circle at center, black 40%, transparent 60%)', WebkitMaskImage: 'radial-gradient(circle at center, black 40%, transparent 60%)' }}
     >
         <div

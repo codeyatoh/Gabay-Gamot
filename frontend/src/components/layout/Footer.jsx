@@ -41,11 +41,11 @@ const links = [
 
 export function Footer() {
   return (
-    <footer className="flex flex-col items-center justify-center border-t border-[#e5f0e1] bg-[#fcfdfa] py-16 dark:border-white/[0.04] dark:bg-[#0d1117] sm:py-24">
-      <div className="mx-auto w-full max-w-7xl px-6">
-        <div className="grid gap-12 md:grid-cols-5">
+    <footer className="flex flex-col items-center justify-center border-t border-[#e5f0e1] bg-[#fcfdfa] py-12 pb-[max(3rem,env(safe-area-inset-bottom))] dark:border-white/[0.04] dark:bg-[#0d1117] sm:py-16 md:py-20 lg:py-24">
+      <div className="section-shell">
+        <div className="grid gap-10 md:grid-cols-5 lg:gap-12">
           <div className="flex flex-col items-start md:col-span-2">
-            <a href="#home" aria-label="GabayGamot home" className="flex items-center gap-3">
+            <a href="#home" aria-label="GabayGamot home" className="flex min-h-11 items-center gap-3">
               <img
                 src={logoUrl}
                 alt="GabayGamot"
@@ -56,12 +56,12 @@ export function Footer() {
                 <span className="block text-xs text-slate-500 dark:text-slate-500">Medicine coordination</span>
               </span>
             </a>
-            <p className="mt-6 max-w-xs text-sm text-slate-500 dark:text-slate-500">
+            <p className="mt-6 max-w-sm text-sm leading-6 text-slate-500 dark:text-slate-500 sm:text-base">
               A unified ecosystem designed to streamline medicine coordination, inventory tracking, and patient referrals across barangay health centers.
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-4 md:col-span-3">
+          <div className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-4 md:col-span-3 lg:gap-8">
             {links.map((link, index) => (
               <div key={index} className="space-y-4 text-sm">
                 <span className="block font-semibold text-slate-900 dark:text-slate-200">{link.group}</span>
@@ -69,7 +69,7 @@ export function Footer() {
                   <a
                     key={idx}
                     href={item.href}
-                    className="block text-slate-500 transition-colors duration-150 hover:text-[#0b6b35] dark:text-slate-500 dark:hover:text-[#4ade80]"
+                    className="flex min-h-11 items-center text-slate-500 transition-all duration-150 active:scale-95 hover:text-[#0b6b35] dark:text-slate-500 dark:hover:text-[#4ade80]"
                   >
                     <span>{item.title}</span>
                   </a>
@@ -79,9 +79,9 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-16 flex flex-wrap items-center justify-between gap-6 border-t border-[#e5f0e1] pt-8 dark:border-white/5">
-          <span className="order-last block text-center text-sm text-slate-500 dark:text-slate-600 md:order-first">
-            © {new Date().getFullYear()} GabayGamot, All rights reserved.
+        <div className="mt-12 flex flex-wrap items-center justify-center gap-6 border-t border-[#e5f0e1] pt-8 dark:border-white/5 sm:mt-16 md:justify-between">
+          <span className="order-last block w-full text-center text-sm text-slate-500 dark:text-slate-600 md:order-first md:w-auto md:text-left">
+            &copy; {new Date().getFullYear()} GabayGamot, All rights reserved.
           </span>
           <div className="order-first flex flex-wrap items-center justify-center gap-6 text-sm md:order-last">
             {[
@@ -96,7 +96,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={label}
-                className="text-slate-400 transition-colors hover:text-[#0b6b35] dark:text-slate-600 dark:hover:text-[#4ade80]"
+                className="flex min-h-11 min-w-11 items-center justify-center rounded-full text-slate-400 transition-all active:scale-95 hover:text-[#0b6b35] dark:text-slate-600 dark:hover:text-[#4ade80]"
               >
                 <Icon className="h-5 w-5" />
               </a>

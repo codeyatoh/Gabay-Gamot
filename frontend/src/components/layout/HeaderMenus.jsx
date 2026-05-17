@@ -27,7 +27,7 @@ export function HeaderMenus() {
               asChild
               className={cn(
                 navigationMenuTriggerStyle(),
-                "bg-transparent text-sm font-medium text-slate-600 transition-colors hover:bg-[#eef8e9] hover:text-[#0b6b35] rounded-xl dark:text-slate-400 dark:hover:bg-white/8 dark:hover:text-[#4ade80]"
+                "rounded-xl bg-transparent text-sm font-medium text-slate-600 transition-all hover:bg-[#eef8e9] hover:text-[#0b6b35] dark:text-slate-400 dark:hover:bg-white/8 dark:hover:text-[#4ade80]"
               )}
             >
               <a href={item.href}>{item.label}</a>

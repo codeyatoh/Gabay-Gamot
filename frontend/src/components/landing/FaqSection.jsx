@@ -40,15 +40,15 @@ const faqData = [
 
 export function FaqSection() {
   return (
-    <section id="faqs" className="bg-white py-24 dark:bg-[#0d1117]" style={{ scrollMarginTop: "8rem" }}>
+    <section id="faqs" className="bg-white py-16 dark:bg-[#0d1117] sm:py-20 md:py-24 lg:py-28" style={{ scrollMarginTop: "8rem" }}>
       <div className="section-shell">
-        <div className="mx-auto flex max-w-5xl flex-col gap-8 lg:flex-row lg:gap-12">
+        <div className="mx-auto flex max-w-screen-lg flex-col gap-8 lg:flex-row lg:gap-12 xl:max-w-screen-xl">
           <div className="flex w-full flex-col gap-4 lg:flex-1 lg:py-5">
             <p className="text-xs font-medium uppercase tracking-[0.22em] text-[#0b6b35] dark:text-[#4ade80]">FAQs</p>
-            <h2 className="text-4xl font-semibold leading-tight tracking-normal text-slate-950 dark:text-slate-50 sm:text-5xl">
+            <h2 className="text-3xl font-semibold leading-tight tracking-normal text-slate-950 dark:text-slate-50 sm:text-4xl lg:text-5xl">
               Frequently Asked Questions
             </h2>
-            <p className="text-base leading-7 text-slate-600 dark:text-slate-500">
+            <p className="text-sm leading-6 text-slate-600 dark:text-slate-500 sm:text-base sm:leading-7">
               Short answers for the first version of GabayGamot, based on the planned medicine
               coordination workflow.
             </p>
@@ -58,11 +58,11 @@ export function FaqSection() {
             <Accordion type="single" collapsible className="w-full rounded-md border border-[#dbe9d5] bg-[#f8fbf5] dark:border-white/10 dark:bg-[#111318]">
               {faqData.map((item, index) => (
                 <AccordionItem key={item.question} value={`item-${index}`} className="border-[#dbe9d5] last:border-b-0 dark:border-white/5">
-                  <AccordionTrigger className="p-5 text-left text-base font-medium text-slate-950 hover:no-underline hover:text-[#0b6b35] dark:text-slate-100 dark:hover:text-[#4ade80]">
+                  <AccordionTrigger className="min-h-14 p-4 text-left text-sm font-medium text-slate-950 hover:no-underline hover:text-[#0b6b35] sm:p-5 sm:text-base dark:text-slate-100 dark:hover:text-[#4ade80]">
                     {item.question}
                   </AccordionTrigger>
 
-                  <AccordionContent className="px-5 pb-5 text-sm leading-6 text-slate-600 dark:text-slate-500">
+                  <AccordionContent className="px-4 pb-5 text-sm leading-6 text-slate-600 sm:px-5 dark:text-slate-500">
                     {item.answer}
                   </AccordionContent>
                 </AccordionItem>
