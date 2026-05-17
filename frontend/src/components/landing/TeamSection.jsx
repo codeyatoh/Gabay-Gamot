@@ -2,12 +2,14 @@ import React from "react";
 import cedrickAvatar from "@/assets/images/team/cedrick-tacan.png";
 import angelitoAvatar from "@/assets/images/team/angelito-halmain.png";
 import joashAvatar from "@/assets/images/team/joash-elizzer.jpg";
+import gabrielAvatar from "@/assets/images/team/gabriel-carpio.jpg";
+import pauleenAvatar from "@/assets/images/team/pauleen-sabillo.jpg";
 
 const coreTeam = [
   {
     name: "Pauleen Sabillo",
     role: "Lead/Pitcher",
-    avatar: "https://ui-avatars.com/api/?name=Pauleen+Sabillo&background=0b6b35&color=fff&size=256",
+    avatar: pauleenAvatar,
   },
   {
     name: "Angelito Halmain",
@@ -22,7 +24,7 @@ const coreTeam = [
   {
     name: "Gabriel Carpio",
     role: "Researcher",
-    avatar: "https://ui-avatars.com/api/?name=Gabriel+Carpio&background=0b6b35&color=fff&size=256",
+    avatar: gabrielAvatar,
   },
   {
     name: "Cedrick Tacan",

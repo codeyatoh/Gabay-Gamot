@@ -1,0 +1,238 @@
+GabayGamot  
+AI-Assisted Medicine Monitoring, Dispensing, and Referral 
+System to Reduce Medicine Waste and Shortages  
+1. Introduction  
+1.1 System Overview  
+GabayGamot is a web -based medicine inventory, dispensing, monitoring, and referral system 
+designed to help barangay health centers manage medicine stocks efficiently and reduce medicine 
+waste.  
+The system uses camera -based scanning with Optical Character Recognition (OCR) to 
+automatically extract important medicine details such as medicine name, expiry date, and category. 
+After scanning, the user reviews the extracted information and manually inp uts the medicine 
+quantity before submission to ensure accuracy.  
+The system also provides medicine availability monitoring between barangays. If a medicine is 
+unavailable in one barangay, the system searches nearby barangays with available stock and 
+automatically generates a referral form.  
+GabayGamot also includes a dispensing log feature that records medicines given to patients. This 
+helps improve accountability, monitor medicine usage, and automatically deduct inventory after 
+dispensing.  
+All validated records are stored in a centralized database. The system integrates Gemini API to 
+provide AI -assisted recommendations for redistribution, shortage prevention, procurement 
+planning, and medicine demand forecasting.  
+The Admin manages users, monitors inventory, views analytics, and generates reports to support 
+healthcare decision -making.  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+2. Problem Statement  and Proposed Solution  
+2.1 Problem Statement  
+Many barangay health centers experience difficulties in managing medicine inventory because of 
+manual recording and disconnected monitoring systems.  
+These issues often result in inaccurate stock monitoring, medicine shortages, delayed referrals, 
+expired medicines, and poor medicine accountability.  
+According to COA reports, many medicines expired or remained unused because of poor inventory 
+systems, weak procurement planning, and inefficient monitoring.  
+Some barangays experience medicine shortages while nearby barangays have excess stocks. 
+Patients also experience delays because health centers cannot easily monitor medicine availability 
+from nearby barangays.  
+Another challenge is the lack of proper monitoring of medicines dispensed to patients. Without 
+dispensing records, health workers may have difficulty tracking medicine usage and 
+accountability.  
+2.2 Proposed Solution (GabayGamot)  
+GabayGamot provides a centralized solution for medicine inventory monitoring, dispensing, 
+patient referrals, and procurement planning.  
+The system uses OCR -based scanning to automatically extract medicine information such as 
+medicine name, expiry date, and category. Users review the extracted information and manually 
+input medicine quantity before submission.  
+The system monitors medicine availability, generates expiry alerts, records dispensing logs, 
+automatically deducts inventory after dispensing, and searches nearby barangays with available 
+medicines for referral generation.  
+Gemini API provides AI -assisted recommendations for redistribution, shortage prevention, 
+procurement planning, and medicine demand forecasting.  
+The admin dashboard supports monitoring, analytics, and report generation for improved 
+healthcare coordination and decision -making.  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+3. Objectives  
+The system aims to improve medicine inventory monitoring, reduce expired medicines, improve 
+barangay coordination, automate referrals, and support smarter procurement planning.  
+It also aims to reduce manual encoding, improve medicine accountability through dispensing logs, 
+and provide AI -assisted recommendations for better healthcare decision -making.  
+ 
+4. System Scope  
+GabayGamot includes account authentication, medicine scanning, inventory management, expiry 
+alerts, medicine dispensing, referral generation, AI -assisted recommendations, analytics 
+dashboards, and report generation.  
+The system is intended for barangay health centers and local health offices.  
+ 
+5. System Users  
+5.1 Admin  
+The Admin manages the overall operations of the system.  
+Responsibilities include:  
+• managing users  
+• monitoring inventory  
+• viewing analytics  
+• monitoring referrals  
+• monitoring dispensing logs  
+• generating reports  
+• monitoring AI recommendations  
+5.2 Barangay Health Worker  
+The Barangay Health Worker performs daily medicine inventory and dispensing operations.  
+Responsibilities include:  
+• scanning medicines  
+• updating inventory  
+• dispensing medicines  
+• recording dispensing logs  
+• generating referrals  
+• viewing AI recommendations  
+ 
+ 
+ 
+
+6. System Features  
+GabayGamot provides OCR -based medicine scanning, inventory management, dispensing logs, 
+automatic stock deduction, nearby medicine search, referral generation, AI -assisted 
+recommendations, dashboards, analytics, and report generation.  
+These features help improve medicine tracking, monitoring, accountability, and coordination 
+between barangays.  
+ 
+7. System Workflow  
+The system follows a structured process starting from admin registration and barangay setup.  
+Users scan medicines, review extracted data, input quantity, and store validated records in the 
+centralized database.  
+The system automatically updates inventory, generates expiry alerts, records dispensing logs, 
+deducts stock after dispensing, and generates referrals when medicines are unavailable.  
+Gemini API analyzes medicine usage and inventory trends to generate procurement and 
+redistribution recommendations.  
+The admin monitors inventory, referrals, dispensing records, analytics, and reports through the 
+dashboard.  
+ 
+8. System Architecture  
+The system uses React JS (Vite) for the frontend, Node.js with Express.js for the backend, and 
+Firebase Firestore for database management.  
+Additional technologies include Firebase Authentication, Tailwind CSS, Shadcn UI, Tesseract.js 
+for OCR scanning, Mapbox API for location services, and Gemini API for AI integration.  
+ 
+ 
+
+
+9. Database Design  
+The database is composed of entities including Users, Barangays, Medicines, Referrals, 
+Notifications, Redistribution Records, and Dispensing Logs.  
+These entities store information related to medicine inventory, dispensing activities, referrals, 
+notifications, and AI -generated recommendations.  
+ 
+10. Relationship s 
+The system follows structured relationships between entities.  
+One Barangay can have many Users, Medicines, Referrals, Notifications, and Dispensing Logs.  
+Each User belongs to one Barangay, while Medicines, Referrals, and Dispensing Logs are 
+associated with a specific Barangay.  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+11. Data Flow Summar y 
+GabayGamot processes information through input, processing, and output stages.  
+Inputs include medicine images, medicine quantities, dispensing records, referral requests, and 
+login credentials.  
+The system processes OCR extraction, validation, inventory monitoring, dispensing, referral 
+generation, and AI recommendation analysis.  
+Outputs include updated inventory records, dispensing logs, alerts, referrals, procurement 
+recommendations, and reports.  
+ 
+ 
+ 
+ 
+ 
+
+
+12. Use Case Diagram  
+The Use Case Diagram illustrates the interaction between the Admin and Barangay Health Worker 
+with the system.  
+The diagram includes major system functions such as login, inventory management, medicine 
+dispensing, referral generation, AI recommendations, and report generation.  
+ 
+13. Possible System Pages  
+Admin Pages  
+• Login Page  
+• Dashboard  
+• User Management  
+• Inventory Monitoring  
+• Reports and Analytics  
+Barangay Health Worker Pages  
+• Dashboard  
+• Scan Medicine Page  
+• Dispensing Page  
+• Referral Page  
+• Reports Page  
+ 
+ 
+ 
+
+
+14. Dispensing Log Feature  
+The Dispensing Log feature records medicines given to patients.  
+This feature helps improve medicine accountability, track medicine usage, monitor dispensing 
+history, reduce inventory discrepancies, and support patient safety.  
+The dispensing log records the patient name, medicine name, quantity dispensed, date dispensed, 
+health worker assigned, and remarks.  
+When medicines are dispensed, the system automatically deducts the quantity from the inventory.  
+ 
+15. System Constraints  
+The system has some limitations.  
+• OCR accuracy depends on image quality  
+• medicine quantity must still be manually entered  
+• internet connection is required  
+• Gemini API requires internet access  
+• location accuracy depends on maps integration  
+• the system is not a full electronic medical record system  
+ 
+16. System Type  
+GabayGamot is a web -based system and does not use IoT devices.  
+ 
+17. Future Improvements  
+Future versions of the system may include disease trend analytics, barcode scanning, mobile 
+application support, predictive analytics, and advanced forecasting.  
+ 
+18. Summary  
+GabayGamot improves medicine inventory management by combining OCR, centralized 
+monitoring, dispensing logs, AI -assisted recommendations, and barangay coordination.  
+The system helps reduce expired medicines, improve medicine accessibility, automate referrals, 
+improve procurement planning, and support smarter healthcare decision -making.  
+By improving visibility and coordination between barangays, GabayGamot helps ensure that 
+medicines are properly utilized instead of expiring unused while nearby communities experience 
+shortages.  
+ 
