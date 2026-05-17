@@ -10,5 +10,8 @@ globs: *
 - **Verify Before Coding:** Always check existing files (like `globals.css`, `tailwind.config.js`, or the `.agent` folder) to align with existing design tokens and configurations before inventing new ones.
 - **Docs Must Move With Code:** Every code, UI, database, API, Firebase, workflow, or behavior change must include a matching update inside the `docs/` folder.
 - **PWA-Safe UI:** Preserve `viewport-fit=cover`, safe-area utilities, hidden scrollbars with scroll functionality, root horizontal overflow protection, and 44px minimum touch targets.
+- **Use Context7 MCP:** When implementation depends on framework, package, SDK, or API behavior that may have changed, resolve and query Context7 before coding.
+- **Use Playwright MCP:** After meaningful frontend, routing, form, responsive, or browser-interaction changes, verify the relevant local route with Playwright and check for console/layout issues.
+- **Storage Foldering:** During development, use Cloudinary folders under `gabaygamot/dev/` exactly as documented in `.agent/storage-guidelines.md` and `docs/planning/development-file-storage.md`.
 
 Follow these rules unconditionally for every prompt, update, or feature addition.

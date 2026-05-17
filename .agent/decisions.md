@@ -11,3 +11,10 @@
 - Treat security as a core requirement from the start, including rate limiting, role-based access, validation, safe uploads, and secret management.
 - Every implementation or behavior change must be reflected in the `docs/` folder, using the matching documentation area for screens, planning, database, API, or diagrams.
 - Treat responsive UI and PWA-ready layout behavior as baseline requirements: safe-area support, hidden scrollbars with scroll preserved, 44px touch targets, no unintended horizontal overflow, and breakpoint-aware Tailwind layouts from 320px through ultra-wide screens.
+- Use a four-step Barangay Health Center Admin signup request flow: account, assignment, pin location, and validation.
+- Use PSGC Cloud directly only as a development shortcut; production PSGC validation should go through the backend and official PSA PSGC data.
+- Keep Mapbox token and geocoding behind the Express backend proxy.
+- Use Context7 MCP for up-to-date library documentation and Playwright MCP for local browser/responsive validation.
+- Use Cloudinary as the temporary development file storage provider while Firebase Storage requires a Blaze upgrade.
+- Organize Cloudinary uploads under `gabaygamot/{environment}/` with documented folders for public assets, admin signup documents, IDs, OCR uploads, medicine images, reports, and temporary files.
+- Seed the first Super Admin through a backend-only Firebase Admin script, not through public signup.

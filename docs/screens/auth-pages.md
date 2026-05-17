@@ -2,7 +2,9 @@
 
 ## Current Scope
 
-The first auth screens are UI-only. Firebase Authentication, Firestore writes, validation, and real password reset behavior will be added later.
+The first auth screens are still mostly UI-only. Firebase Authentication, Firestore writes, server-side validation, file upload persistence, and real password reset behavior will be added later.
+
+The signup page includes implemented frontend behavior for PSGC-backed address selection, Mapbox geocoding, map pinning, GPS lookup, map style switching, and local file type/size checks.
 
 The visual structure follows the provided reference: a single centered auth card, logo at the top, title and helper text, stacked form fields, action button, optional social buttons, and a footer link. Only GabayGamot-specific text, routes, and fields are changed.
 
@@ -29,50 +31,84 @@ Visible fields and actions:
 - Google sign-in button as a UI-only placeholder
 - Link to Create Admin Account
 
-## Sign Up Page (Admin Setup Request Wizard)
+## Sign Up Page: Admin Setup Request Wizard
 
-The sign up page is a highly structured, 3-step wizard using the custom headless `Stepper` component (`@/components/reui/stepper.jsx`). It is designed for submitting a Barangay Health Center Admin approval request during health center setup. It does not request a password or create an active account immediately (following the Super Admin approval workflow).
+The sign up page is a structured 4-step wizard using the custom headless `Stepper` component (`frontend/src/components/reui/stepper.jsx`). It is designed for submitting a Barangay Health Center Admin approval request during health center setup.
 
-### 3-Step Wizard Structure
+It does not request a password or create an active account immediately.
 
-#### Step 1: Account (Personal Details)
-- **First Name** (placeholder: `e.g. Juan`)
-- **Last Name** (placeholder: `e.g. Dela Cruz`)
-- **Email Address** (placeholder: `e.g. juan@gmail.com`)
-- **Mobile Number:**
-  - Prefixed with an absolute, non-editable `+63` country code indicator.
-  - Custom JavaScript validation rules limit entry strictly to **10 digits**.
-  - Enforces that the mobile number MUST start with the digit `9` (automatically clears input if a different starting digit is typed, e.g., accidental `0`).
-- **Google Sign-Up Button:**
-  - Displayed **only on Step 1** (to facilitate auto-filling First Name, Last Name, and Email address from Google authentication scopes, while omitting it from later steps).
+## Step 1: Account
 
-#### Step 2: Assignment (Health Center Info)
-To improve readability and prevent jagged forms, fields are organized into two clean visual sections separated by divider lines:
-- **Center Details:**
-  - **Barangay Health Center Name** (full-width input, placeholder: `e.g. San Jose Health Center`)
-  - **Position / Designation** (full-width input, placeholder: `e.g. Barangay Health Worker`)
-- **Center Location:**
-  - A unified 4-field grid: **Region** (placeholder: `e.g. Region IV-A`), **Province** (placeholder: `e.g. Cavite`), **City / Municipality** (placeholder: `e.g. Dasmariñas`), and **Barangay** (placeholder: `e.g. San Jose`).
-  - **Facility Address Line** (full-width input, placeholder: `Street, sitio, or purok`).
+Personal details:
 
-#### Step 3: Validation (Proof & Identity)
-- **Valid Proof Guidelines:**
-  - Displays a clean green notification box listing accepted documents (e.g., signed authorization letter, health center endorsement, employee ID, appointment designation certificate).
-- **Document Uploads:**
-  - **Authorization Document:**
-    - Accepts ONLY `.pdf, .doc, .docx` files.
-    - Strictly limits size to **5MB**.
-    - Omit custom photo previews to avoid layout clutter (utilizes standard native file input name displays).
-  - **Government / Employee ID:**
-    - Accepts ONLY image formats (`.jpg, .jpeg, .png`).
-    - Strictly limits size to **2MB**.
-    - Displays a **live local photo preview** underneath upon selection, featuring a red close button (`✕`) to clear or reset the file.
-- **Agreement Checkbox:**
-  - A responsive checkbox list item confirming authorization.
-- **Submit for Review button:**
-  - Form submission has active event prevention (`e.preventDefault()`) to avoid browser reload loops during React navigation.
+- First Name
+- Last Name
+- Email Address
+- Mobile Number
 
----
+Mobile number behavior:
+
+- Displays a fixed `+63` prefix.
+- Limits input to 10 digits.
+- Requires the first entered digit to be `9`.
+
+The Google sign-up button is displayed on this step only. It is currently a UI-only placeholder for future Firebase/Google auth integration.
+
+## Step 2: Assignment
+
+Health center details:
+
+- Barangay Health Center Name
+- Position / Designation
+- Region
+- Province
+- City / Municipality
+- Barangay
+- Facility Address Line
+
+Implemented address behavior:
+
+- Uses `frontend/src/hooks/usePSGC.js`.
+- Uses the custom `SearchableSelect` component.
+- Uses `https://psgc.cloud/api` as the current development data source.
+- Handles province-less regions such as NCR by fetching cities directly under the selected region.
+- Caches NCR barangays in memory after the first fetch to avoid slow repeated requests.
+- Stores selected address names in hidden inputs for future form submission.
+
+## Step 3: Pin Location
+
+Implemented map behavior:
+
+- Fetches a Mapbox token from the backend proxy through `GET /api/mapbox/token`.
+- Geocodes selected address parts through `GET /api/mapbox/geocode?q=...`.
+- Displays a Mapbox map with a draggable marker.
+- Stores latitude and longitude in hidden inputs.
+- Includes a `Use GPS` button through browser geolocation.
+- Includes a streets/satellite style switcher using custom Mapbox Studio styles.
+- Re-adds the draggable marker after style changes.
+
+## Step 4: Validation
+
+Proof and identity fields:
+
+- Authorization Document
+- Government / Employee ID
+- Authorization agreement checkbox
+
+Validation behavior:
+
+- Authorization document accepts `.pdf`, `.doc`, and `.docx` up to 5MB.
+- Government / Employee ID accepts `.jpg`, `.jpeg`, and `.png` up to 2MB.
+- Image ID uploads display a local preview.
+- File errors are displayed inline.
+- Form submission is prevented with `e.preventDefault()` to avoid browser reloads during UI work.
+
+Valid proof examples shown in the UI:
+
+- Authorization letter for the Barangay Health Center
+- City Health Office or Barangay Health Center endorsement
+- Government, employee, or barangay health worker ID
+- Appointment, designation, or employment certification connected to the health center
 
 ## Forgot Password Page
 
@@ -85,8 +121,10 @@ Visible fields and actions:
 ## Future Firebase Behavior
 
 - Login will use Firebase Authentication.
+- Google auth buttons will connect to Firebase/Google sign-in.
 - Forgot password will use Firebase password reset email.
-- Admin sign up must verify barangay health center setup before creating an admin account.
+- Admin signup must create an approval request before an admin account becomes active.
+- Uploaded proof files must be stored securely in Firebase Storage or an approved backend upload service.
 - Super Admin/System Owner reviews proof documents before approval.
 - Approved Admin accounts receive a temporary password or setup link and must change password on first login.
 - Barangay Health Worker accounts should be created by an authorized Barangay Health Center Admin.

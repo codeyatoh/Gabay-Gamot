@@ -9,9 +9,12 @@
 - Prefer small, focused components instead of one very large file.
 - Keep comments short and only add them when they help explain non-obvious logic.
 - Follow `.agent/security-guidelines.md` when adding backend, Firebase, auth, upload, or API features.
+- Follow `.agent/storage-guidelines.md` when adding image, document, OCR, or attachment uploads.
 - Always check existing design tokens (`globals.css`, `tailwind.config.js`) before inventing new ones.
 - Every code, UI, database, API, Firebase, workflow, or system behavior change MUST include a matching documentation update inside `docs/`.
 - Keep documentation updates close to the changed area: screens in `docs/screens/`, planning decisions in `docs/planning/`, database changes in `docs/database/`, API changes in `docs/api/`, and workflow diagrams in `docs/diagrams/`.
+- Use Context7 MCP for current package/framework documentation before changing behavior that depends on recently changing APIs.
+- Use Playwright MCP to verify local frontend behavior after meaningful UI, routing, responsive, form, or browser-interaction changes.
 
 ## Frontend
 
@@ -22,6 +25,7 @@
 - Use `lucide-react` for meaningful icons.
 - Put reusable UI pieces in `frontend/src/components/common/`.
 - Put landing page sections in `frontend/src/components/landing/`.
+- Put custom app-specific reusable UI controls in `frontend/src/components/reui/`.
 - Put page-level components in `frontend/src/pages/`.
 - Keep animation subtle, smooth, and purposeful.
 - Prefer custom GabayGamot product visuals over generic placeholder cards.
@@ -43,6 +47,9 @@
 - Add rate limits to auth, OCR, AI, and other API routes before public deployment.
 - Keep API keys and credentials in `.env`.
 - Never commit real secrets to GitHub.
+- Keep Mapbox secret token server-side. Do not move `MAPBOX_SECRET_TOKEN` into frontend code.
+- Keep Cloudinary secrets server-side. Do not move `CLOUDINARY_API_SECRET` into frontend code.
+- During development, use the documented Cloudinary folder map under `gabaygamot/dev/`.
 - Use auth and role middleware for protected routes.
 - Enforce barangay-based access on server-side logic.
 

@@ -12,6 +12,8 @@ Use this folder when planning pages, asking AI for help, or checking what decisi
 - `security-guidelines.md` - security, rate limiting, auth, validation, and secret handling rules
 - `landing-page-plan.md` - landing page sections and content direction
 - `coding-guidelines.md` - basic coding and UI rules
+- `mcp-workflow.md` - Context7 and Playwright MCP usage rules
+- `storage-guidelines.md` - Cloudinary development storage and foldering rules
 - `tasks.md` - beginner-friendly task checklist
 - `decisions.md` - important project decisions
 - `prompts/` - reusable AI prompts for common project tasks

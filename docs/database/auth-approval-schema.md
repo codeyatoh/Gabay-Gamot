@@ -32,7 +32,12 @@ Suggested fields:
   },
   facility: {
     name: "Example Barangay Health Center",
-    addressLine: "Street / sitio / purok details"
+    addressLine: "Street / sitio / purok details",
+    coordinates: {
+      latitude: 14.5995,
+      longitude: 120.9842,
+      source: "mapbox_geocode | gps | manual_marker"
+    }
   },
   proof: {
     authorizationDocumentUrl: "storage/path/file.pdf",
@@ -73,6 +78,37 @@ Created only after approval.
 }
 ```
 
+For the seeded Super Admin, `users/{uid}` is created directly by the backend seed script:
+
+```js
+{
+  uid: "firebaseUid",
+  firstName: "Super",
+  lastName: "Admin",
+  email: "superadmin@example.com",
+  role: "super_admin",
+  barangayCode: null,
+  barangayId: null,
+  facilityId: null,
+  status: "active",
+  mustChangePassword: true,
+  createdBy: "seed:super-admin",
+  createdFromRequestId: null,
+  isSeedAccount: true,
+  createdAt: timestamp,
+  updatedAt: timestamp
+}
+```
+
+The seed script also sets Firebase Auth custom claims:
+
+```js
+{
+  role: "super_admin",
+  superAdmin: true
+}
+```
+
 ### `barangays`
 
 Uses PSGC as the normalized barangay identity.
@@ -99,7 +135,8 @@ Uses PSGC as the normalized barangay identity.
 ## Security Notes
 
 - Signup request documents are not active user accounts.
-- Uploaded proof files must be protected in Firebase Storage.
+- During development, uploaded proof files use Cloudinary with the documented foldering convention.
+- In production, uploaded proof files should use private storage with strict access control.
 - Only Super Admin/System Owner can approve or reject requests.
 - Barangay Health Center Admin cannot approve their own account request.
 - Barangay Health Worker accounts are created by the approved Barangay Health Center Admin after login.

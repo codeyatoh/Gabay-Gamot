@@ -13,5 +13,9 @@ globs: *.jsx, *.js, *.tsx, *.ts
 - **Import Paths:** Use absolute aliased imports (e.g., `import { Button } from "@/components/ui/button"`).
 - **Cleanliness:** Remove unused imports, variables, and console logs before finalizing. Zero lint errors.
 - **UI Primitives:** Shared responsive behavior belongs in `src/components/ui/`, `src/styles/globals.css`, or `tailwind.config.js` before being repeated across page components.
+- **Custom Interaction Components:** App-specific reusable controls belong in `src/components/reui/` when they are not base shadcn/Radix primitives.
 - **Page Shells:** Page-level components must account for safe areas, hidden scrollbars, and horizontal overflow protection.
 - **Docs Sync:** UI architecture, screen behavior, route behavior, and design system changes must be documented in the matching `docs/` folder.
+- **Backend Boundaries:** Keep secret-bearing integrations behind Express routes. Mapbox token/geocoding currently belongs in `backend/src/routes/mapboxRoutes.js` and `backend/src/controllers/mapboxController.js`.
+- **Upload Boundaries:** File uploads must go through backend services. Do not upload from the frontend using provider secrets. Store provider-neutral metadata and keep Cloudinary `publicId` for future delete/migration behavior.
+- **Firebase Admin Boundary:** Firebase Admin SDK belongs in the backend only. Seed Super Admin accounts through `backend/scripts/seedSuperAdmin.js`, never through public signup or frontend code.

@@ -14,42 +14,36 @@ GabayGamot/
 |   |-- project-structure.md
 |   |-- landing-page-plan.md
 |   |-- coding-guidelines.md
+|   |-- mcp-workflow.md
 |   |-- tasks.md
 |   `-- decisions.md
+|-- .cursor/
+|   `-- rules/
 |-- frontend/
-|   |-- public/
 |   `-- src/
 |       |-- assets/
 |       |   |-- images/
-|       |   `-- icons/
+|       |   `-- videos/
 |       |-- components/
 |       |   |-- common/
 |       |   |-- landing/
-|       |   `-- layout/
+|       |   |-- layout/
+|       |   |-- reui/
+|       |   `-- ui/
 |       |-- hooks/
+|       |-- lib/
 |       |-- pages/
-|       |   |-- admin/
 |       |   |-- auth/
-|       |   |-- health-worker/
 |       |   `-- landing/
-|       |-- routes/
-|       |-- services/
-|       |-- styles/
-|       `-- utils/
+|       `-- styles/
 |-- backend/
-|   |-- uploads/
+|   |-- scripts/
 |   `-- src/
 |       |-- config/
 |       |-- controllers/
-|       |-- middlewares/
-|       |-- models/
 |       |-- routes/
-|       |-- services/
-|       |-- utils/
-|       `-- validators/
+|       `-- server.js
 |-- firebase/
-|   |-- rules/
-|   `-- seed-data/
 `-- docs/
     |-- api/
     |-- database/
@@ -76,8 +70,10 @@ Examples:
 ```text
 HeroSection.jsx
 FeaturesSection.jsx
-HowItWorksSection.jsx
-CallToActionSection.jsx
+WorkflowSection.jsx
+TechnologySection.jsx
+TeamSection.jsx
+FaqSection.jsx
 ```
 
 ### `frontend/src/components/common/`
@@ -96,6 +92,16 @@ Footer.jsx
 PageLayout.jsx
 ```
 
+### `frontend/src/components/reui/`
+Custom reusable interaction components that are not shadcn primitives.
+
+Current examples:
+
+```text
+SearchableSelect.jsx
+stepper.jsx
+```
+
 ### `frontend/src/pages/`
 Page-level components.
 
@@ -112,7 +118,17 @@ health-worker/HealthWorkerDashboard.jsx
 Frontend API and Firebase service calls.
 
 ### `backend/`
-Node.js and Express API for future backend features.
+Node.js and Express API.
+
+Current implementation:
+
+```text
+scripts/seedSuperAdmin.js
+src/config/firebaseAdmin.js
+src/server.js
+src/routes/mapboxRoutes.js
+src/controllers/mapboxController.js
+```
 
 ### `firebase/`
 Firestore rules and sample seed data.

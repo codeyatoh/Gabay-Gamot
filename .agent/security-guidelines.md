@@ -135,6 +135,7 @@ Keep these in `.env` files:
 - Firebase service account values
 - Gemini API key
 - Mapbox API key
+- Cloudinary cloud name, API key, and API secret
 - backend secret values
 
 Rules:
@@ -142,6 +143,19 @@ Rules:
 - `.env` must stay ignored by Git.
 - Use `.env.example` for placeholder variable names only.
 - Never paste real API keys in documentation, screenshots, or commits.
+- Upload files through the backend. The frontend must never receive `CLOUDINARY_API_SECRET`.
+
+## Development File Storage
+
+Cloudinary is the temporary development storage provider while Firebase Storage requires a Blaze upgrade.
+
+Rules:
+
+- Follow `.agent/storage-guidelines.md` and `docs/planning/development-file-storage.md`.
+- Use folders under `gabaygamot/dev/`.
+- Validate file type and size on the backend.
+- Store original filenames only as metadata.
+- Store Cloudinary `publicId` so files can be deleted later without relying on URLs.
 
 ## Firestore Security Rules
 

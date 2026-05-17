@@ -1,0 +1,12 @@
+# GabayGamot Cursor Rules
+
+- Follow `.cursor/rules/*.mdc` as the source of truth for Cursor behavior.
+- Every code, UI, database, API, Firebase, workflow, or behavior change must update the matching file under `docs/`.
+- Use Context7 MCP for current framework, package, SDK, and API documentation before implementing version-sensitive behavior.
+- Use Playwright MCP to verify meaningful frontend changes in the browser, including local routes, console errors, screenshots, and responsive widths.
+- Preserve responsive and PWA-ready behavior: `viewport-fit=cover`, safe-area utilities, hidden scrollbars with scroll still working, root overflow protection, and 44px touch targets.
+- Keep secret-bearing integrations in the backend. Do not expose `MAPBOX_SECRET_TOKEN`, Firebase service credentials, Gemini keys, or other private secrets in frontend code.
+- During development, use Cloudinary for file storage while Firebase Storage requires Blaze. All Cloudinary uploads must be foldered under `gabaygamot/dev/` using `.agent/storage-guidelines.md`.
+- File uploads must go through the backend. Never expose `CLOUDINARY_API_SECRET` in frontend code.
+- Firebase Admin SDK must stay backend-only. Seed the first Super Admin with `backend/scripts/seedSuperAdmin.js`; never create Super Admin credentials from public frontend signup.
+- Use React + Vite + Tailwind + shadcn/Radix primitives for frontend work and Node.js + Express for backend work.

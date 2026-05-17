@@ -2,21 +2,26 @@
 
 ## Phase 1: Landing Page
 
-- [ ] Set up React with Vite
-- [ ] Install Tailwind CSS
-- [ ] Install Shadcn UI
-- [ ] Create landing page layout
-- [ ] Create hero section
-- [ ] Create problem and solution sections
-- [ ] Create core features section
-- [ ] Create how it works section
-- [ ] Create user roles section
-- [ ] Create benefits section
-- [ ] Create final call to action section
+- [x] Set up React with Vite
+- [x] Install Tailwind CSS
+- [x] Install Shadcn UI-style primitives and Radix dependencies
+- [x] Create landing page layout
+- [x] Create hero section
+- [x] Create core features section
+- [x] Create workflow section
+- [x] Create technology section
+- [x] Create team section
+- [x] Create FAQ section
+- [x] Create footer and primary navigation
 
 ## Phase 2: Basic App Pages
 
-- [ ] Create login page
+- [x] Create login page
+- [x] Create forgot password page
+- [x] Create admin signup request wizard UI
+- [x] Add PSGC address selectors for signup
+- [x] Add Mapbox pin-location step for signup
+- [x] Add backend Mapbox proxy endpoints
 - [ ] Create admin dashboard placeholder
 - [ ] Create barangay health worker dashboard placeholder
 
@@ -30,7 +35,9 @@
 
 ## Security Tasks
 
-- [ ] Add `.env.example`
+- [x] Add backend `.env.example`
+- [x] Add Firebase Admin backend config
+- [x] Add Super Admin seed script
 - [ ] Add backend rate limiting
 - [ ] Add auth verification middleware
 - [ ] Add role authorization middleware
@@ -39,3 +46,12 @@
 - [ ] Add Firestore security rules
 - [ ] Review CORS allowed origins
 - [ ] Confirm no real secrets are committed
+
+## Documentation / Agent Tooling Tasks
+
+- [x] Document auth pages and admin signup flow
+- [x] Document responsive and PWA UI rules
+- [x] Document auth approval data model
+- [x] Document Mapbox proxy API
+- [x] Add Context7 and Playwright MCP workflow notes
+- [x] Add Cloudinary development storage foldering rules

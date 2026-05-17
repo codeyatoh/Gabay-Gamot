@@ -10,6 +10,16 @@ GabayGamot should not allow anyone to self-claim a barangay health center and im
 - Barangay Health Center Admin
 - Barangay Health Worker
 
+## Bootstrap Requirement
+
+Before approval workflows can be used, seed the first Super Admin account from the backend with:
+
+```text
+npm run seed:super-admin
+```
+
+See `docs/database/firebase-bootstrap.md` for required Firebase Admin SDK and Super Admin environment variables.
+
 ## Core Rule
 
 Barangay Health Center Admin signup does not create an active account immediately.
@@ -18,13 +28,14 @@ Instead:
 
 1. Applicant submits an Admin Signup Request.
 2. System validates the health center's barangay address selection using PSGC data.
-3. Applicant uploads proof/authorization documents.
-4. Request status becomes `pending_review`.
-5. Super Admin reviews the request.
-6. Super Admin approves or rejects.
-7. If approved, the system creates or activates the Admin account and issues a temporary password.
-8. Admin logs in and must change the temporary password.
-9. Admin can then create Barangay Health Worker accounts for the assigned barangay health center.
+3. Applicant pins the health center location using Mapbox geocoding, draggable marker coordinates, or GPS.
+4. Applicant uploads proof/authorization documents.
+5. Request status becomes `pending_review`.
+6. Super Admin reviews the request.
+7. Super Admin approves or rejects.
+8. If approved, the system creates or activates the Admin account and issues a temporary password.
+9. Admin logs in and must change the temporary password.
+10. Admin can then create Barangay Health Worker accounts for the assigned barangay health center.
 
 ## Why This Is Needed
 
@@ -54,8 +65,16 @@ The system therefore needs both:
 - PSGC barangay code
 - Barangay health center name
 - Barangay health center address line
+- Latitude
+- Longitude
 
 The address dropdowns should be API-backed, not free text only. Free text may still be used for the facility address line.
+
+Current frontend implementation note:
+
+- The app currently uses PSGC Cloud directly in `frontend/src/hooks/usePSGC.js` for rapid prototyping.
+- Production should proxy official PSA PSGC requests through the backend because PSA API access requires a token.
+- Mapbox token and geocoding requests are already routed through the backend Mapbox proxy.
 
 ### Proof / Verification
 

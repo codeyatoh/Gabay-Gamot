@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon src/server.js",
-    "start": "node src/server.js"
+    "start": "node src/server.js",
+    "seed:super-admin": "node scripts/seedSuperAdmin.js"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",

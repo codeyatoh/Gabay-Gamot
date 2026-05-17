@@ -19,3 +19,4 @@ AESTHETICS ARE VERY IMPORTANT. If the UI looks simple, basic, or like a generic 
 - **Touch Native:** Interactive elements must feel good on touch devices: at least `min-h-11 min-w-11`, `cursor-pointer`, `transition-all`, and `active:scale-95` unless a component has a specific reason not to.
 - **PWA Ready:** Respect safe areas using `pt-safe`, `pb-safe`, `px-safe`, or `env(safe-area-inset-*)`. Keep scrollbars visually hidden but scrolling functional.
 - **Typography Fit:** Use responsive Tailwind text utilities. Do not use viewport-width font sizing. Text must not overflow compact UI surfaces.
+- **Browser Verification:** Use Playwright screenshots or snapshots for significant visual changes, especially at 320px, 390px, 768px, 1024px, and 1440px widths.
