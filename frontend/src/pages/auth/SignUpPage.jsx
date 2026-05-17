@@ -30,6 +30,7 @@ const validProofs = [
 const steps = [
   { title: "Account", description: "Personal details" },
   { title: "Assignment", description: "Health center info" },
+  { title: "Pin Location", description: "Center coordinates" },
   { title: "Validation", description: "Proof & identity" },
 ];
 
@@ -124,7 +125,7 @@ export function SignUpPage() {
 
   // Mapbox Lifecycle
   useEffect(() => {
-    if (currentStep !== 2) {
+    if (currentStep !== 3) {
       if (mapRef.current) {
         mapRef.current.remove();
         mapRef.current = null;
@@ -186,7 +187,7 @@ export function SignUpPage() {
 
   // Mapbox geocoding whenever address changes
   useEffect(() => {
-    if (currentStep !== 2) return;
+    if (currentStep !== 2 && currentStep !== 3) return;
 
     const regionName = getSelectedName(regions, selectedRegion);
     const provinceName = selectedProvince === "N/A" ? "" : getSelectedName(provinces, selectedProvince);
@@ -259,7 +260,7 @@ export function SignUpPage() {
     );
   };
 
-  const nextStep = () => setCurrentStep((prev) => Math.min(prev + 1, 3));
+  const nextStep = () => setCurrentStep((prev) => Math.min(prev + 1, 4));
   const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 1));
 
   const handleFileChange = (e, setPreview, setError, allowedExtensions, maxMb) => {
@@ -520,47 +521,60 @@ export function SignUpPage() {
                         <Label htmlFor="facilityAddress" className="block text-sm">Facility Address Line</Label>
                         <Input type="text" name="facilityAddress" id="facilityAddress" placeholder="Street, sitio, or purok" />
                       </div>
+                    </div>
+                  </div>
+                </StepperContent>
 
-                      {/* Mapbox Coordinates Hidden Inputs */}
-                      <input type="hidden" name="latitude" value={latitude} />
-                      <input type="hidden" name="longitude" value={longitude} />
+                {/* Step 3: Pin Location */}
+                <StepperContent value={3} className="space-y-6">
+                  <div className="space-y-4">
+                    <div className="text-left">
+                      <h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Pin Center Location</h3>
+                      <p className="mt-1 text-xs text-muted-foreground leading-relaxed">
+                        Specify the exact coordinates of the Barangay Health Center. Use your device's GPS if you are on-site, or drag the green marker on the map to pin its exact location.
+                      </p>
+                    </div>
 
-                      {/* Mapbox Interactive Map Container */}
-                      <div className="space-y-2 pt-2 border-t border-dashed dark:border-white/10">
-                        <div className="flex items-center justify-between gap-2 flex-wrap">
-                          <div className="flex items-center gap-2">
-                            <Label className="block text-sm font-medium">Barangay Health Center Coordinates</Label>
-                            <Button
-                              type="button"
-                              variant="outline"
-                              onClick={handleGetCurrentLocation}
-                              disabled={locating}
-                              className="h-6 gap-1 px-2 text-[10px] text-[#0b6b35] dark:text-[#16a34a] border-[#0b6b35]/20 hover:bg-[#0b6b35]/10 dark:border-[#16a34a]/20 dark:hover:bg-[#16a34a]/10 flex items-center justify-center font-medium transition-all active:scale-[0.98]"
-                            >
-                              <Locate className={`h-3 w-3 ${locating ? "animate-pulse" : ""}`} />
-                              <span>{locating ? "Locating..." : "Use Current GPS"}</span>
-                            </Button>
-                          </div>
-                          <span className="text-[10px] font-mono text-muted-foreground">
-                            {latitude && longitude ? `${latitude}, ${longitude}` : "Select address or locate"}
-                          </span>
+                    {/* Mapbox Coordinates Hidden Inputs */}
+                    <input type="hidden" name="latitude" value={latitude} />
+                    <input type="hidden" name="longitude" value={longitude} />
+
+                    {/* Mapbox Interactive Map Container */}
+                    <div className="space-y-3 pt-2">
+                      <div className="flex items-center justify-between gap-2 flex-wrap bg-slate-50 dark:bg-zinc-900 border dark:border-white/10 rounded-md p-3">
+                        <div className="flex items-center gap-2">
+                          <Label className="block text-xs font-semibold text-slate-700 dark:text-slate-300">Exact GPS Coordinates</Label>
+                          <Button
+                            type="button"
+                            variant="outline"
+                            onClick={handleGetCurrentLocation}
+                            disabled={locating}
+                            className="h-7 gap-1 px-2.5 text-[10px] text-[#0b6b35] dark:text-[#16a34a] border-[#0b6b35]/20 hover:bg-[#0b6b35]/10 dark:border-[#16a34a]/20 dark:hover:bg-[#16a34a]/10 flex items-center justify-center font-medium transition-all active:scale-[0.98] shadow-sm bg-background"
+                          >
+                            <Locate className={`h-3 w-3 ${locating ? "animate-pulse" : ""}`} />
+                            <span>{locating ? "Locating..." : "Use Current GPS"}</span>
+                          </Button>
                         </div>
-                        <div className="relative overflow-hidden rounded-md border border-input dark:border-white/10">
-                          <div 
-                            id="map-container" 
-                            className="h-48 w-full bg-slate-100 dark:bg-zinc-900 transition-all"
-                          />
-                          <div className="absolute bottom-2 left-2 rounded bg-white/90 dark:bg-zinc-900/90 border dark:border-white/10 px-2 py-1 text-[10px] font-medium backdrop-blur-sm pointer-events-none select-none text-slate-700 dark:text-slate-300 shadow-sm">
-                            📍 Drag the green marker to pin the exact center location
-                          </div>
+                        <span className="text-[11px] font-mono font-medium text-slate-800 dark:text-slate-200">
+                          {latitude && longitude ? `${latitude}, ${longitude}` : "Not located yet"}
+                        </span>
+                      </div>
+
+                      <div className="relative overflow-hidden rounded-md border border-input dark:border-white/10 shadow-sm">
+                        <div 
+                          id="map-container" 
+                          className="h-64 w-full bg-slate-100 dark:bg-zinc-900 transition-all"
+                        />
+                        <div className="absolute bottom-2 left-2 rounded bg-white/95 dark:bg-zinc-950/95 border dark:border-white/10 px-2.5 py-1 text-[10px] font-medium backdrop-blur-sm pointer-events-none select-none text-slate-700 dark:text-slate-300 shadow-md">
+                          📍 Drag the green marker to pin the exact center location
                         </div>
                       </div>
                     </div>
                   </div>
                 </StepperContent>
 
-                {/* Step 3: Validation */}
-                <StepperContent value={3} className="space-y-6">
+                {/* Step 4: Validation */}
+                <StepperContent value={4} className="space-y-6">
                   {/* Section: Guidelines */}
                   <div className="rounded-md border border-[#dbe9d5] bg-[#f8fbf5] p-4 text-left dark:border-white/10 dark:bg-white/5">
                     <p className="text-sm font-medium text-slate-900 dark:text-slate-100">Valid proof documents</p>
@@ -661,7 +675,7 @@ export function SignUpPage() {
                   Back
                 </Button>
                 
-                {currentStep < 3 ? (
+                {currentStep < 4 ? (
                   <Button type="button" onClick={nextStep} className="w-24 bg-[#0b6b35] hover:bg-[#08552b] dark:bg-[#16a34a] dark:hover:bg-[#15803d]">
                     Next
                   </Button>
