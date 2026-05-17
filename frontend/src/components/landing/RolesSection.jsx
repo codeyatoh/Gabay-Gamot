@@ -32,7 +32,7 @@ export function RolesSection() {
             <TabsTrigger value="admin" className="rounded-xl py-3">Admin</TabsTrigger>
             <TabsTrigger value="worker" className="rounded-xl py-3">Health Worker</TabsTrigger>
           </TabsList>
-          <TabsContent value="admin" className="mt-4 rounded-2xl bg-emerald-950 p-6 text-white">
+          <TabsContent value="admin" className="mt-4 rounded-2xl bg-slate-900 p-6 text-white">
             <RolePanel
               icon={ShieldCheck}
               title="Admin operations"
@@ -42,7 +42,7 @@ export function RolesSection() {
               metric="Reports and analytics"
             />
           </TabsContent>
-          <TabsContent value="worker" className="mt-4 rounded-2xl bg-emerald-950 p-6 text-white">
+          <TabsContent value="worker" className="mt-4 rounded-2xl bg-slate-900 p-6 text-white">
             <RolePanel
               icon={UsersRound}
               title="Barangay Health Worker flow"
@@ -63,22 +63,22 @@ function RolePanel({ icon: Icon, title, subtitle, items, metricIcon: MetricIcon,
     <div>
       <div className="flex items-start justify-between gap-4">
         <div>
-          <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-emerald-100">
+          <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-slate-200">
             <Icon className="h-6 w-6" />
           </div>
           <h3 className="text-2xl font-semibold">{title}</h3>
-          <p className="mt-2 text-sm leading-6 text-emerald-50/75">{subtitle}</p>
+          <p className="mt-2 text-sm leading-6 text-teal-50/75">{subtitle}</p>
         </div>
         <div className="hidden rounded-2xl bg-white/10 p-4 text-right sm:block">
-          <MetricIcon className="ml-auto h-5 w-5 text-cyan-200" />
-          <p className="mt-3 text-xs text-emerald-100">{metric}</p>
+          <MetricIcon className="ml-auto h-5 w-5 text-sky-200" />
+          <p className="mt-3 text-xs text-slate-200">{metric}</p>
         </div>
       </div>
       <div className="mt-8 grid gap-3">
         {items.map((item) => (
           <div key={item} className="flex items-center gap-3 rounded-2xl bg-white/9 p-4">
-            <ClipboardList className="h-4 w-4 text-cyan-200" />
-            <span className="text-sm font-medium text-emerald-50">{item}</span>
+            <ClipboardList className="h-4 w-4 text-sky-200" />
+            <span className="text-sm font-medium text-teal-50">{item}</span>
           </div>
         ))}
       </div>

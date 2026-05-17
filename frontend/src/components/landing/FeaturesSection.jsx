@@ -52,10 +52,10 @@ export function FeaturesSection() {
           {features.map((feature, index) => (
             <Card
               key={feature.title}
-              className="reveal group rounded-2xl border-white bg-white p-6 shadow-none transition duration-300 hover:-translate-y-1 hover:border-emerald-100 hover:shadow-panel"
+              className="reveal group rounded-2xl border-white bg-white p-6 shadow-none transition duration-300 hover:-translate-y-1 hover:border-slate-200 hover:shadow-panel"
               style={{ animationDelay: `${index * 70}ms` }}
             >
-              <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-700 transition duration-300 group-hover:bg-emerald-600 group-hover:text-white">
+              <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-teal-50 text-teal-700 transition duration-300 group-hover:bg-teal-700 group-hover:text-white">
                 <feature.icon className="h-5 w-5" />
               </div>
               <h3 className="text-lg font-semibold text-slate-950">{feature.title}</h3>

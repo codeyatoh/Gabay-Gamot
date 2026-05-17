@@ -32,7 +32,7 @@ export function TechnologySection() {
                 key={item.label}
                 className="group flex items-center gap-4 rounded-2xl border border-slate-100 bg-slate-50 p-4 transition duration-300 hover:-translate-y-0.5 hover:bg-white hover:shadow-panel"
               >
-                <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white text-emerald-700 shadow-sm transition group-hover:bg-emerald-600 group-hover:text-white">
+                <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white text-teal-700 shadow-sm transition group-hover:bg-teal-700 group-hover:text-white">
                   <item.icon className="h-5 w-5" />
                 </span>
                 <div>
@@ -46,7 +46,7 @@ export function TechnologySection() {
 
         <div className="mt-10 flex flex-wrap gap-2">
           {["secure by design", "role-based access", "barangay coordination", "AI assisted"].map((label) => (
-            <Badge key={label} variant="outline" className="rounded-full border-emerald-200 bg-emerald-50/70 px-3 py-1 text-emerald-700">
+            <Badge key={label} variant="outline" className="rounded-full border-teal-100 bg-teal-50/70 px-3 py-1 text-teal-700">
               {label}
             </Badge>
           ))}
