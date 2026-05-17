@@ -3,20 +3,35 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
+const validProofs = [
+  "Authorization letter from Punong Barangay",
+  "City Health Office or health center endorsement",
+  "Government, employee, or barangay health worker ID",
+  "Appointment, designation, or employment certification",
+];
+
 export function SignUpPage() {
   return (
     <section className="flex min-h-screen min-h-dvh overflow-x-hidden bg-zinc-50 px-4 py-10 pb-[max(2.5rem,env(safe-area-inset-bottom))] pt-[max(2.5rem,env(safe-area-inset-top))] sm:px-6 sm:py-14 md:px-8 md:py-20 lg:py-24 xl:py-28 dark:bg-transparent">
       <form
         action=""
-        className="bg-muted m-auto h-fit w-full max-w-sm overflow-hidden rounded-[calc(var(--radius)+.125rem)] border shadow-md shadow-zinc-950/5 sm:max-w-md dark:[--color-muted:var(--color-zinc-900)]"
+        className="bg-muted m-auto h-fit w-full max-w-sm overflow-hidden rounded-[calc(var(--radius)+.125rem)] border shadow-md shadow-zinc-950/5 sm:max-w-xl dark:[--color-muted:var(--color-zinc-900)]"
       >
         <div className="bg-card -m-px rounded-[calc(var(--radius)+.125rem)] border p-5 pb-6 sm:p-7 sm:pb-6 md:p-8 md:pb-6">
           <div className="text-center">
             <a href="/" aria-label="go home" className="mx-auto block w-fit">
-              <img src={logoUrl} alt="GabayGamot" className="h-12 w-12 max-w-full rounded-md object-contain" />
+              <img
+                src={logoUrl}
+                alt="GabayGamot"
+                className="h-12 w-12 max-w-full rounded-md object-contain"
+              />
             </a>
-            <h1 className="mb-1 mt-4 text-lg font-semibold sm:text-xl">Create a GabayGamot Admin Account</h1>
-            <p className="text-sm text-muted-foreground sm:text-base">Create a verified admin account for barangay setup</p>
+            <h1 className="mb-1 mt-4 text-lg font-semibold sm:text-xl">
+              Request Barangay Admin Access
+            </h1>
+            <p className="text-sm text-muted-foreground sm:text-base">
+              Submit your barangay details for Super Admin review
+            </p>
           </div>
 
           <div className="mt-6 space-y-6">
@@ -35,49 +50,163 @@ export function SignUpPage() {
               </div>
             </div>
 
+            <div className="grid gap-3 sm:grid-cols-2">
+              <div className="space-y-2">
+                <Label htmlFor="email" className="block text-sm">
+                  Email
+                </Label>
+                <Input type="email" required name="email" id="email" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="mobileNumber" className="block text-sm">
+                  Mobile Number
+                </Label>
+                <Input
+                  type="tel"
+                  required
+                  name="mobileNumber"
+                  id="mobileNumber"
+                  placeholder="09XXXXXXXXX"
+                />
+              </div>
+            </div>
+
             <div className="space-y-2">
-              <Label htmlFor="email" className="block text-sm">
-                Email
+              <Label htmlFor="position" className="block text-sm">
+                Position / Designation
               </Label>
-              <Input type="email" required name="email" id="email" />
+              <Input
+                type="text"
+                required
+                name="position"
+                id="position"
+                placeholder="e.g. Barangay Health Worker"
+              />
             </div>
 
             <div className="grid gap-3 sm:grid-cols-2">
+              <div className="space-y-2">
+                <Label htmlFor="region" className="block text-sm">
+                  Region
+                </Label>
+                <Input
+                  type="text"
+                  required
+                  name="region"
+                  id="region"
+                  placeholder="PSGC-backed selection later"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="province" className="block text-sm">
+                  Province
+                </Label>
+                <Input type="text" required name="province" id="province" />
+              </div>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-2">
+              <div className="space-y-2">
+                <Label htmlFor="cityMunicipality" className="block text-sm">
+                  City / Municipality
+                </Label>
+                <Input type="text" required name="cityMunicipality" id="cityMunicipality" />
+              </div>
               <div className="space-y-2">
                 <Label htmlFor="barangay" className="block text-sm">
                   Barangay
                 </Label>
                 <Input type="text" required name="barangay" id="barangay" />
               </div>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="setupCode" className="block text-sm">
-                  Setup Code
+                <Label htmlFor="facilityName" className="block text-sm">
+                  Health Center / Facility Name
                 </Label>
-                <Input type="text" required name="setupCode" id="setupCode" />
+                <Input type="text" required name="facilityName" id="facilityName" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="facilityAddress" className="block text-sm">
+                  Facility Address Line
+                </Label>
+                <Input
+                  type="text"
+                  required
+                  name="facilityAddress"
+                  id="facilityAddress"
+                  placeholder="Street, sitio, or purok"
+                />
               </div>
             </div>
 
-            <div className="space-y-0.5">
-              <div className="flex items-center justify-between">
-                <Label htmlFor="pwd" className="text-sm">
-                  Password
-                </Label>
-                <Button asChild variant="link" size="sm">
-                  <a href="/forgot-password" className="link intent-info variant-ghost text-sm">
-                    Forgot your Password ?
-                  </a>
-                </Button>
-              </div>
+            <div className="rounded-md border border-[#dbe9d5] bg-[#f8fbf5] p-4 text-left dark:border-white/10 dark:bg-white/5">
+              <p className="text-sm font-medium text-slate-900 dark:text-slate-100">
+                Valid proof documents
+              </p>
+              <p className="mt-1 text-xs leading-5 text-muted-foreground">
+                Upload documents that prove you are authorized to request admin access for this
+                barangay.
+              </p>
+              <ul className="mt-3 list-disc space-y-1 pl-5 text-xs leading-5 text-muted-foreground">
+                {validProofs.map((proof) => (
+                  <li key={proof}>{proof}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="authorizationDocument" className="block text-sm">
+                Authorization Document
+              </Label>
               <Input
-                type="password"
+                type="file"
                 required
-                name="pwd"
-                id="pwd"
-                className="input sz-md variant-mixed"
+                name="authorizationDocument"
+                id="authorizationDocument"
+                accept=".pdf,.jpg,.jpeg,.png"
+                className="cursor-pointer file:mr-3 file:rounded-md file:border-0 file:bg-secondary file:px-3 file:py-1.5 file:text-xs file:font-medium file:text-secondary-foreground"
+              />
+              <p className="text-xs leading-5 text-muted-foreground">
+                Best option: signed letter from the Punong Barangay, City Health Office, or health
+                center.
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="idDocument" className="block text-sm">
+                Government / Employee ID
+              </Label>
+              <Input
+                type="file"
+                required
+                name="idDocument"
+                id="idDocument"
+                accept=".pdf,.jpg,.jpeg,.png"
+                className="cursor-pointer file:mr-3 file:rounded-md file:border-0 file:bg-secondary file:px-3 file:py-1.5 file:text-xs file:font-medium file:text-secondary-foreground"
               />
             </div>
 
-            <Button className="w-full">Create Account</Button>
+            <label className="flex cursor-pointer items-start gap-3 rounded-md border border-[#dbe9d5] bg-white p-3 text-left transition-all active:scale-[0.99] dark:border-white/10 dark:bg-white/5">
+              <input
+                type="checkbox"
+                required
+                name="authorizationAgreement"
+                className="mt-1 h-4 w-4 shrink-0 rounded border-input accent-[#0b6b35]"
+              />
+              <span className="text-xs leading-5 text-muted-foreground">
+                I confirm that I am authorized to request GabayGamot admin access for this barangay
+                and that the uploaded documents are valid for Super Admin review.
+              </span>
+            </label>
+
+            <div className="rounded-md bg-amber-50 p-3 text-xs leading-5 text-amber-900 dark:bg-amber-500/10 dark:text-amber-100">
+              No password is created yet. The Super Admin will review your request first, then issue
+              a temporary password or setup link after approval.
+            </div>
+
+            <Button className="w-full">Submit for Review</Button>
           </div>
 
           <div className="my-6 grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3">

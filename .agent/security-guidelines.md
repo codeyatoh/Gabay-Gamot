@@ -21,7 +21,9 @@ These rules should guide backend, frontend, Firebase, and API development.
 - Do not trust frontend-only role checks.
 - Verify user identity on the backend before allowing protected API actions.
 - Store user role and barangay assignment in Firestore.
-- Separate permissions for Admin and Barangay Health Worker.
+- Separate permissions for Super Admin/System Owner, Admin, and Barangay Health Worker.
+- Public admin signup must create an approval request only. It must not immediately create an active Firebase Auth account.
+- A Super Admin/System Owner must verify barangay legitimacy and approve the request before an Admin receives a temporary password.
 
 ## Authorization
 
@@ -33,6 +35,15 @@ Admin can:
 - view all barangay inventory
 - view reports and analytics
 - monitor referrals and dispensing logs
+
+Super Admin/System Owner can:
+
+- review barangay admin signup requests
+- verify proof/authorization documents
+- approve or reject barangay admin requests
+- create or activate barangay admin accounts
+- issue temporary passwords
+- monitor system-level account approvals
 
 Barangay Health Worker can:
 
@@ -191,4 +202,3 @@ Before production, backend should include:
 - [ ] Review CORS allowed origins
 - [ ] Make sure `.env` is ignored
 - [ ] Avoid committing real credentials
-

@@ -14,6 +14,7 @@ Help barangay health centers reduce medicine waste, prevent shortages, monitor d
 
 ## Main Users
 
+- Super Admin / System Owner
 - Admin
 - Barangay Health Worker
 
@@ -28,4 +29,3 @@ Help barangay health centers reduce medicine waste, prevent shortages, monitor d
 - OCR: Tesseract.js
 - Maps: Mapbox API
 - AI: Gemini API
-

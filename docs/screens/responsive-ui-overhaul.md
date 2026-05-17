@@ -10,7 +10,7 @@ This pass audits and improves the current frontend for mobile, tablet, desktop, 
 - Global styles did not hide scrollbars across browsers while preserving scroll functionality.
 - Root-level wrappers did not consistently prevent accidental horizontal overflow.
 - Button, navigation, and tab primitives used 36px or 40px heights, below the 44px mobile touch target recommendation.
-- The mobile navbar dropdown used negative horizontal offsets that could bleed at narrow widths.
+- The mobile navbar dropdown must align with the outer navbar pill while staying contained by the navbar's viewport padding.
 - Footer links and social icons were visually small touch targets.
 - Several sections used fixed max-width utilities and large static spacing without full breakpoint coverage.
 - Auth pages matched the requested reference structure but needed safer small-screen padding and stacked fields at 320px.
@@ -29,6 +29,7 @@ This pass audits and improves the current frontend for mobile, tablet, desktop, 
 - Updated auth pages with responsive safe-area padding while preserving the provided centered card structure.
 - Updated landing sections with responsive spacing, typography, grid collapse behavior, and contained media sizing.
 - Updated navbar and footer to avoid viewport bleed and improve mobile touch interaction.
+- Corrected mobile dropdown alignment so the menu panel matches the outer navbar pill edges instead of the inner content padding.
 
 ## Validation Targets
 

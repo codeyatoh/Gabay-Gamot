@@ -31,20 +31,37 @@ Visible fields and actions:
 
 ## Sign Up Page
 
-The sign up page is for creating a verified Barangay Admin account during barangay setup. It is not intended for public self-claiming of barangay access.
+The sign up page is for submitting a Barangay Admin approval request during barangay setup. It must not create an active account immediately.
 
 Visible fields and actions:
 
-- Full name
+- First name
+- Last name
 - Email
+- Mobile number
+- Position / designation
+- Region
+- Province
+- City or municipality
 - Barangay
-- Setup Code
-- Password
-- Create Account button
+- Health center / facility name
+- Health center address line
+- Authorization document upload
+- Government ID or employee ID upload
+- Valid proof note listing accepted documents
+- Agreement checkbox
+- Submit for Review button
 - Google sign-up button as a UI-only placeholder
 - Link back to Login
 
-The setup code is a temporary UI placeholder until Firebase and backend validation are added. Its purpose is to reflect the product rule that users should not be able to self-claim a barangay without verification.
+Address fields should use PSGC-backed API dropdowns. Password should not be requested at this stage; the Super Admin/System Owner issues a temporary password only after approval.
+
+The sign up page should show these valid proof examples:
+
+- Authorization letter from Punong Barangay
+- City Health Office or health center endorsement
+- Government, employee, or barangay health worker ID
+- Appointment, designation, or employment certification
 
 ## Forgot Password Page
 
@@ -59,4 +76,6 @@ Visible fields and actions:
 - Login will use Firebase Authentication.
 - Forgot password will use Firebase password reset email.
 - Admin sign up must verify barangay setup before creating an admin account.
+- Super Admin/System Owner reviews proof documents before approval.
+- Approved Admin accounts receive a temporary password or setup link and must change password on first login.
 - Barangay Health Worker accounts should be created by an authorized Barangay Admin.
