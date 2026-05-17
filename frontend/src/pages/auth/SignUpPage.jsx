@@ -5,7 +5,7 @@ import logoUrl from "@/assets/images/gabay-gamot-logo-sm.png";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CheckIcon } from 'lucide-react';
+import { CheckIcon, Locate } from 'lucide-react';
 import {
   Stepper,
   StepperContent,
@@ -220,6 +220,44 @@ export function SignUpPage() {
         console.error("Geocoding failed:", err);
       });
   }, [selectedRegion, selectedProvince, selectedCity, selectedBarangay, currentStep]);
+
+  const [locating, setLocating] = useState(false);
+
+  const handleGetCurrentLocation = () => {
+    if (!navigator.geolocation) {
+      alert("Geolocation is not supported by your browser.");
+      return;
+    }
+
+    setLocating(true);
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+        setLatitude(lat.toFixed(6));
+        setLongitude(lng.toFixed(6));
+
+        if (mapRef.current) {
+          mapRef.current.flyTo({ center: [lng, lat], zoom: 17 });
+        }
+        if (markerRef.current) {
+          markerRef.current.setLngLat([lng, lat]);
+        }
+        setLocating(false);
+      },
+      (error) => {
+        console.error("Geolocation error:", error);
+        let errorMsg = "Unable to retrieve exact location.";
+        if (error.code === error.PERMISSION_DENIED) {
+          errorMsg = "Location access denied. Please enable location permissions in your browser.";
+        }
+        setLocating(false);
+        alert(errorMsg);
+      },
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+    );
+  };
 
   const nextStep = () => setCurrentStep((prev) => Math.min(prev + 1, 3));
   const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 1));
@@ -489,10 +527,22 @@ export function SignUpPage() {
 
                       {/* Mapbox Interactive Map Container */}
                       <div className="space-y-2 pt-2 border-t border-dashed dark:border-white/10">
-                        <div className="flex items-center justify-between">
-                          <Label className="block text-sm font-medium">Barangay Health Center Coordinates</Label>
+                        <div className="flex items-center justify-between gap-2 flex-wrap">
+                          <div className="flex items-center gap-2">
+                            <Label className="block text-sm font-medium">Barangay Health Center Coordinates</Label>
+                            <Button
+                              type="button"
+                              variant="outline"
+                              onClick={handleGetCurrentLocation}
+                              disabled={locating}
+                              className="h-6 gap-1 px-2 text-[10px] text-[#0b6b35] dark:text-[#16a34a] border-[#0b6b35]/20 hover:bg-[#0b6b35]/10 dark:border-[#16a34a]/20 dark:hover:bg-[#16a34a]/10 flex items-center justify-center font-medium transition-all active:scale-[0.98]"
+                            >
+                              <Locate className={`h-3 w-3 ${locating ? "animate-pulse" : ""}`} />
+                              <span>{locating ? "Locating..." : "Use Current GPS"}</span>
+                            </Button>
+                          </div>
                           <span className="text-[10px] font-mono text-muted-foreground">
-                            {latitude && longitude ? `${latitude}, ${longitude}` : "Select address to locate"}
+                            {latitude && longitude ? `${latitude}, ${longitude}` : "Select address or locate"}
                           </span>
                         </div>
                         <div className="relative overflow-hidden rounded-md border border-input dark:border-white/10">
