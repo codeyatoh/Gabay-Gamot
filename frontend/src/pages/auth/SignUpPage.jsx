@@ -21,7 +21,8 @@ import {
 } from "@/components/reui/stepper";
 import { SearchableSelect } from "@/components/reui/SearchableSelect";
 
-// Mapbox styles — requires VITE_MAPBOX_ACCESS_TOKEN in frontend/.env
+// Backend API base — Mapbox token is stored server-side only, never exposed to browser
+const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
 const MAPBOX_STREETS_STYLE = "mapbox://styles/mapbox/streets-v12";
 const MAPBOX_SATELLITE_STYLE = "mapbox://styles/mapbox/satellite-streets-v12";
 
@@ -139,14 +140,29 @@ export function SignUpPage() {
       return;
     }
 
-    // Delay initialization slightly to let the Stepper transition animation complete
-    const timer = setTimeout(() => {
+    // Fetch token from backend proxy (token never exposed in browser)
+    const timer = setTimeout(async () => {
       const container = document.getElementById("map-container");
       if (!container) return;
 
-      mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
+      let token;
+      try {
+        const res = await fetch(`${API_BASE}/api/mapbox/token`);
+        const data = await res.json();
+        token = data.token;
+      } catch (err) {
+        console.error("Failed to fetch Mapbox token from backend:", err);
+        return;
+      }
 
-      const initialLng = parseFloat(longitude) || 120.9842; // default to Manila
+      if (!token) {
+        console.error("No Mapbox token received from backend");
+        return;
+      }
+
+      mapboxgl.accessToken = token;
+
+      const initialLng = parseFloat(longitude) || 120.9842;
       const initialLat = parseFloat(latitude) || 14.5995;
 
       const map = new mapboxgl.Map({
@@ -202,8 +218,8 @@ export function SignUpPage() {
     if (parts.length <= 1) return; // Only "Philippines"
 
     const query = parts.join(", ");
-    const token = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
-    const geocodeUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json?access_token=${token}&country=PH&limit=1`;
+    // Geocoding via backend proxy — token stays server-side
+    const geocodeUrl = `${API_BASE}/api/mapbox/geocode?q=${encodeURIComponent(query)}`;
 
     fetch(geocodeUrl)
       .then((res) => res.json())
