@@ -23,10 +23,9 @@ import { SearchableSelect } from "@/components/reui/SearchableSelect";
 
 // Backend API base — Mapbox token is stored server-side only, never exposed to browser
 const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
-// Custom Mapbox style from Mapbox Studio
-// REPLACE THIS with your own Mapbox Studio Style URL (e.g., mapbox://styles/username/style-id)
-const MAPBOX_STREETS_STYLE = "mapbox://styles/0xyatoh/cmpa0ea9p003d01sk7v3z4qu3"; // User's custom style
-const MAPBOX_SATELLITE_STYLE = "mapbox://styles/mapbox/satellite-streets-v12";
+// Custom Mapbox styles from Mapbox Studio
+const MAPBOX_STREETS_STYLE = "mapbox://styles/0xyatoh/cmpa0qeah001z01s3gmphgs0b"; // Custom Streets
+const MAPBOX_SATELLITE_STYLE = "mapbox://styles/0xyatoh/cmpa0ea9p003d01sk7v3z4qu3"; // Custom Satellite
 
 const validProofs = [
   "Authorization letter for the Barangay Health Center",
