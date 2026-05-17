@@ -1,13 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { LandingPage } from "@/pages/landing/LandingPage";
 import "./styles/globals.css";
-
-function App() {
-  return <h1>GabayGamot</h1>;
-}
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <App />
+    <LandingPage />
   </React.StrictMode>
 );
