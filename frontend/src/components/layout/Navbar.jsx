@@ -43,7 +43,7 @@ export function Navbar() {
           className={cn(
             "mx-auto mt-2 w-full max-w-screen-xl transition-all duration-300 2xl:max-w-screen-2xl",
             (isScrolled || menuState) &&
-              "max-w-screen-lg rounded-2xl border border-[#cfe3c7] bg-white/95 px-3 shadow-panel backdrop-blur-xl dark:border-white/10 dark:bg-[#0d1117]"
+              "rounded-2xl border border-[#cfe3c7] bg-white/95 px-6 shadow-panel backdrop-blur-xl dark:border-white/10 dark:bg-[#0d1117]"
           )}
         >
           <div className="relative flex min-h-14 flex-wrap items-center justify-between gap-3 py-3">
