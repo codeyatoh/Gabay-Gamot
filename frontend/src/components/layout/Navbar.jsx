@@ -108,7 +108,7 @@ export function Navbar() {
                 >
                   Login
                 </Button>
-                <Button className={cn("bg-[#0b6b35] text-white shadow-panel hover:bg-[#08552b]", isScrolled && "lg:hidden")}>
+                <Button className={cn("rounded-xl bg-[#0b6b35] text-white shadow-panel hover:bg-[#08552b]", isScrolled && "lg:hidden")}>
                   <Activity className="h-4 w-4" />
                   Request Access
                 </Button>
