@@ -33,7 +33,7 @@ export function Navbar() {
       <nav
         data-state={menuState ? "active" : "closed"}
         className={cn(
-          "fixed left-0 top-0 z-50 w-full px-3 pt-safe transition-colors duration-300 sm:px-4 md:px-5 lg:px-6",
+          "fixed left-0 top-0 z-50 w-full px-6 pt-safe transition-colors duration-300 sm:px-8 md:px-10 lg:px-12 xl:px-14 2xl:px-16",
           isScrolled
             ? "border-transparent"
             : "border-transparent bg-white/90 backdrop-blur-xl dark:border-transparent dark:bg-[#0d1117]"

@@ -30,7 +30,7 @@ export function HeroSection() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 flex w-full flex-col justify-end px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:px-6 sm:pb-10 md:px-8 lg:px-10 lg:pb-24 xl:pb-32 2xl:px-16">
+      <div className="relative z-10 flex w-full flex-col justify-end px-8 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:px-12 sm:pb-10 md:px-16 lg:px-20 lg:pb-24 xl:px-24 xl:pb-32 2xl:px-32">
         <div className="mx-auto w-full max-w-screen-xl 2xl:max-w-screen-2xl">
           <div className="max-w-xl sm:max-w-2xl lg:max-w-3xl">
             <h1 className="font-sans text-balance text-4xl font-extrabold leading-[1.1] tracking-normal text-slate-950 dark:text-white sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl">
