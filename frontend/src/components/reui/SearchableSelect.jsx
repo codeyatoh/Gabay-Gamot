@@ -49,7 +49,7 @@ export function SearchableSelect({
         variant="outline"
         disabled={disabled}
         onClick={() => setIsOpen(!isOpen)}
-        className="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background cursor-pointer transition-all active:scale-[0.99] dark:bg-zinc-950 dark:border-white/10 dark:text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0b6b35] disabled:cursor-not-allowed disabled:opacity-50"
+        className="flex h-10 w-full items-center justify-between rounded-md border border-input bg-white px-3 py-2 text-sm ring-offset-background cursor-pointer transition-all active:scale-[0.99] dark:bg-zinc-950 dark:border-white/10 dark:text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0b6b35] disabled:cursor-not-allowed disabled:opacity-50"
       >
         <span className="truncate">
           {loading 
@@ -64,9 +64,9 @@ export function SearchableSelect({
 
       {/* Dropdown Menu Panel */}
       {isOpen && !disabled && (
-        <div className="absolute z-50 mt-1 max-h-60 w-full overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md outline-none animate-in fade-in-0 zoom-in-95 dark:bg-zinc-950 dark:border-white/10 dark:shadow-slate-950/50 flex flex-col">
+        <div className="absolute z-50 mt-1 max-h-60 w-full overflow-hidden rounded-md border border-slate-200 bg-white text-popover-foreground shadow-lg outline-none animate-in fade-in-0 zoom-in-95 dark:bg-zinc-950 dark:border-white/10 dark:shadow-slate-950/50 flex flex-col">
           {/* Search Input Box */}
-          <div className="flex items-center border-b px-3 dark:border-white/10">
+          <div className="flex items-center border-b border-slate-100 px-3 dark:border-white/10">
             <Search className="mr-2 h-4 w-4 shrink-0 opacity-50 text-muted-foreground" />
             <input
               type="text"

@@ -531,7 +531,7 @@ export function SignUpPage() {
                     <div className="text-left">
                       <h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Pin Center Location</h3>
                       <p className="mt-1 text-xs text-muted-foreground leading-relaxed">
-                        Specify the exact coordinates of the Barangay Health Center. Use your device's GPS if you are on-site, or drag the green marker on the map to pin its exact location.
+                        Specify the exact physical location of the Barangay Health Center. 
                       </p>
                     </div>
 
@@ -539,35 +539,49 @@ export function SignUpPage() {
                     <input type="hidden" name="latitude" value={latitude} />
                     <input type="hidden" name="longitude" value={longitude} />
 
-                    {/* Mapbox Interactive Map Container */}
-                    <div className="space-y-3 pt-2">
-                      <div className="flex items-center justify-between gap-2 flex-wrap bg-slate-50 dark:bg-zinc-900 border dark:border-white/10 rounded-md p-3">
-                        <div className="flex items-center gap-2">
-                          <Label className="block text-xs font-semibold text-slate-700 dark:text-slate-300">Exact GPS Coordinates</Label>
-                          <Button
-                            type="button"
-                            variant="outline"
-                            onClick={handleGetCurrentLocation}
-                            disabled={locating}
-                            className="h-7 gap-1 px-2.5 text-[10px] text-[#0b6b35] dark:text-[#16a34a] border-[#0b6b35]/20 hover:bg-[#0b6b35]/10 dark:border-[#16a34a]/20 dark:hover:bg-[#16a34a]/10 flex items-center justify-center font-medium transition-all active:scale-[0.98] shadow-sm bg-background"
-                          >
-                            <Locate className={`h-3 w-3 ${locating ? "animate-pulse" : ""}`} />
-                            <span>{locating ? "Locating..." : "Use Current GPS"}</span>
-                          </Button>
-                        </div>
-                        <span className="text-[11px] font-mono font-medium text-slate-800 dark:text-slate-200">
-                          {latitude && longitude ? `${latitude}, ${longitude}` : "Not located yet"}
-                        </span>
-                      </div>
-
-                      <div className="relative overflow-hidden rounded-md border border-input dark:border-white/10 shadow-sm">
-                        <div 
-                          id="map-container" 
-                          className="h-64 w-full bg-slate-100 dark:bg-zinc-900 transition-all"
+                    {/* Coordinates Grid */}
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2 text-left">
+                        <Label className="block text-xs font-semibold text-slate-500 dark:text-slate-400">Center Latitude</Label>
+                        <Input
+                          type="text"
+                          readOnly
+                          value={latitude || "Not located"}
+                          className="font-mono text-xs bg-slate-50/50 dark:bg-zinc-900/50 cursor-not-allowed select-all border-slate-200 dark:border-white/10 text-slate-800 dark:text-slate-200"
                         />
-                        <div className="absolute bottom-2 left-2 rounded bg-white/95 dark:bg-zinc-950/95 border dark:border-white/10 px-2.5 py-1 text-[10px] font-medium backdrop-blur-sm pointer-events-none select-none text-slate-700 dark:text-slate-300 shadow-md">
-                          📍 Drag the green marker to pin the exact center location
-                        </div>
+                      </div>
+                      <div className="space-y-2 text-left">
+                        <Label className="block text-xs font-semibold text-slate-500 dark:text-slate-400">Center Longitude</Label>
+                        <Input
+                          type="text"
+                          readOnly
+                          value={longitude || "Not located"}
+                          className="font-mono text-xs bg-slate-50/50 dark:bg-zinc-900/50 cursor-not-allowed select-all border-slate-200 dark:border-white/10 text-slate-800 dark:text-slate-200"
+                        />
+                      </div>
+                    </div>
+
+                    {/* GPS Locator Prominent Button */}
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={handleGetCurrentLocation}
+                      disabled={locating}
+                      className="w-full h-11 gap-2 text-sm text-[#0b6b35] dark:text-[#16a34a] border-[#0b6b35]/20 bg-[#0b6b35]/5 hover:bg-[#0b6b35]/10 dark:border-[#16a34a]/20 dark:bg-[#16a34a]/5 dark:hover:bg-[#16a34a]/10 flex items-center justify-center font-semibold transition-all active:scale-[0.99] shadow-sm rounded-md"
+                    >
+                      <Locate className={`h-4 w-4 ${locating ? "animate-pulse" : ""}`} />
+                      <span>{locating ? "Acquiring high-accuracy GPS signal..." : "Use Current GPS Location"}</span>
+                    </Button>
+
+                    {/* Map Area */}
+                    <div className="relative overflow-hidden rounded-lg border border-slate-200 dark:border-white/10 shadow-md">
+                      <div 
+                        id="map-container" 
+                        className="h-80 w-full bg-slate-100 dark:bg-zinc-900 transition-all"
+                      />
+                      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-white/95 dark:bg-zinc-950/95 border dark:border-white/10 px-4 py-1.5 text-[10px] font-medium backdrop-blur-sm pointer-events-none select-none text-slate-700 dark:text-slate-300 shadow-lg flex items-center gap-1.5 whitespace-nowrap">
+                        <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#0b6b35] animate-ping" />
+                        <span>Drag the marker to pinpoint the exact health center facility</span>
                       </div>
                     </div>
                   </div>
