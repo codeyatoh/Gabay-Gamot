@@ -54,7 +54,7 @@ export function Navbar() {
               <button
                 onClick={() => setMenuState((value) => !value)}
                 aria-label={menuState ? "Close menu" : "Open menu"}
-                className="relative z-20 flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:bg-teal-50 lg:hidden"
+                className="relative z-20 flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-teal-200 hover:bg-teal-700 hover:text-white lg:hidden"
               >
                 <Equal
                   className={cn(
@@ -88,7 +88,7 @@ export function Navbar() {
                       <a
                         href={item.href}
                         onClick={() => setMenuState(false)}
-                        className="block text-sm font-medium text-slate-600 transition hover:text-teal-700"
+                        className="block rounded-xl px-3 py-2 text-sm font-semibold text-slate-600 transition hover:bg-teal-700 hover:text-white"
                       >
                         {item.label}
                       </a>
@@ -98,10 +98,13 @@ export function Navbar() {
               </div>
 
               <div className="flex w-full flex-col gap-3 border-t border-slate-100 pt-3 sm:flex-row sm:items-center lg:w-fit lg:border-0 lg:pt-0">
-                <Button variant="ghost" className="justify-start text-slate-700 lg:justify-center">
+                <Button
+                  variant="ghost"
+                  className="justify-start text-slate-700 transition hover:bg-slate-100 hover:text-slate-950 lg:justify-center"
+                >
                   Login
                 </Button>
-                <Button className="bg-teal-700 text-white shadow-panel hover:bg-teal-800">
+                <Button className="bg-teal-700 text-white shadow-panel transition hover:-translate-y-0.5 hover:bg-teal-800 hover:shadow-soft">
                   <Activity className="h-4 w-4" />
                   Request Access
                 </Button>

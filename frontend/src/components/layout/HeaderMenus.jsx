@@ -35,10 +35,13 @@ function MenuLink({ href, children }) {
         asChild
         className={cn(
           navigationMenuTriggerStyle(),
-          "h-9 rounded-full bg-transparent px-3 text-xs font-medium text-slate-600 hover:bg-teal-50 hover:text-teal-700 focus:bg-teal-50"
+          "group relative h-9 rounded-full bg-transparent px-3 text-xs font-semibold text-slate-600 transition duration-200 hover:bg-teal-700 hover:text-white focus:bg-teal-700 focus:text-white"
         )}
       >
-        <a href={href}>{children}</a>
+        <a href={href}>
+          {children}
+          <span className="pointer-events-none absolute inset-x-3 -bottom-1 h-0.5 scale-x-0 rounded-full bg-teal-700 transition duration-200 group-hover:scale-x-100 group-focus:scale-x-100" />
+        </a>
       </NavigationMenuLink>
     </NavigationMenuItem>
   );
