@@ -23,8 +23,9 @@ import { SearchableSelect } from "@/components/reui/SearchableSelect";
 
 // Backend API base — Mapbox token is stored server-side only, never exposed to browser
 const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
-// Premium Mapbox styles
-const MAPBOX_STREETS_STYLE = "mapbox://styles/mapbox/navigation-day-v1";
+// Custom Mapbox style from Mapbox Studio
+// REPLACE THIS with your own Mapbox Studio Style URL (e.g., mapbox://styles/username/style-id)
+const MAPBOX_STREETS_STYLE = "mapbox://styles/0xyatoh/cmpt4ps1k004601qrgv2t8lpo"; // <-- Palitan ito ng iyong Style URL
 const MAPBOX_SATELLITE_STYLE = "mapbox://styles/mapbox/satellite-streets-v12";
 
 const validProofs = [
@@ -190,23 +191,8 @@ export function SignUpPage() {
 
       map.on("load", () => {
         map.resize();
-        // Enable 3D buildings on streets view
-        if (mapStyle === "streets") {
-          map.addLayer({
-            id: "3d-buildings",
-            source: "composite",
-            "source-layer": "building",
-            filter: ["==", "extrude", "true"],
-            type: "fill-extrusion",
-            minzoom: 14,
-            paint: {
-              "fill-extrusion-color": "#aaa",
-              "fill-extrusion-height": ["get", "height"],
-              "fill-extrusion-base": ["get", "min_height"],
-              "fill-extrusion-opacity": 0.6
-            }
-          });
-        }
+        // Custom styles from Mapbox Studio already include 3D buildings and other features if configured there.
+        // No need to manually inject extrusions here.
       });
 
       mapRef.current = map;
