@@ -86,7 +86,7 @@ export function Navbar() {
 
             <div
               className={cn(
-                "absolute left-0 right-0 top-[calc(100%+0.5rem)] z-50 mx-auto hidden w-full flex-wrap items-center justify-end space-y-6 rounded-2xl border border-[#cfe3c7] bg-[#fcfdfa] p-4 shadow-panel backdrop-blur-xl dark:border-white/[0.08] dark:bg-[#0f1319] lg:static lg:m-0 lg:flex lg:w-fit lg:max-w-none lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none lg:backdrop-blur-none dark:lg:bg-transparent",
+                "absolute -left-3 -right-3 top-[calc(100%+0.5rem)] z-50 mx-auto hidden w-auto flex-wrap items-center justify-end space-y-6 rounded-2xl border border-[#cfe3c7] bg-[#fcfdfa] p-4 shadow-panel backdrop-blur-xl dark:border-white/[0.08] dark:bg-[#0f1319] lg:static lg:m-0 lg:flex lg:w-fit lg:max-w-none lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none lg:backdrop-blur-none dark:lg:bg-transparent",
                 menuState && "block"
               )}
             >
