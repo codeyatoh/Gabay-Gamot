@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import maplibregl from 'maplibre-gl';
-import 'maplibre-gl/dist/maplibre-gl.css';
+import mapboxgl from 'mapbox-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
 import { usePSGC } from "@/hooks/usePSGC";
 import logoUrl from "@/assets/images/gabay-gamot-logo-sm.png";
 import { Button } from "@/components/ui/button";
@@ -21,80 +21,9 @@ import {
 } from "@/components/reui/stepper";
 import { SearchableSelect } from "@/components/reui/SearchableSelect";
 
-// MapLibre GL JS requires no access token — fully open-source, token-free
-
-const STREETS_STYLE = {
-  version: 8,
-  sources: {
-    "osm-tiles": {
-      type: "raster",
-      // Use multiple OSM tile servers for load balancing + reliability
-      tiles: [
-        "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
-        "https://b.tile.openstreetmap.org/{z}/{x}/{y}.png",
-        "https://c.tile.openstreetmap.org/{z}/{x}/{y}.png",
-      ],
-      tileSize: 256,
-      maxzoom: 19,
-      attribution: "© <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
-    }
-  },
-  layers: [
-    {
-      id: "osm-layer",
-      type: "raster",
-      source: "osm-tiles",
-      minzoom: 0,
-      maxzoom: 19
-    }
-  ]
-};
-
-const SATELLITE_STYLE = {
-  version: 8,
-  sources: {
-    "esri-satellite": {
-      type: "raster",
-      tiles: [
-        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
-      ],
-      tileSize: 256,
-      // Esri World Imagery reliable zoom for Philippines is 0-18
-      maxzoom: 18,
-      attribution: "Esri, Maxar, Earthstar Geographics, USDA, USGS, AeroGRID, IGN"
-    },
-    "osm-labels": {
-      type: "raster",
-      // Overlay road/label tiles on top of satellite so streets are readable
-      tiles: [
-        "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
-        "https://b.tile.openstreetmap.org/{z}/{x}/{y}.png",
-        "https://c.tile.openstreetmap.org/{z}/{x}/{y}.png",
-      ],
-      tileSize: 256,
-      maxzoom: 19,
-      attribution: "© <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
-    }
-  },
-  layers: [
-    {
-      id: "esri-satellite-layer",
-      type: "raster",
-      source: "esri-satellite",
-      minzoom: 0,
-      maxzoom: 18
-    },
-    {
-      id: "osm-labels-layer",
-      type: "raster",
-      source: "osm-labels",
-      minzoom: 0,
-      maxzoom: 19,
-      // Only show street labels as a semi-transparent overlay on satellite
-      paint: { "raster-opacity": 0.3 }
-    }
-  ]
-};
+// Mapbox styles — requires VITE_MAPBOX_ACCESS_TOKEN in frontend/.env
+const MAPBOX_STREETS_STYLE = "mapbox://styles/mapbox/streets-v12";
+const MAPBOX_SATELLITE_STYLE = "mapbox://styles/mapbox/satellite-streets-v12";
 
 const validProofs = [
   "Authorization letter for the Barangay Health Center",
@@ -215,21 +144,21 @@ export function SignUpPage() {
       const container = document.getElementById("map-container");
       if (!container) return;
 
+      mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
+
       const initialLng = parseFloat(longitude) || 120.9842; // default to Manila
       const initialLat = parseFloat(latitude) || 14.5995;
 
-      const map = new maplibregl.Map({
+      const map = new mapboxgl.Map({
         container: "map-container",
-        style: mapStyle === "streets" ? STREETS_STYLE : SATELLITE_STYLE,
+        style: mapStyle === "streets" ? MAPBOX_STREETS_STYLE : MAPBOX_SATELLITE_STYLE,
         center: [initialLng, initialLat],
-        zoom: parseFloat(longitude) && parseFloat(latitude) ? 14 : 9,
-        attributionControl: false,
+        zoom: parseFloat(longitude) && parseFloat(latitude) ? 15 : 10,
       });
 
-      map.addControl(new maplibregl.NavigationControl(), "top-right");
-      map.addControl(new maplibregl.AttributionControl({ compact: true }), "bottom-left");
+      map.addControl(new mapboxgl.NavigationControl(), "top-right");
 
-      const marker = new maplibregl.Marker({
+      const marker = new mapboxgl.Marker({
         draggable: true,
         color: "#0b6b35",
       })
@@ -273,23 +202,19 @@ export function SignUpPage() {
     if (parts.length <= 1) return; // Only "Philippines"
 
     const query = parts.join(", ");
-    const geocodeUrl = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=1&countrycodes=ph`;
+    const token = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
+    const geocodeUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json?access_token=${token}&country=PH&limit=1`;
 
-    fetch(geocodeUrl, {
-      headers: {
-        "User-Agent": "GabayGamot-HealthCenterOnboarding/1.0"
-      }
-    })
+    fetch(geocodeUrl)
       .then((res) => res.json())
       .then((data) => {
-        if (data && data.length > 0) {
-          const lng = parseFloat(data[0].lon);
-          const lat = parseFloat(data[0].lat);
+        if (data.features && data.features.length > 0) {
+          const [lng, lat] = data.features[0].center;
           setLongitude(lng.toFixed(6));
           setLatitude(lat.toFixed(6));
 
           if (mapRef.current) {
-            mapRef.current.flyTo({ center: [lng, lat], zoom: 14 });
+            mapRef.current.flyTo({ center: [lng, lat], zoom: 15 });
           }
           if (markerRef.current) {
             markerRef.current.setLngLat([lng, lat]);
@@ -308,13 +233,11 @@ export function SignUpPage() {
     const nextStyle = mapStyle === "streets" ? "satellite" : "streets";
     setMapStyle(nextStyle);
     mapRef.current.setStyle(
-      nextStyle === "streets" ? STREETS_STYLE : SATELLITE_STYLE
+      nextStyle === "streets" ? MAPBOX_STREETS_STYLE : MAPBOX_SATELLITE_STYLE
     );
     setTimeout(() => {
-      if (mapRef.current) {
-        mapRef.current.resize();
-      }
-    }, 150);
+      if (mapRef.current) mapRef.current.resize();
+    }, 200);
   };
 
   const [locating, setLocating] = useState(false);
