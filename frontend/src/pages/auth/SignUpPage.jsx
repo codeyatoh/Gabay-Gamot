@@ -26,22 +26,26 @@ import { SearchableSelect } from "@/components/reui/SearchableSelect";
 const STREETS_STYLE = {
   version: 8,
   sources: {
-    "cartodb-voyager": {
+    "osm-tiles": {
       type: "raster",
+      // Use multiple OSM tile servers for load balancing + reliability
       tiles: [
-        "https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+        "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        "https://b.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        "https://c.tile.openstreetmap.org/{z}/{x}/{y}.png",
       ],
       tileSize: 256,
-      attribution: "© OpenStreetMap contributors, © CartoDB"
+      maxzoom: 19,
+      attribution: "© <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
     }
   },
   layers: [
     {
-      id: "cartodb-voyager-layer",
+      id: "osm-layer",
       type: "raster",
-      source: "cartodb-voyager",
+      source: "osm-tiles",
       minzoom: 0,
-      maxzoom: 20
+      maxzoom: 19
     }
   ]
 };
@@ -55,7 +59,21 @@ const SATELLITE_STYLE = {
         "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
       ],
       tileSize: 256,
-      attribution: "Esri, Maxar, Earthstar Geographics, USDA, USGS, AeroGRID, IGN, and the GIS User Community"
+      // Esri World Imagery reliable zoom for Philippines is 0-18
+      maxzoom: 18,
+      attribution: "Esri, Maxar, Earthstar Geographics, USDA, USGS, AeroGRID, IGN"
+    },
+    "osm-labels": {
+      type: "raster",
+      // Overlay road/label tiles on top of satellite so streets are readable
+      tiles: [
+        "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        "https://b.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        "https://c.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      ],
+      tileSize: 256,
+      maxzoom: 19,
+      attribution: "© <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
     }
   },
   layers: [
@@ -64,7 +82,16 @@ const SATELLITE_STYLE = {
       type: "raster",
       source: "esri-satellite",
       minzoom: 0,
-      maxzoom: 20
+      maxzoom: 18
+    },
+    {
+      id: "osm-labels-layer",
+      type: "raster",
+      source: "osm-labels",
+      minzoom: 0,
+      maxzoom: 19,
+      // Only show street labels as a semi-transparent overlay on satellite
+      paint: { "raster-opacity": 0.3 }
     }
   ]
 };
