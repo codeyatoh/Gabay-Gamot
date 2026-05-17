@@ -141,7 +141,7 @@ export function SignUpPage() {
 
       import("mapbox-gl").then((mapboxglModule) => {
         const mapboxgl = mapboxglModule.default;
-        mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN || "pk.eyJ1IjoiZ2FiYXlnYW1vdCIsImEiOiJjbHdkNWN6aTQwMHp5MmtsZXdsaHhhcGhrIn0.your-token-here";
+        mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN || "pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTAwY2kycnA0MDBfMHNzZTEifQ.dummy-fallback-token";
 
         const initialLng = parseFloat(longitude) || 120.9842; // default to Manila
         const initialLat = parseFloat(latitude) || 14.5995;
@@ -168,12 +168,16 @@ export function SignUpPage() {
           setLatitude(lngLat.lat.toFixed(6));
         });
 
+        map.on("load", () => {
+          map.resize();
+        });
+
         mapRef.current = map;
         markerRef.current = marker;
       }).catch((err) => {
         console.error("Mapbox dynamic import failed:", err);
       });
-    }, 100);
+    }, 300);
 
     return () => {
       clearTimeout(timer);
@@ -198,7 +202,7 @@ export function SignUpPage() {
     if (parts.length <= 1) return; // Only "Philippines"
 
     const query = parts.join(", ");
-    const token = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN || "pk.eyJ1IjoiZ2FiYXlnYW1vdCIsImEiOiJjbHdkNWN6aTQwMHp5MmtsZXdsaHhhcGhrIn0.your-token-here";
+    const token = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN || "pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTAwY2kycnA0MDBfMHNzZTEifQ.dummy-fallback-token";
     const geocodeUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json?access_token=${token}&country=PH&limit=1`;
 
     fetch(geocodeUrl)
@@ -233,6 +237,11 @@ export function SignUpPage() {
         ? "mapbox://styles/mapbox/streets-v12"
         : "mapbox://styles/mapbox/satellite-streets-v12"
     );
+    setTimeout(() => {
+      if (mapRef.current) {
+        mapRef.current.resize();
+      }
+    }, 150);
   };
 
   const [locating, setLocating] = useState(false);
@@ -600,7 +609,7 @@ export function SignUpPage() {
 
                       <div 
                         id="map-container" 
-                        className="h-80 w-full bg-slate-100 dark:bg-zinc-900 transition-all"
+                        className="h-80 w-full bg-slate-100 dark:bg-zinc-900"
                       />
                       <div className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-white/95 dark:bg-zinc-950/95 border dark:border-white/10 px-4 py-1.5 text-[10px] font-medium backdrop-blur-sm pointer-events-none select-none text-slate-700 dark:text-slate-300 shadow-lg flex items-center gap-1.5 whitespace-nowrap">
                         <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#0b6b35] animate-ping" />
