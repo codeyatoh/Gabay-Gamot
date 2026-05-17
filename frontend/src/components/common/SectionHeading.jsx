@@ -6,7 +6,7 @@ export function SectionHeading({ eyebrow, title, description, align = "center" }
   return (
     <div className={`flex max-w-3xl flex-col gap-4 ${alignment}`}>
       {eyebrow ? (
-        <Badge className="w-fit rounded-full border-teal-100 bg-teal-50 px-3 py-1 text-teal-700 shadow-none">
+        <Badge className="w-fit rounded-full border-[#dbe9d5] bg-[#eef8e9] px-3 py-1 text-[#0b6b35] shadow-none">
           {eyebrow}
         </Badge>
       ) : null}

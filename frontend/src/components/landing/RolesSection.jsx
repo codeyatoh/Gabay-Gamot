@@ -32,7 +32,7 @@ export function RolesSection() {
             <TabsTrigger value="admin" className="rounded-xl py-3">Admin</TabsTrigger>
             <TabsTrigger value="worker" className="rounded-xl py-3">Health Worker</TabsTrigger>
           </TabsList>
-          <TabsContent value="admin" className="mt-4 rounded-2xl bg-slate-900 p-6 text-white">
+          <TabsContent value="admin" className="mt-4 rounded-2xl bg-[#083f24] p-6 text-white">
             <RolePanel
               icon={ShieldCheck}
               title="Admin operations"
@@ -42,7 +42,7 @@ export function RolesSection() {
               metric="Reports and analytics"
             />
           </TabsContent>
-          <TabsContent value="worker" className="mt-4 rounded-2xl bg-slate-900 p-6 text-white">
+          <TabsContent value="worker" className="mt-4 rounded-2xl bg-[#083f24] p-6 text-white">
             <RolePanel
               icon={UsersRound}
               title="Barangay Health Worker flow"
@@ -67,7 +67,7 @@ function RolePanel({ icon: Icon, title, subtitle, items, metricIcon: MetricIcon,
             <Icon className="h-6 w-6" />
           </div>
           <h3 className="text-2xl font-semibold">{title}</h3>
-          <p className="mt-2 text-sm leading-6 text-teal-50/75">{subtitle}</p>
+          <p className="mt-2 text-sm leading-6 text-[#eef8e9]/75">{subtitle}</p>
         </div>
         <div className="hidden rounded-2xl bg-white/10 p-4 text-right sm:block">
           <MetricIcon className="ml-auto h-5 w-5 text-sky-200" />
@@ -78,7 +78,7 @@ function RolePanel({ icon: Icon, title, subtitle, items, metricIcon: MetricIcon,
         {items.map((item) => (
           <div key={item} className="flex items-center gap-3 rounded-2xl bg-white/9 p-4">
             <ClipboardList className="h-4 w-4 text-sky-200" />
-            <span className="text-sm font-medium text-teal-50">{item}</span>
+            <span className="text-sm font-medium text-[#eef8e9]">{item}</span>
           </div>
         ))}
       </div>

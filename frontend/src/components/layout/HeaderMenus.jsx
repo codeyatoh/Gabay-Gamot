@@ -7,12 +7,12 @@ const menuItems = [
 
 export function HeaderMenus() {
   return (
-    <nav className="flex items-center gap-1 rounded-full bg-slate-100/70 p-1">
+    <nav className="flex items-center gap-1">
       {menuItems.map((item) => (
         <a
           key={item.href}
           href={item.href}
-          className="rounded-full px-4 py-2 text-xs font-semibold text-slate-600 transition-colors duration-200 hover:bg-white hover:text-teal-800 hover:shadow-sm focus:bg-white focus:text-teal-800 focus:outline-none focus:ring-2 focus:ring-teal-100"
+          className="rounded-md px-3 py-2 text-xs font-medium text-slate-600 duration-150 hover:bg-[#eef8e9] hover:text-[#0b6b35] focus:bg-[#eef8e9] focus:text-[#0b6b35] focus:outline-none"
         >
           {item.label}
         </a>

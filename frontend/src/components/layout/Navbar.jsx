@@ -1,9 +1,10 @@
 import React from "react";
-import { Activity, Equal, Pill, X } from "lucide-react";
+import { Activity, Equal, X } from "lucide-react";
 
 import { HeaderMenus } from "@/components/layout/HeaderMenus";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import logoUrl from "@/assets/images/gabay-gamot-logo-sm.png";
 
 const navItems = [
   { label: "Features", href: "#features" },
@@ -28,23 +29,25 @@ export function Navbar() {
       <nav
         data-state={menuState ? "active" : "closed"}
         className={cn(
-          "fixed left-0 top-0 z-50 w-full px-3 transition-all duration-300 md:px-4",
-          isScrolled ? "pt-2" : "border-b border-slate-200/70 bg-white/80 pt-0 backdrop-blur-xl"
+          "fixed left-0 top-0 z-50 w-full px-3 transition-colors duration-300 md:px-4",
+          isScrolled ? "border-transparent" : "border-b border-[#dbe9d5]/80 bg-white/78 backdrop-blur-xl"
         )}
       >
         <div
           className={cn(
-            "mx-auto max-w-7xl transition-all duration-300",
+            "mx-auto mt-2 max-w-7xl transition-all duration-300",
             isScrolled &&
-              "max-w-5xl rounded-2xl border border-slate-200 bg-white/86 px-3 shadow-panel backdrop-blur-xl"
+              "max-w-5xl rounded-2xl border border-[#cfe3c7] bg-white/78 px-3 shadow-panel backdrop-blur-xl"
           )}
         >
           <div className="relative flex flex-wrap items-center justify-between gap-3 py-3">
-            <div className="flex w-full items-center justify-between lg:w-auto">
+            <div className="flex w-full justify-between lg:w-auto">
               <a href="#home" aria-label="GabayGamot home" className="flex items-center gap-3">
-                <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-teal-700 text-white shadow-panel">
-                  <Pill className="h-5 w-5" />
-                </span>
+                <img
+                  src={logoUrl}
+                  alt="GabayGamot"
+                  className="z-10 h-10 w-10 rounded-xl object-contain"
+                />
                 <span className="leading-tight">
                   <span className="block text-sm font-semibold text-slate-950">GabayGamot</span>
                   <span className="block text-xs text-slate-500">Medicine coordination</span>
@@ -54,18 +57,18 @@ export function Navbar() {
               <button
                 onClick={() => setMenuState((value) => !value)}
                 aria-label={menuState ? "Close menu" : "Open menu"}
-                className="relative z-20 flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-teal-200 hover:bg-teal-700 hover:text-white lg:hidden"
+                className="relative z-20 block cursor-pointer p-2.5 pr-4 text-slate-700 lg:hidden"
               >
                 <Equal
                   className={cn(
-                    "absolute h-5 w-5 transition duration-200",
-                    menuState ? "scale-0 rotate-180 opacity-0" : "scale-100 rotate-0 opacity-100"
+                    "m-auto h-5 w-5 transition duration-200",
+                    menuState ? "scale-0 rotate-180 opacity-0" : "scale-110 rotate-0 opacity-100"
                   )}
                 />
                 <X
                   className={cn(
-                    "absolute h-5 w-5 transition duration-200",
-                    menuState ? "scale-100 rotate-0 opacity-100" : "scale-0 -rotate-180 opacity-0"
+                    "absolute inset-0 m-auto h-6 w-6 transition duration-200",
+                    menuState ? "scale-110 rotate-0 opacity-100" : "scale-0 -rotate-180 opacity-0"
                   )}
                 />
               </button>
@@ -77,7 +80,7 @@ export function Navbar() {
 
             <div
               className={cn(
-                "hidden w-full flex-wrap items-center justify-end rounded-2xl border border-slate-200 bg-white/95 p-3 shadow-panel backdrop-blur-2xl lg:m-0 lg:flex lg:w-fit lg:gap-4 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none",
+                "hidden w-full flex-wrap items-center justify-end space-y-8 rounded-sm border border-[#dbe9d5] bg-white/92 p-3 shadow-zinc-300/20 backdrop-blur-2xl lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none",
                 menuState && "block"
               )}
             >
@@ -88,7 +91,7 @@ export function Navbar() {
                       <a
                         href={item.href}
                         onClick={() => setMenuState(false)}
-                        className="block rounded-xl px-3 py-2 text-sm font-semibold text-slate-600 transition hover:bg-teal-700 hover:text-white"
+                        className="block rounded-md px-3 py-2 text-sm text-slate-600 duration-150 hover:bg-[#eef8e9] hover:text-[#0b6b35]"
                       >
                         {item.label}
                       </a>
@@ -98,13 +101,10 @@ export function Navbar() {
               </div>
 
               <div className="flex w-full flex-col gap-3 border-t border-slate-100 pt-3 sm:flex-row sm:items-center lg:w-fit lg:border-0 lg:pt-0">
-                <Button
-                  variant="ghost"
-                  className="justify-start text-slate-700 transition hover:bg-slate-100 hover:text-slate-950 lg:justify-center"
-                >
+                <Button variant="ghost" className="justify-start text-slate-700 lg:justify-center">
                   Login
                 </Button>
-                <Button className="bg-teal-700 text-white shadow-panel transition hover:-translate-y-0.5 hover:bg-teal-800 hover:shadow-soft">
+                <Button className={cn("bg-[#0b6b35] text-white shadow-panel hover:bg-[#08552b]", isScrolled && "lg:hidden")}>
                   <Activity className="h-4 w-4" />
                   Request Access
                 </Button>

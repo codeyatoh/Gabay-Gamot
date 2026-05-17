@@ -13,7 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 
 const inventoryRows = [
-  { name: "Paracetamol", stock: "284", state: "Stable", color: "bg-teal-500" },
+  { name: "Paracetamol", stock: "284", state: "Stable", color: "bg-[#45b52c]" },
   { name: "Amoxicillin", stock: "38", state: "Low", color: "bg-amber-500" },
   { name: "ORS Sachet", stock: "112", state: "Stable", color: "bg-sky-500" },
 ];
@@ -21,15 +21,15 @@ const inventoryRows = [
 export function ProductPreview() {
   return (
     <div className="relative mx-auto w-full max-w-xl reveal">
-      <div className="absolute -inset-4 rounded-[2rem] bg-teal-100/45 blur-3xl" />
+      <div className="absolute -inset-4 rounded-[2rem] bg-[#dff0d2]/55 blur-3xl" />
       <Card className="relative overflow-hidden rounded-[1.5rem] border-slate-200 bg-white/92 p-4 shadow-soft backdrop-blur">
         <div className="flex items-center justify-between border-b border-slate-100 pb-4">
           <div>
             <p className="text-sm font-semibold text-slate-950">Barangay Inventory</p>
             <p className="text-xs text-slate-500">Live stock and referral signals</p>
           </div>
-          <Badge className="rounded-full bg-teal-50 text-teal-700 shadow-none">
-            <span className="mr-2 h-2 w-2 rounded-full bg-teal-500 animate-soft-pulse" />
+          <Badge className="rounded-full bg-[#eef8e9] text-[#0b6b35] shadow-none">
+            <span className="mr-2 h-2 w-2 rounded-full bg-[#45b52c] animate-soft-pulse" />
             Online
           </Badge>
         </div>
@@ -53,16 +53,16 @@ export function ProductPreview() {
             ))}
           </div>
 
-          <div className="relative rounded-2xl border border-slate-200 bg-slate-900 p-4 text-white shadow-panel">
+          <div className="relative rounded-2xl border border-slate-200 bg-[#083f24] p-4 text-white shadow-panel">
             <div className="mb-3 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <ScanLine className="h-4 w-4 text-teal-100" />
+                <ScanLine className="h-4 w-4 text-[#dff0d2]" />
                 <span className="text-xs font-medium text-slate-200">OCR scan</span>
               </div>
-              <span className="text-[11px] text-teal-100">Review required</span>
+              <span className="text-[11px] text-[#dff0d2]">Review required</span>
             </div>
-            <div className="relative h-40 overflow-hidden rounded-xl border border-teal-700 bg-slate-800/70 p-3">
-              <div className="absolute left-3 right-3 top-4 h-0.5 bg-sky-200/90 shadow-[0_0_18px_rgba(103,232,249,0.8)] animate-scan" />
+            <div className="relative h-40 overflow-hidden rounded-xl border border-[#2d8a3d] bg-[#0b3421]/80 p-3">
+              <div className="absolute left-3 right-3 top-4 h-0.5 bg-[#b7e08f]/90 shadow-[0_0_18px_rgba(183,224,143,0.75)] animate-scan" />
               <div className="space-y-3 pt-4 text-xs">
                 <div className="h-3 w-28 rounded-full bg-white/18" />
                 <div className="h-3 w-36 rounded-full bg-white/14" />
@@ -108,7 +108,7 @@ function PreviewSignal({ icon: Icon, label, value }) {
         <span className="text-[11px] font-medium uppercase">{label}</span>
       </div>
       <div className="flex items-center gap-2">
-        <CheckCircle2 className="h-4 w-4 text-teal-700" />
+        <CheckCircle2 className="h-4 w-4 text-[#0b6b35]" />
         <p className="text-sm font-semibold text-slate-900">{value}</p>
       </div>
     </div>

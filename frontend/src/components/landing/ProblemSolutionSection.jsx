@@ -47,7 +47,7 @@ export function ProblemSolutionSection() {
               style={{ animationDelay: `${index * 90}ms` }}
             >
               <div className="flex gap-4">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white text-teal-700 shadow-sm">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white text-[#0b6b35] shadow-sm">
                   <item.icon className="h-5 w-5" />
                 </span>
                 <div>
@@ -59,14 +59,14 @@ export function ProblemSolutionSection() {
           ))}
         </div>
 
-        <Card className="lg:col-span-2 rounded-[1.5rem] border-slate-200 bg-slate-900 p-6 text-white shadow-soft">
+        <Card className="lg:col-span-2 rounded-[1.5rem] border-slate-200 bg-[#083f24] p-6 text-white shadow-soft">
           <div className="grid gap-8 lg:grid-cols-[0.75fr_1.25fr] lg:items-center">
             <div>
               <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-slate-200">
                 <Route className="h-6 w-6" />
               </div>
               <h3 className="text-2xl font-semibold">A coordinated medicine flow</h3>
-              <p className="mt-3 text-sm leading-7 text-teal-50/80">
+              <p className="mt-3 text-sm leading-7 text-[#eef8e9]/80">
                 The system connects stock records, health worker actions, and referral decisions into one operational view.
               </p>
             </div>
@@ -74,7 +74,7 @@ export function ProblemSolutionSection() {
               {solutions.map((solution) => (
                 <div key={solution} className="flex items-center gap-3 rounded-2xl bg-white/9 p-4">
                   <FileSearch className="h-4 w-4 text-sky-200" />
-                  <span className="text-sm font-medium text-teal-50">{solution}</span>
+                  <span className="text-sm font-medium text-[#eef8e9]">{solution}</span>
                 </div>
               ))}
             </div>
