@@ -20,7 +20,53 @@ import {
 } from "@/components/reui/stepper";
 import { SearchableSelect } from "@/components/reui/SearchableSelect";
 
-const MAPBOX_FALLBACK_TOKEN = "pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTAwY2kycnA0MDBfMHNzZTEifQ" + "." + "4mw1Z1YtBwGAqGoVLFi55A";
+const MAPBOX_DUMMY_TOKEN = "pk.eyJ1IjoiZHVtbXkiLCJhIjoiY2x3ZDUifQ.dummy";
+
+const STREETS_STYLE = {
+  version: 8,
+  sources: {
+    "cartodb-voyager": {
+      type: "raster",
+      tiles: [
+        "https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+      ],
+      tileSize: 256,
+      attribution: "© OpenStreetMap contributors, © CartoDB"
+    }
+  },
+  layers: [
+    {
+      id: "cartodb-voyager-layer",
+      type: "raster",
+      source: "cartodb-voyager",
+      minzoom: 0,
+      maxzoom: 20
+    }
+  ]
+};
+
+const SATELLITE_STYLE = {
+  version: 8,
+  sources: {
+    "esri-satellite": {
+      type: "raster",
+      tiles: [
+        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+      ],
+      tileSize: 256,
+      attribution: "Esri, Maxar, Earthstar Geographics, USDA, USGS, AeroGRID, IGN, and the GIS User Community"
+    }
+  },
+  layers: [
+    {
+      id: "esri-satellite-layer",
+      type: "raster",
+      source: "esri-satellite",
+      minzoom: 0,
+      maxzoom: 20
+    }
+  ]
+};
 
 const validProofs = [
   "Authorization letter for the Barangay Health Center",
@@ -143,14 +189,14 @@ export function SignUpPage() {
 
       import("mapbox-gl").then((mapboxglModule) => {
         const mapboxgl = mapboxglModule.default;
-        mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN || MAPBOX_FALLBACK_TOKEN;
+        mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN || MAPBOX_DUMMY_TOKEN;
 
         const initialLng = parseFloat(longitude) || 120.9842; // default to Manila
         const initialLat = parseFloat(latitude) || 14.5995;
 
         const map = new mapboxgl.Map({
           container: "map-container",
-          style: mapStyle === "streets" ? "mapbox://styles/mapbox/streets-v12" : "mapbox://styles/mapbox/satellite-streets-v12",
+          style: mapStyle === "streets" ? STREETS_STYLE : SATELLITE_STYLE,
           center: [initialLng, initialLat],
           zoom: parseFloat(longitude) && parseFloat(latitude) ? 14 : 9,
         });
@@ -204,14 +250,18 @@ export function SignUpPage() {
     if (parts.length <= 1) return; // Only "Philippines"
 
     const query = parts.join(", ");
-    const token = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN || MAPBOX_FALLBACK_TOKEN;
-    const geocodeUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json?access_token=${token}&country=PH&limit=1`;
+    const geocodeUrl = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=1&countrycodes=ph`;
 
-    fetch(geocodeUrl)
+    fetch(geocodeUrl, {
+      headers: {
+        "User-Agent": "GabayGamot-HealthCenterOnboarding/1.0"
+      }
+    })
       .then((res) => res.json())
       .then((data) => {
-        if (data.features && data.features.length > 0) {
-          const [lng, lat] = data.features[0].center;
+        if (data && data.length > 0) {
+          const lng = parseFloat(data[0].lon);
+          const lat = parseFloat(data[0].lat);
           setLongitude(lng.toFixed(6));
           setLatitude(lat.toFixed(6));
 
@@ -235,9 +285,7 @@ export function SignUpPage() {
     const nextStyle = mapStyle === "streets" ? "satellite" : "streets";
     setMapStyle(nextStyle);
     mapRef.current.setStyle(
-      nextStyle === "streets"
-        ? "mapbox://styles/mapbox/streets-v12"
-        : "mapbox://styles/mapbox/satellite-streets-v12"
+      nextStyle === "streets" ? STREETS_STYLE : SATELLITE_STYLE
     );
     setTimeout(() => {
       if (mapRef.current) {

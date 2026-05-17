@@ -96,14 +96,25 @@ export function usePSGC() {
     setLoadingBarangays(true);
     setError(null);
     try {
-      const res = await fetch(`${API_BASE}/cities-municipalities/${cityCode}/barangays`);
-      if (!res.ok) throw new Error('Failed to fetch barangays');
-      const data = await res.json();
+      let data = [];
+      // NCR city codes in this API start with '13' (e.g. 1380600000)
+      // but in psgc.cloud, NCR city barangays are stored under the NCR region (1300000000)
+      if (cityCode.startsWith("13")) {
+        const res = await fetch(`${API_BASE}/regions/1300000000/barangays`);
+        if (!res.ok) throw new Error('Failed to fetch NCR barangays');
+        const allBrgys = await res.json();
+        // Filter by the first 6 digits of the cityCode (e.g., '138060' for Manila City)
+        data = allBrgys.filter(b => b.code.startsWith(cityCode.substring(0, 6)));
+      } else {
+        const res = await fetch(`${API_BASE}/cities-municipalities/${cityCode}/barangays`);
+        if (!res.ok) throw new Error('Failed to fetch barangays');
+        data = await res.json();
+      }
       const sorted = data.sort((a, b) => a.name.localeCompare(b.name));
       setBarangays(sorted);
       return sorted;
     } catch (err) {
-      console.error(err);
+      console.error("Failed to load barangays:", err);
       setBarangays([]);
       return [];
     } finally {
