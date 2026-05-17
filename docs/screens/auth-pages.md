@@ -2,7 +2,7 @@
 
 ## Current Scope
 
-The first auth screens are still mostly UI-only. Firebase Authentication, Firestore writes, server-side validation, file upload persistence, and real password reset behavior will be added later.
+The auth screens are partially wired. Login now uses Firebase Authentication email/password from the frontend and logs manual login success/failure to the browser console. Firestore writes from auth forms, server-side validation, file upload persistence, Google login, and real password reset behavior will be added later.
 
 The signup page includes implemented frontend behavior for PSGC-backed address selection, Mapbox geocoding, map pinning, GPS lookup, map style switching, and local file type/size checks.
 
@@ -30,6 +30,19 @@ Visible fields and actions:
 - Sign In button
 - Google sign-in button as a UI-only placeholder
 - Link to Create Admin Account
+
+Implemented login behavior:
+
+- Uses Firebase Web SDK `signInWithEmailAndPassword`.
+- Reads config from `frontend/.env` through `VITE_FIREBASE_*` variables.
+- Logs a safe success object in the browser console:
+  - UID
+  - email
+  - email verification status
+  - role claim
+  - `superAdmin` claim
+- Logs Firebase error code/message on failure.
+- Shows a small inline success or failure message.
 
 ## Sign Up Page: Admin Setup Request Wizard
 
@@ -120,7 +133,7 @@ Visible fields and actions:
 
 ## Future Firebase Behavior
 
-- Login will use Firebase Authentication.
+- Login already uses Firebase Authentication for email/password.
 - Google auth buttons will connect to Firebase/Google sign-in.
 - Forgot password will use Firebase password reset email.
 - Admin signup must create an approval request before an admin account becomes active.

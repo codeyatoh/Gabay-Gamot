@@ -1,13 +1,63 @@
+import { useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import logoUrl from "@/assets/images/gabay-gamot-logo-sm.png";
+import { auth, firebaseConfigStatus } from "@/config/firebase";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export function LoginPage() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [message, setMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setMessage("");
+    setErrorMessage("");
+
+    const formData = new FormData(event.currentTarget);
+    const email = String(formData.get("email") || "").trim();
+    const password = String(formData.get("pwd") || "");
+
+    if (!firebaseConfigStatus.isConfigured || !auth) {
+      console.error("[GabayGamot Auth] Firebase config missing", firebaseConfigStatus.missingKeys);
+      setErrorMessage("Firebase config is missing. Check the browser console.");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const credential = await signInWithEmailAndPassword(auth, email, password);
+      const tokenResult = await credential.user.getIdTokenResult(true);
+      const role = tokenResult.claims.role || "none";
+      const isSuperAdmin = tokenResult.claims.superAdmin === true;
+
+      console.log("[GabayGamot Auth] Login successful", {
+        uid: credential.user.uid,
+        email: credential.user.email,
+        emailVerified: credential.user.emailVerified,
+        role,
+        superAdmin: isSuperAdmin,
+      });
+
+      setMessage(`Login successful. Role: ${role}`);
+    } catch (error) {
+      console.error("[GabayGamot Auth] Login failed", {
+        code: error.code,
+        message: error.message,
+      });
+      setErrorMessage("Login failed. Check the browser console.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <section className="flex min-h-screen min-h-dvh overflow-x-hidden bg-zinc-50 px-4 py-10 pb-[max(2.5rem,env(safe-area-inset-bottom))] pt-[max(2.5rem,env(safe-area-inset-top))] sm:px-6 sm:py-14 md:px-8 md:py-20 lg:py-28 xl:py-32 dark:bg-transparent">
       <form
-        action=""
+        onSubmit={handleSubmit}
         className="bg-muted m-auto h-fit w-full max-w-sm overflow-hidden rounded-[calc(var(--radius)+.125rem)] border shadow-md shadow-zinc-950/5 sm:max-w-md dark:[--color-muted:var(--color-zinc-900)]"
       >
         <div className="bg-card -m-px rounded-[calc(var(--radius)+.125rem)] border p-5 pb-6 sm:p-7 sm:pb-6 md:p-8 md:pb-6">
@@ -47,7 +97,20 @@ export function LoginPage() {
               />
             </div>
 
-            <Button className="w-full">Sign In</Button>
+            {message && (
+              <p className="rounded-md border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm font-medium text-emerald-700 dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:text-emerald-200">
+                {message}
+              </p>
+            )}
+            {errorMessage && (
+              <p className="rounded-md border border-rose-200 bg-rose-50 px-3 py-2 text-sm font-medium text-rose-700 dark:border-rose-500/20 dark:bg-rose-500/10 dark:text-rose-200">
+                {errorMessage}
+              </p>
+            )}
+
+            <Button className="w-full" disabled={isSubmitting}>
+              {isSubmitting ? "Signing In..." : "Sign In"}
+            </Button>
           </div>
 
           <div className="my-6 grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3">

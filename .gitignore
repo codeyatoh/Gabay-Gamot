@@ -22,6 +22,7 @@ pnpm-debug.log*
 Thumbs.db
 .vscode/
 .idea/
+.playwright-mcp/
 
 # Firebase local files
 .firebase/

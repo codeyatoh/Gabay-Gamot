@@ -12,6 +12,8 @@ Implemented files:
 
 The frontend auth forms are still UI-only. This bootstrap only prepares the backend and creates the first Super Admin account through Firebase Admin.
 
+The login form is wired separately in the frontend using Firebase Web SDK config from `frontend/.env`.
+
 ## Required Firebase Setup
 
 Create or open the Firebase project for GabayGamot, then create a service account key for the backend.
