@@ -46,7 +46,7 @@ export default {
         soft: "0 24px 80px -40px rgba(15, 23, 42, 0.28)",
         panel: "0 18px 50px -28px rgba(15, 23, 42, 0.32)",
       },
-      keyframes: {
+      keyframes: { marquee: { from: { transform: 'translateX(0)' }, to: { transform: 'translateX(calc(-100% - var(--gap)))' } },
         "fade-up": {
           "0%": { opacity: "0", transform: "translateY(18px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
@@ -71,6 +71,7 @@ export default {
         },
       },
       animation: {
+        marquee: "marquee var(--duration) linear infinite",
         "fade-up": "fade-up 0.7s ease-out both",
         "soft-pulse": "soft-pulse 2.4s ease-in-out infinite",
         scan: "scan 3.2s ease-in-out infinite",

@@ -1,0 +1,14 @@
+---
+description: Component architecture, code quality, and file structure rules
+globs: *.jsx, *.js, *.tsx, *.ts
+---
+# Component Architecture & Code Quality
+- **Component Size:** Prefer small, focused components over massive files.
+- **Naming Convention:** Use `PascalCase` for component files (e.g., `HeroSection.jsx`).
+- **File Structure:**
+  - `src/components/common/` - Highly reusable base components.
+  - `src/components/layout/` - Headers, Footers, Navbars.
+  - `src/components/ui/` - Shadcn UI/Radix primitives.
+  - `src/pages/` - Full page assemblies.
+- **Import Paths:** Use absolute aliased imports (e.g., `import { Button } from "@/components/ui/button"`).
+- **Cleanliness:** Remove unused imports, variables, and console logs before finalizing. Zero lint errors.

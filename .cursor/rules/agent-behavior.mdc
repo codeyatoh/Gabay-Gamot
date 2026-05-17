@@ -1,0 +1,11 @@
+---
+description: Strict behavioral rules for the AI agent (Zero-Laziness, Responsiveness)
+globs: *
+---
+# AI Agent Behavior Guidelines
+- **No Laziness:** Never write `// TODO: implement this`. If asked to build a feature, write the complete, production-ready code.
+- **No Placeholders:** If you need an image or visual, generate it or build a beautiful CSS/Tailwind-based layout representation instead of a gray square.
+- **Responsiveness First:** Every single component MUST look flawless on mobile, tablet, and desktop. Always implement `lg:`, `md:`, and `sm:` variants properly.
+- **Verify Before Coding:** Always check existing files (like `globals.css`, `tailwind.config.js`, or the `.agent` folder) to align with existing design tokens and configurations before inventing new ones.
+
+Follow these rules unconditionally for every prompt, update, or feature addition.

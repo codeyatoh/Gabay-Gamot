@@ -4,24 +4,61 @@
 
 @layer base {
   :root {
+    /* ── Light Mode Tokens ── */
     --background: 104 28% 98%;
     --foreground: 222 47% 11%;
+
     --card: 0 0% 100%;
     --card-foreground: 222 47% 11%;
+
     --primary: 145 81% 23%;
     --primary-foreground: 0 0% 100%;
+
     --secondary: 105 32% 94%;
     --secondary-foreground: 143 70% 18%;
+
     --muted: 210 40% 96%;
     --muted-foreground: 215 16% 42%;
+
     --accent: 103 42% 94%;
     --accent-foreground: 143 70% 18%;
+
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
+
     --border: 214 32% 91%;
     --input: 214 32% 91%;
     --ring: 145 81% 23%;
     --radius: 0.5rem;
+  }
+
+  .dark {
+    /* ── Dark Mode Tokens (X/Twitter-like) ── */
+    /* near-black backgrounds, subtle green tint */
+    --background: 222 20% 8%;
+    --foreground: 210 20% 92%;
+
+    --card: 222 18% 11%;
+    --card-foreground: 210 20% 92%;
+
+    --primary: 145 60% 42%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 222 16% 16%;
+    --secondary-foreground: 145 40% 75%;
+
+    --muted: 222 16% 14%;
+    --muted-foreground: 215 14% 55%;
+
+    --accent: 222 16% 16%;
+    --accent-foreground: 145 40% 75%;
+
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 222 14% 18%;
+    --input: 222 14% 18%;
+    --ring: 145 60% 42%;
   }
 
   * {
@@ -52,3 +89,5 @@
     animation: fade-up 0.7s ease-out both;
   }
 }
+
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } } .animate-marquee { animation: marquee var(--duration) linear infinite; }

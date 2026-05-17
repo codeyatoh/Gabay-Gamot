@@ -1,0 +1,10 @@
+---
+description: Core technology stack and libraries for GabayGamot
+globs: *
+---
+# Core Tech Stack
+- **Frontend Framework:** React 19+ with Vite.
+- **Styling:** Tailwind CSS.
+- **UI Library:** Shadcn UI + Radix Primitives.
+- **Icons:** `lucide-react`.
+- **State/Routing:** Follow project conventions, default to React hooks.

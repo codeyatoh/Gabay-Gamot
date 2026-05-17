@@ -1,22 +1,25 @@
 import React from "react";
-import { Activity, Equal, X } from "lucide-react";
+import { Equal, Moon, Sun, X } from "lucide-react";
 
 import { HeaderMenus } from "@/components/layout/HeaderMenus";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useTheme } from "@/hooks/useTheme.jsx";
 import logoUrl from "@/assets/images/gabay-gamot-logo-sm.png";
 
 const navItems = [
   { label: "Features", href: "#features" },
   { label: "Workflow", href: "#workflow" },
-  { label: "Roles", href: "#roles" },
-  { label: "Security", href: "#security" },
+  { label: "Built With", href: "#built-with" },
+  { label: "Team", href: "#team" },
   { label: "FAQs", href: "#faqs" },
 ];
 
 export function Navbar() {
   const [menuState, setMenuState] = React.useState(false);
   const [isScrolled, setIsScrolled] = React.useState(false);
+  const { theme, toggleTheme } = useTheme();
+  const isDarkMode = theme === "dark";
 
   React.useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 4);
@@ -31,14 +34,16 @@ export function Navbar() {
         data-state={menuState ? "active" : "closed"}
         className={cn(
           "fixed left-0 top-0 z-50 w-full px-3 transition-colors duration-300 md:px-4",
-          isScrolled ? "border-transparent" : "border-b border-[#dbe9d5] bg-white/95 backdrop-blur-md"
+          isScrolled
+            ? "border-transparent"
+            : "border-b border-[#dbe9d5] bg-white/85 backdrop-blur-xl dark:border-transparent dark:bg-[#0d1117]/85"
         )}
       >
         <div
           className={cn(
             "mx-auto mt-2 max-w-7xl transition-all duration-300",
             isScrolled &&
-              "max-w-5xl rounded-2xl border border-[#cfe3c7] bg-white/95 px-3 shadow-panel backdrop-blur-md"
+              "max-w-5xl rounded-2xl border border-[#cfe3c7] bg-white/85 px-3 shadow-panel backdrop-blur-xl dark:border-white/10 dark:bg-[#0d1117]/90"
           )}
         >
           <div className="relative flex flex-wrap items-center justify-between gap-3 py-3">
@@ -47,18 +52,18 @@ export function Navbar() {
                 <img
                   src={logoUrl}
                   alt="GabayGamot"
-                  className="z-10 h-10 w-10 rounded-xl object-contain"
+                  className="z-10 h-10 w-10 rounded-xl object-contain transition-all dark:drop-shadow-[0_0_8px_rgba(74,222,128,0.5)]"
                 />
                 <span className="leading-tight">
-                  <span className="block text-sm font-semibold text-slate-950">GabayGamot</span>
-                  <span className="block text-xs text-slate-500">Medicine coordination</span>
+                  <span className="block text-sm font-semibold text-slate-950 dark:text-slate-50">GabayGamot</span>
+                  <span className="block text-xs text-slate-500 dark:text-slate-400">Medicine coordination</span>
                 </span>
               </a>
 
               <button
                 onClick={() => setMenuState((value) => !value)}
                 aria-label={menuState ? "Close menu" : "Open menu"}
-                className="relative z-20 block cursor-pointer p-2.5 pr-4 text-slate-700 lg:hidden"
+                className="relative z-20 block cursor-pointer p-2.5 pr-4 text-slate-700 dark:text-slate-300 lg:hidden"
               >
                 <Equal
                   className={cn(
@@ -81,18 +86,18 @@ export function Navbar() {
 
             <div
               className={cn(
-                "hidden w-full flex-wrap items-center justify-end space-y-6 rounded-xl border border-[#e5f0e1] bg-[#fcfdfa] p-4 shadow-sm lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none",
+                "hidden w-full flex-wrap items-center justify-end space-y-6 rounded-xl border border-[#e5f0e1] bg-[#fcfdfa] p-4 shadow-sm dark:border-white/[0.06] dark:bg-[#0f1319] lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none dark:lg:bg-transparent",
                 menuState && "block"
               )}
             >
-              <div className="block p-2 lg:hidden">
-                <ul className="space-y-3 text-base">
+              <div className="block p-3 lg:hidden">
+                <ul className="space-y-6 text-base">
                   {navItems.map((item) => (
                     <li key={item.href}>
                       <a
                         href={item.href}
                         onClick={() => setMenuState(false)}
-                        className="block rounded-lg px-3 py-2 text-sm font-medium text-slate-600 duration-150 hover:bg-[#eef8e9] hover:text-[#0b6b35]"
+                        className="block text-sm font-medium text-slate-500 duration-150 hover:text-[#0b6b35] dark:text-slate-400 dark:hover:text-[#4ade80]"
                       >
                         {item.label}
                       </a>
@@ -101,16 +106,33 @@ export function Navbar() {
                 </ul>
               </div>
 
-              <div className="flex w-full flex-col gap-3 border-t border-[#e5f0e1] pt-4 sm:flex-row sm:items-center lg:w-fit lg:border-0 lg:pt-0">
+              <div className="flex w-full items-center gap-3 border-t border-[#e5f0e1] pt-4 dark:border-white/[0.05] lg:w-fit lg:border-0 lg:pt-0">
                 <Button
                   variant="ghost"
-                  className="w-full justify-center rounded-xl border border-[#b8d8aa] bg-white text-[#083f24] shadow-sm transition hover:border-[#0b6b35]/40 hover:bg-[#eef8e9] hover:text-[#083f24] lg:w-auto"
+                  size="icon"
+                  onClick={toggleTheme}
+                  aria-label="Toggle theme"
+                  data-state={isDarkMode ? "on" : "off"}
+                  className="group relative flex size-10 shrink-0 items-center justify-center rounded-xl text-[#083f24] transition hover:bg-[#eef8e9] data-[state=on]:bg-transparent dark:text-slate-300 dark:hover:bg-white/8"
+                >
+                  <Moon
+                    size={16}
+                    className="absolute shrink-0 scale-0 opacity-0 transition-all duration-300 ease-in-out group-data-[state=on]:scale-100 group-data-[state=on]:opacity-100"
+                    aria-hidden="true"
+                  />
+                  <Sun
+                    size={16}
+                    className="absolute shrink-0 scale-100 opacity-100 transition-all duration-300 ease-in-out group-data-[state=on]:scale-0 group-data-[state=on]:opacity-0"
+                    aria-hidden="true"
+                  />
+                </Button>
+                <Button
+                  className={cn(
+                    "flex-1 justify-center rounded-xl bg-[#0b6b35] px-6 text-white shadow-md transition hover:bg-[#08552b] dark:bg-[#16a34a] dark:hover:bg-[#15803d] lg:flex-none",
+                    isScrolled && "lg:hidden"
+                  )}
                 >
                   Login
-                </Button>
-                <Button className={cn("w-full justify-center rounded-xl bg-[#0b6b35] text-white shadow-md hover:bg-[#08552b] lg:w-auto", isScrolled && "lg:hidden")}>
-                  <Activity className="mr-2 h-4 w-4" />
-                  Request Access
                 </Button>
               </div>
             </div>
