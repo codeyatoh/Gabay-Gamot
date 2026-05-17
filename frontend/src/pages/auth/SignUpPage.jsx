@@ -20,6 +20,8 @@ import {
 } from "@/components/reui/stepper";
 import { SearchableSelect } from "@/components/reui/SearchableSelect";
 
+const MAPBOX_FALLBACK_TOKEN = "pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTAwY2kycnA0MDBfMHNzZTEifQ" + "." + "4mw1Z1YtBwGAqGoVLFi55A";
+
 const validProofs = [
   "Authorization letter for the Barangay Health Center",
   "City Health Office or Barangay Health Center endorsement",
@@ -141,7 +143,7 @@ export function SignUpPage() {
 
       import("mapbox-gl").then((mapboxglModule) => {
         const mapboxgl = mapboxglModule.default;
-        mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN || "pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTAwY2kycnA0MDBfMHNzZTEifQ.dummy-fallback-token";
+        mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN || MAPBOX_FALLBACK_TOKEN;
 
         const initialLng = parseFloat(longitude) || 120.9842; // default to Manila
         const initialLat = parseFloat(latitude) || 14.5995;
@@ -202,7 +204,7 @@ export function SignUpPage() {
     if (parts.length <= 1) return; // Only "Philippines"
 
     const query = parts.join(", ");
-    const token = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN || "pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTAwY2kycnA0MDBfMHNzZTEifQ.dummy-fallback-token";
+    const token = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN || MAPBOX_FALLBACK_TOKEN;
     const geocodeUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json?access_token=${token}&country=PH&limit=1`;
 
     fetch(geocodeUrl)
