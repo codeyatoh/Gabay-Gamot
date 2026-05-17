@@ -315,6 +315,19 @@ export function SignUpPage() {
     );
   };
 
+  // Auto GPS when reaching step 3 if permission is already granted
+  useEffect(() => {
+    if (currentStep === 3) {
+      if (navigator.permissions && navigator.geolocation) {
+        navigator.permissions.query({ name: "geolocation" }).then((result) => {
+          if (result.state === "granted") {
+            handleGetCurrentLocation();
+          }
+        });
+      }
+    }
+  }, [currentStep]);
+
   const nextStep = () => setCurrentStep((prev) => Math.min(prev + 1, 4));
   const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 1));
 
