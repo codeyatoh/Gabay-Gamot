@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import 'mapbox-gl/dist/mapbox-gl.css';
 import { usePSGC } from "@/hooks/usePSGC";
 import logoUrl from "@/assets/images/gabay-gamot-logo-sm.png";
 import { Button } from "@/components/ui/button";
@@ -114,6 +115,111 @@ export function SignUpPage() {
     const item = list.find((x) => x.code === code);
     return item ? item.name : "";
   };
+
+  const [latitude, setLatitude] = useState("");
+  const [longitude, setLongitude] = useState("");
+
+  const mapRef = useRef(null);
+  const markerRef = useRef(null);
+
+  // Mapbox Lifecycle
+  useEffect(() => {
+    if (currentStep !== 2) {
+      if (mapRef.current) {
+        mapRef.current.remove();
+        mapRef.current = null;
+        markerRef.current = null;
+      }
+      return;
+    }
+
+    // Delay initialization slightly to let the Stepper transition animation complete
+    const timer = setTimeout(() => {
+      const container = document.getElementById("map-container");
+      if (!container) return;
+
+      import("mapbox-gl").then((mapboxglModule) => {
+        const mapboxgl = mapboxglModule.default;
+        mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN || "pk.eyJ1IjoiZ2FiYXlnYW1vdCIsImEiOiJjbHdkNWN6aTQwMHp5MmtsZXdsaHhhcGhrIn0.your-token-here";
+
+        const initialLng = parseFloat(longitude) || 120.9842; // default to Manila
+        const initialLat = parseFloat(latitude) || 14.5995;
+
+        const map = new mapboxgl.Map({
+          container: "map-container",
+          style: "mapbox://styles/mapbox/streets-v12",
+          center: [initialLng, initialLat],
+          zoom: parseFloat(longitude) && parseFloat(latitude) ? 14 : 9,
+        });
+
+        map.addControl(new mapboxgl.NavigationControl(), "top-right");
+
+        const marker = new mapboxgl.Marker({
+          draggable: true,
+          color: "#0b6b35",
+        })
+          .setLngLat([initialLng, initialLat])
+          .addTo(map);
+
+        marker.on("dragend", () => {
+          const lngLat = marker.getLngLat();
+          setLongitude(lngLat.lng.toFixed(6));
+          setLatitude(lngLat.lat.toFixed(6));
+        });
+
+        mapRef.current = map;
+        markerRef.current = marker;
+      }).catch((err) => {
+        console.error("Mapbox dynamic import failed:", err);
+      });
+    }, 100);
+
+    return () => {
+      clearTimeout(timer);
+      if (mapRef.current) {
+        mapRef.current.remove();
+        mapRef.current = null;
+        markerRef.current = null;
+      }
+    };
+  }, [currentStep]);
+
+  // Mapbox geocoding whenever address changes
+  useEffect(() => {
+    if (currentStep !== 2) return;
+
+    const regionName = getSelectedName(regions, selectedRegion);
+    const provinceName = selectedProvince === "N/A" ? "" : getSelectedName(provinces, selectedProvince);
+    const cityName = getSelectedName(cities, selectedCity);
+    const barangayName = getSelectedName(barangays, selectedBarangay);
+
+    const parts = [barangayName, cityName, provinceName, regionName, "Philippines"].filter(Boolean);
+    if (parts.length <= 1) return; // Only "Philippines"
+
+    const query = parts.join(", ");
+    const token = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN || "pk.eyJ1IjoiZ2FiYXlnYW1vdCIsImEiOiJjbHdkNWN6aTQwMHp5MmtsZXdsaHhhcGhrIn0.your-token-here";
+    const geocodeUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json?access_token=${token}&country=PH&limit=1`;
+
+    fetch(geocodeUrl)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.features && data.features.length > 0) {
+          const [lng, lat] = data.features[0].center;
+          setLongitude(lng.toFixed(6));
+          setLatitude(lat.toFixed(6));
+
+          if (mapRef.current) {
+            mapRef.current.flyTo({ center: [lng, lat], zoom: 14 });
+          }
+          if (markerRef.current) {
+            markerRef.current.setLngLat([lng, lat]);
+          }
+        }
+      })
+      .catch((err) => {
+        console.error("Geocoding failed:", err);
+      });
+  }, [selectedRegion, selectedProvince, selectedCity, selectedBarangay, currentStep]);
 
   const nextStep = () => setCurrentStep((prev) => Math.min(prev + 1, 3));
   const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 1));
@@ -375,6 +481,29 @@ export function SignUpPage() {
                       <div className="space-y-2">
                         <Label htmlFor="facilityAddress" className="block text-sm">Facility Address Line</Label>
                         <Input type="text" name="facilityAddress" id="facilityAddress" placeholder="Street, sitio, or purok" />
+                      </div>
+
+                      {/* Mapbox Coordinates Hidden Inputs */}
+                      <input type="hidden" name="latitude" value={latitude} />
+                      <input type="hidden" name="longitude" value={longitude} />
+
+                      {/* Mapbox Interactive Map Container */}
+                      <div className="space-y-2 pt-2 border-t border-dashed dark:border-white/10">
+                        <div className="flex items-center justify-between">
+                          <Label className="block text-sm font-medium">Barangay Health Center Coordinates</Label>
+                          <span className="text-[10px] font-mono text-muted-foreground">
+                            {latitude && longitude ? `${latitude}, ${longitude}` : "Select address to locate"}
+                          </span>
+                        </div>
+                        <div className="relative overflow-hidden rounded-md border border-input dark:border-white/10">
+                          <div 
+                            id="map-container" 
+                            className="h-48 w-full bg-slate-100 dark:bg-zinc-900 transition-all"
+                          />
+                          <div className="absolute bottom-2 left-2 rounded bg-white/90 dark:bg-zinc-900/90 border dark:border-white/10 px-2 py-1 text-[10px] font-medium backdrop-blur-sm pointer-events-none select-none text-slate-700 dark:text-slate-300 shadow-sm">
+                            📍 Drag the green marker to pin the exact center location
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
