@@ -20,6 +20,8 @@ npm run seed:super-admin
 
 See `docs/database/firebase-bootstrap.md` for required Firebase Admin SDK and Super Admin environment variables.
 
+See `docs/screens/super-admin-pages.md` and `docs/database/super-admin-data-model.md` for the broader Super Admin screen and data requirements.
+
 ## Core Rule
 
 Barangay Health Center Admin signup does not create an active account immediately.

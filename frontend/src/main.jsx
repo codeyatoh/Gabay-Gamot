@@ -4,6 +4,7 @@ import { ForgotPasswordPage } from "@/pages/auth/ForgotPasswordPage";
 import { LoginPage } from "@/pages/auth/LoginPage";
 import { SignUpPage } from "@/pages/auth/SignUpPage";
 import { LandingPage } from "@/pages/landing/LandingPage";
+import { SuperAdminPortal } from "@/pages/super-admin/SuperAdminPortal";
 import { ThemeProvider } from "@/hooks/useTheme.jsx";
 import "./styles/globals.css";
 
@@ -19,7 +20,8 @@ function App() {
     pathname: window.location.pathname,
     hash: window.location.hash,
   }));
-  const Page = routes[location.pathname] ?? LandingPage;
+  const isSuperAdminRoute = location.pathname === "/super-admin" || location.pathname.startsWith("/super-admin/");
+  const Page = isSuperAdminRoute ? SuperAdminPortal : routes[location.pathname] ?? LandingPage;
 
   React.useEffect(() => {
     const navigate = (href) => {
@@ -69,7 +71,7 @@ function App() {
     window.scrollTo({ top: 0 });
   }, [location]);
 
-  return <Page />;
+  return <Page pathname={location.pathname} />;
 }
 
 ReactDOM.createRoot(document.getElementById("root")).render(

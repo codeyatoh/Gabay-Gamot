@@ -19,3 +19,5 @@
 - Organize Cloudinary uploads under `gabaygamot/{environment}/` with documented folders for public assets, admin signup documents, IDs, OCR uploads, medicine images, reports, and temporary files.
 - Seed the first Super Admin through a backend-only Firebase Admin script, not through public signup.
 - Keep package dependencies limited to implemented code paths. Planned OCR, AI, upload validation, and SDK packages should be installed when their feature work starts.
+- Track top common illness cases per barangay from explicit `illnessCases` and `illnessCaseCategories`, then aggregate into `illnessSummaries`; do not infer illness solely from dispensed medicine.
+- Build the first Super Admin portal pass with existing Tailwind, lucide icons, and local shadcn-style primitives instead of adding dashboard-only packages before real data integration.

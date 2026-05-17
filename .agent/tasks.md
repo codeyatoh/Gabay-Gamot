@@ -22,7 +22,7 @@
 - [x] Add PSGC address selectors for signup
 - [x] Add Mapbox pin-location step for signup
 - [x] Add backend Mapbox proxy endpoints
-- [ ] Create admin dashboard placeholder
+- [x] Create Super Admin portal frontend shell and dashboard placeholder
 - [ ] Create barangay health worker dashboard placeholder
 
 ## Phase 3: Core Features
@@ -56,3 +56,6 @@
 - [x] Add Context7 and Playwright MCP workflow notes
 - [x] Add Cloudinary development storage foldering rules
 - [x] Remove unused landing components, empty scaffold folders, generated artifacts, and unused dependencies
+- [x] Document planned Super Admin pages, data, edge cases, and Firestore model
+- [x] Document top common illness cases per barangay implementation model
+- [x] Update Super Admin docs after frontend portal shell implementation

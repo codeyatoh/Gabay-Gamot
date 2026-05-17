@@ -2,6 +2,8 @@
 
 ## Collections
 
+For the broader Super Admin data model, see `docs/database/super-admin-data-model.md`.
+
 ### `adminSignupRequests`
 
 Stores admin signup applications before account activation.

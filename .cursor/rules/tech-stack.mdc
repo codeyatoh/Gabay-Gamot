@@ -11,7 +11,8 @@ globs: *
 - **Backend:** Node.js + Express.
 - **Maps:** Mapbox GL JS in frontend, with token/geocoding routed through the Express backend.
 - **Address Data:** PSGC Cloud is currently used in the frontend for development; production should move official PSA PSGC API access behind the backend.
-- **Database/Auth:** Firebase Firestore and Firebase Authentication are planned but not yet wired into the visible auth pages.
+- **Database/Auth:** Firebase Firestore is planned for app data. Firebase Authentication is partially wired for login and Super Admin seed credentials.
 - **Firebase Admin:** Backend uses Firebase Admin SDK for server-side bootstrap and Super Admin seeding.
 - **Development Storage:** Cloudinary is the temporary development storage provider while Firebase Storage requires Blaze. Use `gabaygamot/dev/` foldering.
+- **Health Analytics:** Top common illness cases per barangay should use explicit `illnessCases`, `illnessCaseCategories`, and aggregate `illnessSummaries`.
 - **Agent MCP:** Use Context7 for current package docs and Playwright for local browser/responsive verification.

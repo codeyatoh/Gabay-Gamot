@@ -52,6 +52,8 @@
 - During development, use the documented Cloudinary folder map under `gabaygamot/dev/`.
 - Use auth and role middleware for protected routes.
 - Enforce barangay-based access on server-side logic.
+- For illness or morbidity analytics, capture explicit case categories from consultation/dispensing workflows. Do not infer top illnesses from medicine names alone.
+- Aggregate health case data by default for Super Admin views and exports; patient-identifying fields require stricter authorization and audit logs.
 
 ## Component Naming
 

@@ -18,3 +18,5 @@ globs: *.jsx, *.js, *.tsx, *.ts
 - **Backend Boundaries:** Keep secret-bearing integrations behind Express routes. Mapbox token/geocoding currently belongs in `backend/src/routes/mapboxRoutes.js` and `backend/src/controllers/mapboxController.js`.
 - **Upload Boundaries:** File uploads must go through backend services. Do not upload from the frontend using provider secrets. Store provider-neutral metadata and keep Cloudinary `publicId` for future delete/migration behavior.
 - **Firebase Admin Boundary:** Firebase Admin SDK belongs in the backend only. Seed Super Admin accounts through `backend/scripts/seedSuperAdmin.js`, never through public signup or frontend code.
+- **Health Analytics Source:** Top illness or morbidity analytics must come from explicit case categories or consultation records. Never infer illness solely from medicine names or dispensing quantities.
+- **Health Data Privacy:** Super Admin analytics should aggregate by barangay, health center, date bucket, and category by default. Patient-identifying case details require explicit authorization and audit logging.
