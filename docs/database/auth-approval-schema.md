@@ -39,7 +39,7 @@ Suggested fields:
     idDocumentUrl: "storage/path/id.jpg",
     notes: ""
   },
-  requestedRole: "barangay_admin",
+  requestedRole: "health_center_admin",
   review: {
     reviewedBy: null,
     reviewedAt: null,
@@ -60,9 +60,10 @@ Created only after approval.
   firstName: "Juan",
   lastName: "Dela Cruz",
   email: "juan@example.com",
-  role: "barangay_admin",
+  role: "health_center_admin",
   barangayCode: "041005001",
   barangayId: "barangayDocId",
+  facilityId: "facilityDocId",
   status: "active",
   mustChangePassword: true,
   createdBy: "superAdminUid",
@@ -100,5 +101,5 @@ Uses PSGC as the normalized barangay identity.
 - Signup request documents are not active user accounts.
 - Uploaded proof files must be protected in Firebase Storage.
 - Only Super Admin/System Owner can approve or reject requests.
-- Barangay Admin cannot approve their own account request.
-- Barangay Health Worker accounts are created by the approved Barangay Admin after login.
+- Barangay Health Center Admin cannot approve their own account request.
+- Barangay Health Worker accounts are created by the approved Barangay Health Center Admin after login.

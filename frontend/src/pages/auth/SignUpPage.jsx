@@ -4,10 +4,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 const validProofs = [
-  "Authorization letter from Punong Barangay",
-  "City Health Office or health center endorsement",
+  "Authorization letter for the Barangay Health Center",
+  "City Health Office or Barangay Health Center endorsement",
   "Government, employee, or barangay health worker ID",
-  "Appointment, designation, or employment certification",
+  "Appointment, designation, or employment certification connected to the health center",
 ];
 
 export function SignUpPage() {
@@ -27,10 +27,10 @@ export function SignUpPage() {
               />
             </a>
             <h1 className="mb-1 mt-4 text-lg font-semibold sm:text-xl">
-              Request Barangay Admin Access
+              Request Health Center Admin Access
             </h1>
             <p className="text-sm text-muted-foreground sm:text-base">
-              Submit your barangay details for Super Admin review
+              Submit your barangay health center details for Super Admin review
             </p>
           </div>
 
@@ -123,7 +123,7 @@ export function SignUpPage() {
             <div className="grid gap-3 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label htmlFor="facilityName" className="block text-sm">
-                  Health Center / Facility Name
+                  Barangay Health Center Name
                 </Label>
                 <Input type="text" required name="facilityName" id="facilityName" />
               </div>
@@ -147,7 +147,7 @@ export function SignUpPage() {
               </p>
               <p className="mt-1 text-xs leading-5 text-muted-foreground">
                 Upload documents that prove you are authorized to request admin access for this
-                barangay.
+                barangay health center.
               </p>
               <ul className="mt-3 list-disc space-y-1 pl-5 text-xs leading-5 text-muted-foreground">
                 {validProofs.map((proof) => (
@@ -169,8 +169,8 @@ export function SignUpPage() {
                 className="cursor-pointer file:mr-3 file:rounded-md file:border-0 file:bg-secondary file:px-3 file:py-1.5 file:text-xs file:font-medium file:text-secondary-foreground"
               />
               <p className="text-xs leading-5 text-muted-foreground">
-                Best option: signed letter from the Punong Barangay, City Health Office, or health
-                center.
+                Best option: signed letter for the Barangay Health Center from the Punong Barangay,
+                City Health Office, or authorized health center officer.
               </p>
             </div>
 
@@ -196,8 +196,8 @@ export function SignUpPage() {
                 className="mt-1 h-4 w-4 shrink-0 rounded border-input accent-[#0b6b35]"
               />
               <span className="text-xs leading-5 text-muted-foreground">
-                I confirm that I am authorized to request GabayGamot admin access for this barangay
-                and that the uploaded documents are valid for Super Admin review.
+                I confirm that I am authorized to request GabayGamot admin access for this Barangay
+                Health Center and that the uploaded documents are valid for Super Admin review.
               </span>
             </label>
 

@@ -18,7 +18,7 @@ These routes use lightweight client-side navigation through `history.pushState`,
 
 ## Login Page
 
-The login page is for existing Admin and Barangay Health Worker accounts.
+The login page is for existing Barangay Health Center Admin and Barangay Health Worker accounts.
 
 Visible fields and actions:
 
@@ -31,7 +31,7 @@ Visible fields and actions:
 
 ## Sign Up Page
 
-The sign up page is for submitting a Barangay Admin approval request during barangay setup. It must not create an active account immediately.
+The sign up page is for submitting a Barangay Health Center Admin approval request during health center setup. It must not create an active account immediately.
 
 Visible fields and actions:
 
@@ -44,8 +44,8 @@ Visible fields and actions:
 - Province
 - City or municipality
 - Barangay
-- Health center / facility name
-- Health center address line
+- Barangay health center name
+- Barangay health center address line
 - Authorization document upload
 - Government ID or employee ID upload
 - Valid proof note listing accepted documents
@@ -54,14 +54,14 @@ Visible fields and actions:
 - Google sign-up button as a UI-only placeholder
 - Link back to Login
 
-Address fields should use PSGC-backed API dropdowns. Password should not be requested at this stage; the Super Admin/System Owner issues a temporary password only after approval.
+Address fields should use PSGC-backed API dropdowns to place the health center under the correct barangay. Password should not be requested at this stage; the Super Admin/System Owner issues a temporary password only after approval.
 
 The sign up page should show these valid proof examples:
 
-- Authorization letter from Punong Barangay
-- City Health Office or health center endorsement
+- Authorization letter for the Barangay Health Center
+- City Health Office or Barangay Health Center endorsement
 - Government, employee, or barangay health worker ID
-- Appointment, designation, or employment certification
+- Appointment, designation, or employment certification connected to the health center
 
 ## Forgot Password Page
 
@@ -75,7 +75,7 @@ Visible fields and actions:
 
 - Login will use Firebase Authentication.
 - Forgot password will use Firebase password reset email.
-- Admin sign up must verify barangay setup before creating an admin account.
+- Admin sign up must verify barangay health center setup before creating an admin account.
 - Super Admin/System Owner reviews proof documents before approval.
 - Approved Admin accounts receive a temporary password or setup link and must change password on first login.
-- Barangay Health Worker accounts should be created by an authorized Barangay Admin.
+- Barangay Health Worker accounts should be created by an authorized Barangay Health Center Admin.

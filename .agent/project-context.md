@@ -15,7 +15,7 @@ Help barangay health centers reduce medicine waste, prevent shortages, monitor d
 ## Main Users
 
 - Super Admin / System Owner
-- Admin
+- Barangay Health Center Admin
 - Barangay Health Worker
 
 ## Planned Tech Stack
