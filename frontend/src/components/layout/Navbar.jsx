@@ -33,7 +33,7 @@ export function Navbar() {
       <nav
         data-state={menuState ? "active" : "closed"}
         className={cn(
-          "fixed left-0 top-0 z-50 w-full px-8 pt-safe transition-colors duration-300 sm:px-12 md:px-16 lg:px-20 xl:px-24 2xl:px-32",
+          "fixed left-0 top-0 z-50 w-full px-3 pt-safe transition-colors duration-300 sm:px-4 md:px-5 lg:px-6",
           isScrolled
             ? "border-transparent"
             : "border-transparent bg-white/90 backdrop-blur-xl dark:border-transparent dark:bg-[#0d1117]"
@@ -43,7 +43,7 @@ export function Navbar() {
           className={cn(
             "mx-auto mt-2 w-full max-w-screen-xl transition-all duration-300 2xl:max-w-screen-2xl",
             (isScrolled || menuState) &&
-              "rounded-2xl border border-[#cfe3c7] bg-white/95 px-6 shadow-panel backdrop-blur-xl dark:border-white/10 dark:bg-[#0d1117]"
+              "max-w-screen-lg rounded-2xl border border-[#cfe3c7] bg-white/95 px-3 shadow-panel backdrop-blur-xl dark:border-white/10 dark:bg-[#0d1117]"
           )}
         >
           <div className="relative flex min-h-14 flex-wrap items-center justify-between gap-3 py-3">
