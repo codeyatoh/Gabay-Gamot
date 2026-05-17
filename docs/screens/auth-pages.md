@@ -29,39 +29,50 @@ Visible fields and actions:
 - Google sign-in button as a UI-only placeholder
 - Link to Create Admin Account
 
-## Sign Up Page
+## Sign Up Page (Admin Setup Request Wizard)
 
-The sign up page is for submitting a Barangay Health Center Admin approval request during health center setup. It must not create an active account immediately.
+The sign up page is a highly structured, 3-step wizard using the custom headless `Stepper` component (`@/components/reui/stepper.jsx`). It is designed for submitting a Barangay Health Center Admin approval request during health center setup. It does not request a password or create an active account immediately (following the Super Admin approval workflow).
 
-Visible fields and actions:
+### 3-Step Wizard Structure
 
-- First name
-- Last name
-- Email
-- Mobile number
-- Position / designation
-- Region
-- Province
-- City or municipality
-- Barangay
-- Barangay health center name
-- Barangay health center address line
-- Authorization document upload
-- Government ID or employee ID upload
-- Valid proof note listing accepted documents
-- Agreement checkbox
-- Submit for Review button
-- Google sign-up button as a UI-only placeholder
-- Link back to Login
+#### Step 1: Account (Personal Details)
+- **First Name** (placeholder: `e.g. Juan`)
+- **Last Name** (placeholder: `e.g. Dela Cruz`)
+- **Email Address** (placeholder: `e.g. juan@gmail.com`)
+- **Mobile Number:**
+  - Prefixed with an absolute, non-editable `+63` country code indicator.
+  - Custom JavaScript validation rules limit entry strictly to **10 digits**.
+  - Enforces that the mobile number MUST start with the digit `9` (automatically clears input if a different starting digit is typed, e.g., accidental `0`).
+- **Google Sign-Up Button:**
+  - Displayed **only on Step 1** (to facilitate auto-filling First Name, Last Name, and Email address from Google authentication scopes, while omitting it from later steps).
 
-Address fields should use PSGC-backed API dropdowns to place the health center under the correct barangay. Password should not be requested at this stage; the Super Admin/System Owner issues a temporary password only after approval.
+#### Step 2: Assignment (Health Center Info)
+To improve readability and prevent jagged forms, fields are organized into two clean visual sections separated by divider lines:
+- **Center Details:**
+  - **Barangay Health Center Name** (full-width input, placeholder: `e.g. San Jose Health Center`)
+  - **Position / Designation** (full-width input, placeholder: `e.g. Barangay Health Worker`)
+- **Center Location:**
+  - A unified 4-field grid: **Region** (placeholder: `e.g. Region IV-A`), **Province** (placeholder: `e.g. Cavite`), **City / Municipality** (placeholder: `e.g. Dasmariñas`), and **Barangay** (placeholder: `e.g. San Jose`).
+  - **Facility Address Line** (full-width input, placeholder: `Street, sitio, or purok`).
 
-The sign up page should show these valid proof examples:
+#### Step 3: Validation (Proof & Identity)
+- **Valid Proof Guidelines:**
+  - Displays a clean green notification box listing accepted documents (e.g., signed authorization letter, health center endorsement, employee ID, appointment designation certificate).
+- **Document Uploads:**
+  - **Authorization Document:**
+    - Accepts ONLY `.pdf, .doc, .docx` files.
+    - Strictly limits size to **5MB**.
+    - Omit custom photo previews to avoid layout clutter (utilizes standard native file input name displays).
+  - **Government / Employee ID:**
+    - Accepts ONLY image formats (`.jpg, .jpeg, .png`).
+    - Strictly limits size to **2MB**.
+    - Displays a **live local photo preview** underneath upon selection, featuring a red close button (`✕`) to clear or reset the file.
+- **Agreement Checkbox:**
+  - A responsive checkbox list item confirming authorization.
+- **Submit for Review button:**
+  - Form submission has active event prevention (`e.preventDefault()`) to avoid browser reload loops during React navigation.
 
-- Authorization letter for the Barangay Health Center
-- City Health Office or Barangay Health Center endorsement
-- Government, employee, or barangay health worker ID
-- Appointment, designation, or employment certification connected to the health center
+---
 
 ## Forgot Password Page
 
