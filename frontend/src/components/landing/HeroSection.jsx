@@ -20,9 +20,9 @@ export function HeroSection() {
 
       {/* Content */}
       <div className="relative z-10 w-full px-5 pb-14 sm:px-6 sm:pb-16 lg:px-12 lg:pb-28">
-        <div className="mx-auto flex w-full max-w-7xl justify-center">
-          <div className="flex max-w-5xl flex-col items-center text-center">
-            <h1 className="text-balance font-mono text-[clamp(3.25rem,14vw,8.75rem)] font-black leading-[0.86] tracking-normal text-slate-950 dark:text-white">
+        <div className="mx-auto flex w-full max-w-7xl justify-center lg:justify-start">
+          <div className="flex max-w-5xl flex-col items-center text-center lg:items-start lg:text-left">
+            <h1 className="text-balance font-mono text-[clamp(3.25rem,13vw,8.75rem)] font-black leading-[0.86] tracking-normal text-slate-950 dark:text-white">
               Gabay
               <br />
               Gamot
@@ -33,7 +33,7 @@ export function HeroSection() {
               dispensing stock, and finding nearby barangay referrals.
             </p>
 
-            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row lg:justify-start">
               <Button className="h-12 rounded-md bg-[#0b6b35] px-7 font-mono text-xs uppercase tracking-normal text-white shadow-panel hover:bg-[#08552b] dark:bg-[#16a34a] dark:hover:bg-[#15803d] sm:px-8 md:h-14 md:px-10">
                 <span className="text-nowrap">Get Started</span>
                 <ArrowRight className="ml-2 h-4 w-4" />
