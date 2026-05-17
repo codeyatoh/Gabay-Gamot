@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { usePSGC } from "@/hooks/usePSGC";
 import logoUrl from "@/assets/images/gabay-gamot-logo-sm.png";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -35,6 +36,83 @@ export function SignUpPage() {
   const [idDocPreview, setIdDocPreview] = useState(null);
   const [authDocError, setAuthDocError] = useState(null);
   const [idDocError, setIdDocError] = useState(null);
+
+  // Address selectors using PSGC
+  const {
+    regions,
+    provinces,
+    cities,
+    barangays,
+    loadingRegions,
+    loadingProvinces,
+    loadingCities,
+    loadingBarangays,
+    error: psgcError,
+    fetchProvincesForRegion,
+    fetchCitiesForParent,
+    fetchBarangaysForCity,
+    setProvinces,
+    setCities,
+    setBarangays
+  } = usePSGC();
+
+  const [selectedRegion, setSelectedRegion] = useState("");
+  const [selectedProvince, setSelectedProvince] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
+  const [selectedBarangay, setSelectedBarangay] = useState("");
+
+  const handleRegionChange = async (e) => {
+    const code = e.target.value;
+    setSelectedRegion(code);
+    setSelectedProvince("");
+    setSelectedCity("");
+    setSelectedBarangay("");
+    setProvinces([]);
+    setCities([]);
+    setBarangays([]);
+
+    if (code) {
+      const fetchedProvinces = await fetchProvincesForRegion(code);
+      if (fetchedProvinces.length === 0) {
+        // Province-less region like NCR, fetch cities directly under region
+        await fetchCitiesForParent("region", code);
+        setSelectedProvince("N/A");
+      }
+    }
+  };
+
+  const handleProvinceChange = async (e) => {
+    const code = e.target.value;
+    setSelectedProvince(code);
+    setSelectedCity("");
+    setSelectedBarangay("");
+    setCities([]);
+    setBarangays([]);
+
+    if (code && code !== "N/A") {
+      await fetchCitiesForParent("province", code);
+    }
+  };
+
+  const handleCityChange = async (e) => {
+    const code = e.target.value;
+    setSelectedCity(code);
+    setSelectedBarangay("");
+    setBarangays([]);
+
+    if (code) {
+      await fetchBarangaysForCity(code);
+    }
+  };
+
+  const handleBarangayChange = (e) => {
+    setSelectedBarangay(e.target.value);
+  };
+
+  const getSelectedName = (list, code) => {
+    const item = list.find((x) => x.code === code);
+    return item ? item.name : "";
+  };
 
   const nextStep = () => setCurrentStep((prev) => Math.min(prev + 1, 3));
   const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 1));
@@ -228,21 +306,107 @@ export function SignUpPage() {
                     </div>
                     <div className="space-y-3">
                       <div className="grid gap-3 sm:grid-cols-2">
+                        {/* Hidden inputs to capture the selected text names upon form submission */}
+                        <input type="hidden" name="regionName" value={getSelectedName(regions, selectedRegion)} />
+                        <input type="hidden" name="provinceName" value={selectedProvince === "N/A" ? "N/A" : getSelectedName(provinces, selectedProvince)} />
+                        <input type="hidden" name="cityName" value={getSelectedName(cities, selectedCity)} />
+                        <input type="hidden" name="barangayName" value={getSelectedName(barangays, selectedBarangay)} />
+
+                        {/* Region Select */}
                         <div className="space-y-2">
-                          <Label htmlFor="region" className="block text-sm">Region</Label>
-                          <Input type="text" name="region" id="region" placeholder="e.g. Region IV-A" />
+                          <Label htmlFor="region" className="block text-sm text-left">Region</Label>
+                          <select
+                            name="region"
+                            id="region"
+                            value={selectedRegion}
+                            onChange={handleRegionChange}
+                            disabled={loadingRegions || regions.length === 0}
+                            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background cursor-pointer transition-all active:scale-[0.99] dark:bg-zinc-950 dark:border-white/10 dark:text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0b6b35] disabled:cursor-not-allowed disabled:opacity-50"
+                          >
+                            <option value="">
+                              {loadingRegions ? "Loading regions..." : "Select Region"}
+                            </option>
+                            {regions.map((r) => (
+                              <option key={r.code} value={r.code}>
+                                {r.name}
+                              </option>
+                            ))}
+                          </select>
                         </div>
+
+                        {/* Province Select */}
                         <div className="space-y-2">
-                          <Label htmlFor="province" className="block text-sm">Province</Label>
-                          <Input type="text" name="province" id="province" placeholder="e.g. Cavite" />
+                          <Label htmlFor="province" className="block text-sm text-left">Province</Label>
+                          <select
+                            name="province"
+                            id="province"
+                            value={selectedProvince}
+                            onChange={handleProvinceChange}
+                            disabled={
+                              loadingProvinces || 
+                              !selectedRegion || 
+                              (provinces.length === 0 && selectedRegion && selectedProvince === "N/A")
+                            }
+                            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background cursor-pointer transition-all active:scale-[0.99] dark:bg-zinc-950 dark:border-white/10 dark:text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0b6b35] disabled:cursor-not-allowed disabled:opacity-50"
+                          >
+                            <option value="">
+                              {loadingProvinces 
+                                ? "Loading provinces..." 
+                                : selectedProvince === "N/A" 
+                                  ? "N/A - Metro Manila" 
+                                  : "Select Province"
+                              }
+                            </option>
+                            {provinces.map((p) => (
+                              <option key={p.code} value={p.code}>
+                                {p.name}
+                              </option>
+                            ))}
+                          </select>
                         </div>
+
+                        {/* City/Municipality Select */}
                         <div className="space-y-2">
-                          <Label htmlFor="cityMunicipality" className="block text-sm">City / Municipality</Label>
-                          <Input type="text" name="cityMunicipality" id="cityMunicipality" placeholder="e.g. Dasmariñas" />
+                          <Label htmlFor="cityMunicipality" className="block text-sm text-left">City / Municipality</Label>
+                          <select
+                            name="cityMunicipality"
+                            id="cityMunicipality"
+                            value={selectedCity}
+                            onChange={handleCityChange}
+                            disabled={loadingCities || !selectedRegion || (selectedProvince === "" && selectedProvince !== "N/A")}
+                            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background cursor-pointer transition-all active:scale-[0.99] dark:bg-zinc-950 dark:border-white/10 dark:text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0b6b35] disabled:cursor-not-allowed disabled:opacity-50"
+                          >
+                            <option value="">
+                              {loadingCities ? "Loading cities..." : "Select City / Municipality"}
+                            </option>
+                            {cities.map((c) => (
+                              <option key={c.code} value={c.code}>
+                                {c.name}
+                              </option>
+                            ))}
+                          </select>
                         </div>
+
+                        {/* Barangay Select */}
                         <div className="space-y-2">
-                          <Label htmlFor="barangay" className="block text-sm">Barangay</Label>
-                          <Input type="text" name="barangay" id="barangay" placeholder="e.g. San Jose" />
+                          <Label htmlFor="barangay" className="block text-sm text-left">Barangay</Label>
+                          <select
+                            name="barangay"
+                            id="barangay"
+                            value={selectedBarangay}
+                            onChange={handleBarangayChange}
+                            disabled={loadingBarangays || !selectedCity}
+                            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background cursor-pointer transition-all active:scale-[0.99] dark:bg-zinc-950 dark:border-white/10 dark:text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0b6b35] disabled:cursor-not-allowed disabled:opacity-50"
+                          >
+                            <option value="">
+                              {loadingBarangays ? "Loading barangays..." : "Select Barangay"}
+                            </option>
+                            {barangays.map((b) => (
+                              <option key={b.code} value={b.code}>
+                                {b.name}
+                              </option>
+                            ))}
+                          </select>
                         </div>
                       </div>
                       <div className="space-y-2">
