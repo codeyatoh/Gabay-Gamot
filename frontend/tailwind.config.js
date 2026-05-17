@@ -61,21 +61,11 @@ export default {
           "85%": { opacity: "1" },
           "100%": { transform: "translateY(155px)", opacity: "0" },
         },
-        "capsule-float": {
-          "0%, 100%": { transform: "translate3d(0, 0, 0) rotate(var(--tw-rotate))" },
-          "50%": { transform: "translate3d(12px, -18px, 0) rotate(var(--tw-rotate))" },
-        },
-        "capsule-drift": {
-          "0%, 100%": { transform: "translate3d(0, 0, 0) rotate(var(--tw-rotate))" },
-          "50%": { transform: "translate3d(-16px, 14px, 0) rotate(var(--tw-rotate))" },
-        },
       },
       animation: {
         "fade-up": "fade-up 0.7s ease-out both",
         "soft-pulse": "soft-pulse 2.4s ease-in-out infinite",
         scan: "scan 3.2s ease-in-out infinite",
-        "capsule-float": "capsule-float 8s ease-in-out infinite",
-        "capsule-drift": "capsule-drift 10s ease-in-out infinite",
       },
     },
   },
