@@ -1,6 +1,5 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ArrowRightLeft, BellRing, QrCode } from "lucide-react";
-import React from "react";
 
 export function FeaturesSection() {
     return (

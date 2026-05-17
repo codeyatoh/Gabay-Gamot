@@ -55,3 +55,4 @@
 - [x] Document Mapbox proxy API
 - [x] Add Context7 and Playwright MCP workflow notes
 - [x] Add Cloudinary development storage foldering rules
+- [x] Remove unused landing components, empty scaffold folders, generated artifacts, and unused dependencies

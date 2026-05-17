@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { usePSGC } from "@/hooks/usePSGC";
@@ -57,7 +57,6 @@ export function SignUpPage() {
     loadingProvinces,
     loadingCities,
     loadingBarangays,
-    error: psgcError,
     fetchProvincesForRegion,
     fetchCitiesForParent,
     fetchBarangaysForCity,

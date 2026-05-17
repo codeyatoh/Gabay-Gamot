@@ -23,7 +23,7 @@
 - Use Shadcn UI as the main UI component system.
 - Use Shadcn UI as primitives, then customize layout and styling so the app does not look generic.
 - Use `lucide-react` for meaningful icons.
-- Put reusable UI pieces in `frontend/src/components/common/`.
+- Add shared frontend helpers only when they are actually used; avoid empty scaffold folders.
 - Put landing page sections in `frontend/src/components/landing/`.
 - Put custom app-specific reusable UI controls in `frontend/src/components/reui/`.
 - Put page-level components in `frontend/src/pages/`.

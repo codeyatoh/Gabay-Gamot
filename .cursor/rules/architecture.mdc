@@ -6,7 +6,6 @@ globs: *.jsx, *.js, *.tsx, *.ts
 - **Component Size:** Prefer small, focused components over massive files.
 - **Naming Convention:** Use `PascalCase` for component files (e.g., `HeroSection.jsx`).
 - **File Structure:**
-  - `src/components/common/` - Highly reusable base components.
   - `src/components/layout/` - Headers, Footers, Navbars.
   - `src/components/ui/` - Shadcn UI/Radix primitives.
   - `src/pages/` - Full page assemblies.

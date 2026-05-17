@@ -1,4 +1,3 @@
-import React from "react";
 import cedrickAvatar from "@/assets/images/team/cedrick-tacan.png";
 import angelitoAvatar from "@/assets/images/team/angelito-halmain.png";
 import joashAvatar from "@/assets/images/team/joash-elizzer.jpg";

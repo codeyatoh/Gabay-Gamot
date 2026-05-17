@@ -18,3 +18,4 @@
 - Use Cloudinary as the temporary development file storage provider while Firebase Storage requires a Blaze upgrade.
 - Organize Cloudinary uploads under `gabaygamot/{environment}/` with documented folders for public assets, admin signup documents, IDs, OCR uploads, medicine images, reports, and temporary files.
 - Seed the first Super Admin through a backend-only Firebase Admin script, not through public signup.
+- Keep package dependencies limited to implemented code paths. Planned OCR, AI, upload validation, and SDK packages should be installed when their feature work starts.

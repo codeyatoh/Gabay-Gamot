@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { ArrowRight, SearchCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import heroVideo from "@/assets/videos/gabaygamot-hero.mp4";

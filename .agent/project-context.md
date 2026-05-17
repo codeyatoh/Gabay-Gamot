@@ -26,10 +26,10 @@ Help barangay health centers reduce medicine waste, prevent shortages, monitor d
 - Backend: Node.js with Express.js
 - Database: Firebase Firestore planned
 - Authentication: Firebase Authentication planned
-- OCR: Tesseract.js planned / installed
+- OCR: Tesseract.js planned, not currently installed until the OCR feature starts
 - Maps: Mapbox GL JS with backend Mapbox proxy implemented for token/geocoding
 - Address Data: PSGC Cloud currently used in frontend for development; official PSA PSGC API should be proxied through backend for production
-- AI: Gemini API planned / installed
+- AI: Gemini API planned, not currently installed until the AI feature starts
 
 ## Implemented So Far
 

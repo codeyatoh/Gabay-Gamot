@@ -25,11 +25,11 @@ GabayGamot/
 |       |   |-- images/
 |       |   `-- videos/
 |       |-- components/
-|       |   |-- common/
 |       |   |-- landing/
 |       |   |-- layout/
 |       |   |-- reui/
 |       |   `-- ui/
+|       |-- config/
 |       |-- hooks/
 |       |-- lib/
 |       |-- pages/
@@ -43,11 +43,9 @@ GabayGamot/
 |       |-- controllers/
 |       |-- routes/
 |       `-- server.js
-|-- firebase/
 `-- docs/
     |-- api/
     |-- database/
-    |-- diagrams/
     |-- planning/
     |-- source-documents/
     |   `-- GabayGamot.pdf
@@ -75,11 +73,6 @@ TechnologySection.jsx
 TeamSection.jsx
 FaqSection.jsx
 ```
-
-### `frontend/src/components/common/`
-Reusable UI helpers or wrappers.
-
-Since the project uses Shadcn UI, only add custom common components when they make the code easier to reuse.
 
 ### `frontend/src/components/layout/`
 Shared page layout pieces.
@@ -110,12 +103,16 @@ Examples:
 ```text
 landing/LandingPage.jsx
 auth/LoginPage.jsx
-admin/AdminDashboard.jsx
-health-worker/HealthWorkerDashboard.jsx
 ```
 
-### `frontend/src/services/`
-Frontend API and Firebase service calls.
+### `frontend/src/config/`
+Frontend configuration wrappers.
+
+Current example:
+
+```text
+firebase.js
+```
 
 ### `backend/`
 Node.js and Express API.
@@ -129,9 +126,6 @@ src/server.js
 src/routes/mapboxRoutes.js
 src/controllers/mapboxController.js
 ```
-
-### `firebase/`
-Firestore rules and sample seed data.
 
 ### `docs/`
 Project documentation such as diagrams, API notes, database notes, and screen references.
