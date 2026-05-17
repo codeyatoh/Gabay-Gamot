@@ -43,6 +43,15 @@ export function LoginPage() {
       });
 
       setMessage(`Login successful. Role: ${role}`);
+
+      // Redirect based on role
+      setTimeout(() => {
+        if (isSuperAdmin || role === "super_admin") {
+          window.location.href = "/super-admin";
+        } else {
+          window.location.href = "/"; // Default redirect for other users (or update later)
+        }
+      }, 500);
     } catch (error) {
       console.error("[GabayGamot Auth] Login failed", {
         code: error.code,
