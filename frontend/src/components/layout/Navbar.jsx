@@ -86,18 +86,18 @@ export function Navbar() {
 
             <div
               className={cn(
-                "hidden w-full flex-wrap items-center justify-end space-y-6 rounded-xl border border-[#e5f0e1] bg-[#fcfdfa] p-4 shadow-sm dark:border-white/[0.06] dark:bg-[#0f1319] lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none dark:lg:bg-transparent",
+                "absolute left-0 right-0 top-[calc(100%+0.5rem)] z-50 mx-auto hidden w-full max-w-sm flex-wrap items-center justify-end space-y-6 rounded-2xl border border-[#cfe3c7] bg-[#fcfdfa]/98 p-4 shadow-panel backdrop-blur-xl dark:border-white/[0.08] dark:bg-[#0f1319]/98 lg:static lg:m-0 lg:flex lg:w-fit lg:max-w-none lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none lg:backdrop-blur-none dark:lg:bg-transparent",
                 menuState && "block"
               )}
             >
               <div className="block p-3 lg:hidden">
-                <ul className="space-y-6 text-base">
+                <ul className="space-y-2 text-base">
                   {navItems.map((item) => (
                     <li key={item.href}>
                       <a
                         href={item.href}
                         onClick={() => setMenuState(false)}
-                        className="block text-sm font-medium text-slate-500 duration-150 hover:text-[#0b6b35] dark:text-slate-400 dark:hover:text-[#4ade80]"
+                        className="block rounded-xl px-4 py-3 text-sm font-medium text-slate-600 duration-150 hover:bg-[#eef8e9] hover:text-[#0b6b35] dark:text-slate-300 dark:hover:bg-white/[0.06] dark:hover:text-[#4ade80]"
                       >
                         {item.label}
                       </a>
@@ -106,14 +106,14 @@ export function Navbar() {
                 </ul>
               </div>
 
-              <div className="flex w-full items-center gap-3 border-t border-[#e5f0e1] pt-4 dark:border-white/[0.05] lg:w-fit lg:border-0 lg:pt-0">
+              <div className="flex w-full flex-col gap-3 border-t border-[#e5f0e1] pt-4 dark:border-white/[0.05] sm:flex-row lg:w-fit lg:border-0 lg:pt-0">
                 <Button
                   variant="ghost"
                   size="icon"
                   onClick={toggleTheme}
                   aria-label="Toggle theme"
                   data-state={isDarkMode ? "on" : "off"}
-                  className="group relative flex size-10 shrink-0 items-center justify-center rounded-xl text-[#083f24] transition hover:bg-[#eef8e9] data-[state=on]:bg-transparent dark:text-slate-300 dark:hover:bg-white/8"
+                  className="group relative flex size-10 shrink-0 items-center justify-center rounded-xl text-[#083f24] transition hover:bg-[#eef8e9] data-[state=on]:bg-transparent dark:text-slate-300 dark:hover:bg-white/8 max-sm:w-full"
                 >
                   <Moon
                     size={16}
