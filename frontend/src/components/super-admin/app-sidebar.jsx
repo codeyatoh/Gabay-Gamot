@@ -1,32 +1,30 @@
 "use client"
 
-import {
-  IconActivity,
-  IconBuildingHospital,
-  IconDashboard,
-  IconDatabase,
-  IconHelp,
-  IconReport,
-  IconSettings,
-  IconShieldCheck,
-  IconUsers,
-} from "@tabler/icons-react"
+import { ChevronRight, ChevronsUpDown, HeartPulse } from "lucide-react"
 
-import { NavDocuments } from "./nav-documents"
-import { NavMain } from "./nav-main"
-import { NavSecondary } from "./nav-secondary"
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible"
 import { NavUser } from "./nav-user"
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
+  SidebarGroup,
+  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
 import logoUrl from "@/assets/images/gabay-gamot-logo-sm.png"
 import { auth } from "@/config/firebase"
+import { superAdminNavGroups } from "@/data/superAdminMockData"
 
 const data = {
   user: {
@@ -34,61 +32,11 @@ const data = {
     email: "superadmin@gabaygamot.com",
     avatar: "",
   },
-  navMain: [
-    {
-      title: "Overview",
-      url: "/super-admin",
-      icon: IconDashboard,
-    },
-    {
-      title: "Approvals",
-      url: "/super-admin/approvals",
-      icon: IconShieldCheck,
-    },
-    {
-      title: "Health Centers",
-      url: "/super-admin/centers",
-      icon: IconBuildingHospital,
-    },
-    {
-      title: "User Registry",
-      url: "/super-admin/users",
-      icon: IconUsers,
-    },
-    {
-      title: "System Audit",
-      url: "/super-admin/audit",
-      icon: IconActivity,
-    },
-  ],
-  navSecondary: [
-    {
-      title: "Settings",
-      url: "/super-admin/settings",
-      icon: IconSettings,
-    },
-    {
-      title: "Support",
-      url: "#",
-      icon: IconHelp,
-    },
-  ],
-  documents: [
-    {
-      name: "Global Inventory",
-      url: "/super-admin/inventory",
-      icon: IconDatabase,
-    },
-    {
-      name: "Analytics & Reports",
-      url: "/super-admin/reports",
-      icon: IconReport,
-    },
-  ],
 }
 
 export function AppSidebar({ ...props }) {
   const currentUser = auth?.currentUser;
+  const currentPath = typeof window !== "undefined" ? window.location.pathname : "";
   
   const userData = {
     name: currentUser?.displayName || data.user.name,
@@ -103,20 +51,69 @@ export function AppSidebar({ ...props }) {
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
-              className="data-[slot=sidebar-menu-button]:p-1.5!"
+              size="lg"
+              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
-              <a href="/super-admin">
-                <img src={logoUrl} alt="Logo" className="size-5 rounded-sm" />
-                <span className="text-base font-semibold">GabayGamot</span>
+              <a href="/super-admin" aria-label="Go to Super Admin overview">
+                <div className="flex aspect-square size-8 items-center justify-center">
+                  <img
+                    src={logoUrl}
+                    alt="GabayGamot"
+                    className="size-8 rounded-none object-contain drop-shadow-[0_1px_2px_rgba(15,23,42,0.25)] dark:brightness-125 dark:saturate-125 dark:drop-shadow-[0_0_8px_rgba(45,212,191,0.42)]"
+                  />
+                </div>
+                <div className="grid flex-1 text-left text-sm leading-tight">
+                  <span className="truncate font-medium">GabayGamot</span>
+                  <span className="truncate text-xs">Super Admin</span>
+                </div>
+                <ChevronsUpDown className="ml-auto size-4" />
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavDocuments items={data.documents} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        <SidebarGroup>
+          <SidebarGroupLabel>Platform</SidebarGroupLabel>
+          <SidebarMenu>
+            {superAdminNavGroups.map((group) => {
+              const isActiveGroup = group.items.some((item) => item.href === currentPath)
+              const GroupIcon = group.items[0]?.icon || HeartPulse
+
+              return (
+                <Collapsible
+                  key={group.label}
+                  asChild
+                  defaultOpen={isActiveGroup}
+                  className="group/collapsible"
+                >
+                  <SidebarMenuItem>
+                    <CollapsibleTrigger asChild>
+                      <SidebarMenuButton tooltip={group.label}>
+                        <GroupIcon />
+                        <span>{group.label}</span>
+                        <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                      </SidebarMenuButton>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent>
+                      <SidebarMenuSub>
+                        {group.items.map((item) => (
+                          <SidebarMenuSubItem key={item.href}>
+                            <SidebarMenuSubButton asChild isActive={currentPath === item.href}>
+                              <a href={item.href}>
+                                <span>{item.title}</span>
+                              </a>
+                            </SidebarMenuSubButton>
+                          </SidebarMenuSubItem>
+                        ))}
+                      </SidebarMenuSub>
+                    </CollapsibleContent>
+                  </SidebarMenuItem>
+                </Collapsible>
+              )
+            })}
+          </SidebarMenu>
+        </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={userData} />

@@ -1,9 +1,20 @@
+import * as React from "react";
+
 import {
   ArrowRight,
-  ChevronDown,
+  ArrowLeft,
+  CheckCircle2,
+  Compass,
+  Clock3,
+  FileText,
+  LayoutDashboard,
+  ListFilter,
   MoreVertical,
+  Settings,
+  ShieldAlert,
   TrendingDown,
   TrendingUp,
+  XCircle,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -15,6 +26,24 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs";
 
 const toneClasses = {
   good: "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:text-emerald-200",
@@ -38,7 +67,7 @@ export function StatusPill({ children, tone = "neutral", className }) {
   );
 }
 
-export function PageIntro({ eyebrow, title, description, action, actionHref, children }) {
+export function PageIntro({ eyebrow, title, description, action, actionHref, notes = [], children }) {
   return (
     <div className="mb-5 flex flex-col gap-4 lg:mb-6 lg:flex-row lg:items-end lg:justify-between">
       <div className="min-w-0">
@@ -54,6 +83,7 @@ export function PageIntro({ eyebrow, title, description, action, actionHref, chi
       </div>
       <div className="flex flex-wrap items-center gap-2">
         {children}
+        {notes.length > 0 && <PageNotesPopover notes={notes} />}
         {action && actionHref && (
           <Button asChild>
             <a href={actionHref}>
@@ -73,6 +103,72 @@ export function PageIntro({ eyebrow, title, description, action, actionHref, chi
   );
 }
 
+export function PageNotesPopover({ notes }) {
+  const [currentStep, setCurrentStep] = React.useState(0);
+  const isFirst = currentStep === 0;
+  const isLast = currentStep === notes.length - 1;
+  const activeNote = notes[currentStep];
+
+  React.useEffect(() => {
+    setCurrentStep(0);
+  }, [notes]);
+
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button variant="outline">
+          <Compass className="size-4" />
+          Page notes
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent
+        className="w-80 gap-2 px-3 pb-2 pt-3"
+        side="bottom"
+        align="end"
+        sideOffset={8}
+      >
+        <div className="space-y-2">
+          <p className="leading-tight font-medium">
+            Reminder {currentStep + 1}
+          </p>
+          <p className="text-sm leading-relaxed text-muted-foreground">
+            {activeNote}
+          </p>
+        </div>
+        <div className="mt-3 flex items-center justify-between">
+          <span className="text-xs text-muted-foreground">
+            {currentStep + 1} of {notes.length}
+          </span>
+          <div className="flex gap-0.5">
+            <Button
+              aria-label="Previous note"
+              className="size-6"
+              disabled={isFirst}
+              onClick={() => setCurrentStep((step) => Math.max(0, step - 1))}
+              size="icon"
+              variant="ghost"
+            >
+              <ArrowLeft className="size-3.5" aria-hidden="true" />
+            </Button>
+            <Button
+              aria-label="Next note"
+              className="size-6"
+              disabled={isLast}
+              onClick={() =>
+                setCurrentStep((step) => Math.min(notes.length - 1, step + 1))
+              }
+              size="icon"
+              variant="ghost"
+            >
+              <ArrowRight className="size-3.5" aria-hidden="true" />
+            </Button>
+          </div>
+        </div>
+      </PopoverContent>
+    </Popover>
+  );
+}
+
 export function MetricGrid({ metrics }) {
   return (
     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
@@ -83,7 +179,7 @@ export function MetricGrid({ metrics }) {
         return (
           <Card
             key={metric.label}
-            className="overflow-hidden rounded-lg bg-gradient-to-t from-primary/5 to-card shadow-sm"
+            className="overflow-hidden rounded-xl bg-muted/50 shadow-none"
           >
             <CardHeader className="flex-row items-start justify-between space-y-0 p-4">
               <div className="min-w-0">
@@ -122,7 +218,7 @@ export function BentoGrid({ children }) {
 
 export function BentoPanel({ children, className }) {
   return (
-    <Card className={cn("overflow-hidden rounded-lg shadow-sm", className)}>
+    <Card className={cn("overflow-hidden rounded-xl shadow-none", className)}>
       {children}
     </Card>
   );
@@ -193,9 +289,9 @@ export function MiniLineChart({ data, primaryKey = "cases", secondaryKey = "disp
 export function DataTable({ columns, rows, caption }) {
   return (
     <div className="min-w-0 max-w-full">
-      <div className="space-y-3 md:hidden">
+      <div className="space-y-3 p-4 md:hidden">
         {rows.map((row) => (
-          <div key={row.join("-")} className="rounded-lg border bg-card p-4 shadow-sm">
+          <div key={row.join("-")} className="rounded-lg border bg-muted/30 p-4">
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
                 <p className="truncate text-sm font-semibold">{row[0]}</p>
@@ -223,14 +319,14 @@ export function DataTable({ columns, rows, caption }) {
         ))}
       </div>
 
-      <div className="hidden overflow-hidden rounded-lg border md:block">
+      <div className="hidden overflow-hidden md:block">
         <div className="block max-w-full overflow-x-auto">
         <table className="w-full min-w-[720px] border-collapse text-sm">
           {caption && <caption className="sr-only">{caption}</caption>}
-          <thead className="bg-muted/80 text-xs uppercase tracking-wider text-muted-foreground">
+          <thead className="border-b bg-muted/35 text-xs text-muted-foreground">
             <tr>
               {columns.map((column) => (
-                <th key={column} className="whitespace-nowrap px-4 py-3 text-left font-semibold">
+                <th key={column} className="whitespace-nowrap px-4 py-3 text-left font-medium">
                   {column}
                 </th>
               ))}
@@ -241,7 +337,7 @@ export function DataTable({ columns, rows, caption }) {
           </thead>
           <tbody>
             {rows.map((row) => (
-              <tr key={row.join("-")} className="border-t bg-card transition-colors hover:bg-accent/50">
+              <tr key={row.join("-")} className="border-b bg-background transition-colors last:border-0 hover:bg-muted/45">
                 {row.map((cell, index) => (
                   <td
                     key={`${cell}-${index}`}
@@ -273,6 +369,54 @@ export function DataTable({ columns, rows, caption }) {
   );
 }
 
+export function TabbedTableCard({ title, description, tabs, columns, rows }) {
+  const defaultTab = tabs[0] || "All";
+
+  return (
+    <Tabs defaultValue={defaultTab} className="w-full">
+      <TabsList className="h-auto w-full justify-start gap-1 overflow-x-auto rounded-xl border bg-muted/50 p-1">
+        {tabs.map((tab, index) => {
+          const Icon = getTabIcon(tab, index);
+
+          return (
+            <TabsTrigger
+              key={tab}
+              value={tab}
+              className="min-h-9 shrink-0 gap-2 px-3 data-[state=active]:shadow-none"
+            >
+              <Icon className="size-4" />
+              {tab}
+            </TabsTrigger>
+          );
+        })}
+      </TabsList>
+
+      {tabs.map((tab, index) => {
+        const filteredRows = getRowsForTab(tab, rows);
+        const visibleRows = filteredRows.length > 0 ? filteredRows : rows;
+
+        return (
+          <TabsContent key={tab} value={tab} className="mt-3">
+            <Card className="rounded-xl shadow-none">
+              <CardHeader className="border-b p-4">
+                <CardTitle>{title}</CardTitle>
+                <CardDescription>
+                  {index === 0
+                    ? description
+                    : `Showing ${tab.toLowerCase()} records in simple view.`}
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="p-0">
+                <DataTable columns={columns} rows={visibleRows} caption={`${title} - ${tab}`} />
+              </CardContent>
+            </Card>
+          </TabsContent>
+        );
+      })}
+    </Tabs>
+  );
+}
+
 export function TabsBar({ tabs }) {
   return (
     <div className="flex w-full flex-wrap gap-2">
@@ -294,17 +438,72 @@ export function TabsBar({ tabs }) {
   );
 }
 
+function getRowsForTab(tab, rows) {
+  const normalizedTab = tab.toLowerCase();
+
+  if (
+    normalizedTab.includes("all") ||
+    normalizedTab.includes("summary") ||
+    normalizedTab.includes("top") ||
+    normalizedTab.includes("trend")
+  ) {
+    return rows;
+  }
+
+  return rows.filter((row) =>
+    row.some((cell) => String(cell).toLowerCase().includes(normalizedTab))
+  );
+}
+
+function getTabIcon(tab, index) {
+  const normalized = tab.toLowerCase();
+
+  if (normalized.includes("pending") || normalized.includes("review")) {
+    return Clock3;
+  }
+
+  if (normalized.includes("approved") || normalized.includes("active") || normalized.includes("fulfilled") || normalized.includes("ready")) {
+    return CheckCircle2;
+  }
+
+  if (normalized.includes("reject") || normalized.includes("expired") || normalized.includes("disabled") || normalized.includes("failed")) {
+    return XCircle;
+  }
+
+  if (normalized.includes("risk") || normalized.includes("stockout") || normalized.includes("low") || normalized.includes("alert")) {
+    return ShieldAlert;
+  }
+
+  if (normalized.includes("setting") || normalized.includes("policy")) {
+    return Settings;
+  }
+
+  if (normalized.includes("report") || normalized.includes("proof") || normalized.includes("audit")) {
+    return FileText;
+  }
+
+  return index === 0 ? LayoutDashboard : ListFilter;
+}
+
 export function CompactSelect({ label, options }) {
+  const [value, setValue] = React.useState(options[0]);
+
   return (
-    <label className="flex min-h-10 items-center gap-2 rounded-lg border bg-card px-3 text-sm text-muted-foreground">
-      <span className="whitespace-nowrap">{label}</span>
-      <ChevronDown className="h-4 w-4" />
-      <select className="sr-only" defaultValue={options[0]}>
+    <div className="flex min-h-10 items-center gap-2 rounded-lg border bg-card px-3 text-sm text-muted-foreground">
+      <span className="whitespace-nowrap text-xs font-medium">{label}</span>
+      <Select value={value} onValueChange={setValue}>
+        <SelectTrigger className="h-8 w-28 border-0 bg-transparent px-0 shadow-none focus:ring-0">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent align="end" className="rounded-xl">
         {options.map((option) => (
-          <option key={option}>{option}</option>
+            <SelectItem key={option} value={option} className="rounded-lg">
+              {option}
+            </SelectItem>
         ))}
-      </select>
-    </label>
+        </SelectContent>
+      </Select>
+    </div>
   );
 }
 

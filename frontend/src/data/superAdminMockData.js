@@ -35,13 +35,13 @@ export const superAdminNavGroups = [
         description: "System health, risks, and live workload.",
       },
       {
-        title: "Approvals",
+        title: "Admin Requests",
         href: "/super-admin/approvals",
         icon: ClipboardCheck,
         description: "Admin signup requests and review queue.",
       },
       {
-        title: "Approval Detail",
+        title: "Request Review",
         href: "/super-admin/approvals/review",
         icon: FileText,
         description: "Applicant, proof, location, and decision panel.",
@@ -64,19 +64,19 @@ export const superAdminNavGroups = [
         description: "Accounts, roles, claims, and assignments.",
       },
       {
-        title: "Inventory",
+        title: "Medicine Stock",
         href: "/super-admin/inventory",
         icon: Pill,
         description: "Stock status, expiry, and shortage risks.",
       },
       {
-        title: "Medicine Catalog",
+        title: "Medicine List",
         href: "/super-admin/medicine-catalog",
         icon: ListChecks,
         description: "Normalized medicine names and thresholds.",
       },
       {
-        title: "Dispensing",
+        title: "Medicine Given Out",
         href: "/super-admin/dispensing",
         icon: Activity,
         description: "Medicine usage and accountability logs.",
@@ -93,7 +93,7 @@ export const superAdminNavGroups = [
         description: "Top common cases by barangay.",
       },
       {
-        title: "Referrals",
+        title: "Medicine Requests",
         href: "/super-admin/referrals",
         icon: RefreshCcw,
         description: "Medicine referrals between barangays.",
@@ -116,7 +116,7 @@ export const superAdminNavGroups = [
         description: "Open risks and system notifications.",
       },
       {
-        title: "Audit Logs",
+        title: "Activity History",
         href: "/super-admin/audit-logs",
         icon: ShieldCheck,
         description: "Sensitive admin activity history.",
@@ -255,6 +255,108 @@ export const inventoryRisks = [
   },
 ];
 
+export const dailyBarangayMedicineSignals = [
+  {
+    barangay: "San Jose",
+    topIllness: "Fever",
+    casesToday: 42,
+    medicineNeeded: "Paracetamol 500mg",
+    shortage: "High",
+    usableStock: "24 tablets",
+    surplusFrom: "Guiwan Health Station",
+    unusedMedicine: "Amoxicillin 500mg",
+    whatIf:
+      "If fever cases continue tomorrow, San Jose may run out of Paracetamol before the next supply cycle. Check Guiwan stock for possible transfer before buying new stock.",
+  },
+  {
+    barangay: "Tetuan",
+    topIllness: "Diarrhea",
+    casesToday: 18,
+    medicineNeeded: "ORS sachet",
+    shortage: "Critical",
+    usableStock: "9 sachets",
+    surplusFrom: "Sta. Maria BHC",
+    unusedMedicine: "Cetirizine 10mg",
+    whatIf:
+      "If diarrhea cases increase by 20 percent, Tetuan should request ORS today and avoid waiting for a confirmed stockout.",
+  },
+  {
+    barangay: "Guiwan",
+    topIllness: "Cough/Colds",
+    casesToday: 37,
+    medicineNeeded: "Cetirizine 10mg",
+    shortage: "Monitor",
+    usableStock: "118 tablets",
+    surplusFrom: "Guiwan Health Station",
+    unusedMedicine: "Amoxicillin 500mg",
+    whatIf:
+      "If Cetirizine usage stays low for 7 days, flag it as slow-moving stock and review whether another barangay needs it more.",
+  },
+];
+
+export const healthCenterLocations = [
+  {
+    id: "HC-001",
+    name: "San Jose Barangay Health Center",
+    shortName: "San Jose BHC",
+    barangay: "San Jose",
+    city: "Zamboanga City",
+    province: "Zamboanga del Sur",
+    coordinates: { latitude: 6.9214, longitude: 122.079 },
+    status: "Active",
+    statusTone: "good",
+    primaryAdmin: "Marielle Santos",
+    workers: 8,
+    inventoryStatus: "2 low-stock items",
+    lastUpdated: "Today",
+  },
+  {
+    id: "HC-002",
+    name: "Guiwan Health Station",
+    shortName: "Guiwan",
+    barangay: "Guiwan",
+    city: "Zamboanga City",
+    province: "Zamboanga del Sur",
+    coordinates: { latitude: 6.9133, longitude: 122.0947 },
+    status: "Active",
+    statusTone: "good",
+    primaryAdmin: "Noel Garcia",
+    workers: 5,
+    inventoryStatus: "1 expiring batch",
+    lastUpdated: "Yesterday",
+  },
+  {
+    id: "HC-003",
+    name: "Tetuan Barangay Health Center",
+    shortName: "Tetuan BHC",
+    barangay: "Tetuan",
+    city: "Zamboanga City",
+    province: "Zamboanga del Sur",
+    coordinates: { latitude: 6.9172, longitude: 122.0876 },
+    status: "Duplicate risk",
+    statusTone: "warning",
+    primaryAdmin: "Rhea Lim",
+    workers: 6,
+    inventoryStatus: "Stockout risk",
+    lastUpdated: "2 days ago",
+  },
+  {
+    id: "HC-004",
+    name: "Sta. Maria Barangay Health Center",
+    shortName: "Sta. Maria BHC",
+    barangay: "Sta. Maria",
+    city: "Zamboanga City",
+    province: "Zamboanga del Sur",
+    coordinates: { latitude: 6.9316, longitude: 122.0709 },
+    status: "Needs admin",
+    statusTone: "warning",
+    primaryAdmin: "Unassigned",
+    workers: 0,
+    inventoryStatus: "No recent update",
+    lastUpdated: "Pending setup",
+  },
+];
+
 export const auditActivity = [
   {
     action: "Approved admin request",
@@ -278,11 +380,11 @@ export const auditActivity = [
 
 export const pageBlueprints = {
   "/super-admin/approvals": {
-    title: "Admin Signup Requests",
+    title: "Admin Requests",
     eyebrow: "Approvals",
-    description: "Review public admin signup requests before creating active health center admin accounts.",
-    primaryAction: "Review selected",
-    tabs: ["All requests", "Pending", "Needs info", "Approved", "Rejected"],
+    description: "Check people who want to become Health Center Admin before giving them access.",
+    primaryAction: "Review request",
+    tabs: ["All", "Pending", "Needs info", "Approved", "Rejected"],
     stats: [
       { label: "Pending review", value: "18", helper: "7 high priority" },
       { label: "Needs info", value: "5", helper: "Waiting for proof" },
@@ -304,11 +406,11 @@ export const pageBlueprints = {
     ],
   },
   "/super-admin/approvals/review": {
-    title: "Approval Detail",
+    title: "Request Review",
     eyebrow: "Approvals",
-    description: "Inspect applicant information, facility details, proof files, duplicate signals, and decision history.",
+    description: "Review one admin request, including proof, location, and duplicate warnings.",
     primaryAction: "Approve request",
-    tabs: ["Applicant", "Facility", "Proof", "Decision"],
+    tabs: ["Applicant", "Health center", "Proof", "Decision"],
     stats: [
       { label: "Risk flags", value: "2", helper: "Location and duplicate checks" },
       { label: "Proof files", value: "3", helper: "2 images, 1 authorization file" },
@@ -329,11 +431,11 @@ export const pageBlueprints = {
     ],
   },
   "/super-admin/health-centers": {
-    title: "Health Center Registry",
+    title: "Health Centers",
     eyebrow: "Operations",
-    description: "Manage recognized barangay health centers, assignments, coverage, and operational status.",
+    description: "See all registered health centers, their barangay, assigned admin, and status.",
     primaryAction: "Add center",
-    tabs: ["All centers", "Active", "Unassigned", "Suspended"],
+    tabs: ["All", "Active", "Unassigned", "Suspended"],
     stats: [
       { label: "Active centers", value: "42", helper: "Across covered barangays" },
       { label: "Unassigned", value: "4", helper: "Need primary admin" },
@@ -356,7 +458,7 @@ export const pageBlueprints = {
   "/super-admin/users": {
     title: "Users & Roles",
     eyebrow: "Operations",
-    description: "Manage Super Admin, Health Center Admin, and Barangay Health Worker accounts.",
+    description: "See system users, their role, and where they are assigned.",
     primaryAction: "Create user",
     tabs: ["All users", "Super Admin", "Admins", "Workers", "Suspended"],
     stats: [
@@ -379,11 +481,11 @@ export const pageBlueprints = {
     ],
   },
   "/super-admin/inventory": {
-    title: "Inventory Oversight",
+    title: "Medicine Stock",
     eyebrow: "Operations",
-    description: "Monitor medicine stock status, expiry, and shortage signals across barangays.",
-    primaryAction: "Review risks",
-    tabs: ["All stock", "Low stock", "Stockout", "Expiring", "Expired"],
+    description: "See which medicines are low, out of stock, expiring, or still usable.",
+    primaryAction: "Review stock",
+    tabs: ["All", "Low stock", "Stockout", "Expiring", "Expired"],
     stats: [
       { label: "Low stock", value: "18", helper: "Below configured threshold" },
       { label: "Expiring soon", value: "11", helper: "Within 90 days" },
@@ -404,9 +506,9 @@ export const pageBlueprints = {
     ],
   },
   "/super-admin/medicine-catalog": {
-    title: "Medicine Catalog",
+    title: "Medicine List",
     eyebrow: "Operations",
-    description: "Normalize medicine names, strength, form, unit, category, and default thresholds.",
+    description: "Keep one clean list of medicine names, dosage, form, and default stock rules.",
     primaryAction: "Add medicine",
     tabs: ["Active", "Duplicates", "Restricted", "Inactive"],
     stats: [
@@ -429,11 +531,11 @@ export const pageBlueprints = {
     ],
   },
   "/super-admin/dispensing": {
-    title: "Dispensing & Usage",
+    title: "Medicine Given Out",
     eyebrow: "Operations",
-    description: "Review medicine usage trends and accountability signals without exposing patient names by default.",
-    primaryAction: "View trend",
-    tabs: ["Summary", "Corrections", "High usage", "Unlinked cases"],
+    description: "See medicine released by health centers without showing patient details by default.",
+    primaryAction: "View usage",
+    tabs: ["Summary", "Corrections", "High usage", "No case link"],
     stats: [
       { label: "Logs this week", value: "386", helper: "Across active centers" },
       { label: "Corrections", value: "7", helper: "Require audit review" },
@@ -454,11 +556,11 @@ export const pageBlueprints = {
     ],
   },
   "/super-admin/illness-cases": {
-    title: "Illness Cases by Barangay",
+    title: "Illness Cases",
     eyebrow: "Insights",
-    description: "Track top common recorded case categories from explicit consultation or dispensing case fields.",
+    description: "See common illness cases per barangay, such as fever, cough, diarrhea, and hypertension.",
     primaryAction: "Review spike",
-    tabs: ["Top cases", "Trend", "By barangay", "Other cleanup"],
+    tabs: ["Top cases", "Trend", "By barangay", "Needs cleanup"],
     stats: [
       { label: "Recorded cases", value: "412", helper: "This month" },
       { label: "Spike watch", value: "5", helper: "Needs validation" },
@@ -480,11 +582,11 @@ export const pageBlueprints = {
     ],
   },
   "/super-admin/referrals": {
-    title: "Referrals Monitor",
+    title: "Medicine Requests",
     eyebrow: "Insights",
-    description: "Track medicine referral requests between barangay health centers.",
+    description: "Track barangays requesting medicine from another health center.",
     primaryAction: "Review pending",
-    tabs: ["All referrals", "Sent", "Accepted", "Fulfilled", "Expired"],
+    tabs: ["All", "Sent", "Accepted", "Fulfilled", "Expired"],
     stats: [
       { label: "Pending", value: "12", helper: "Awaiting destination response" },
       { label: "Fulfilled", value: "28", helper: "This month" },
@@ -505,9 +607,9 @@ export const pageBlueprints = {
     ],
   },
   "/super-admin/reports": {
-    title: "Reports & Analytics",
+    title: "Reports",
     eyebrow: "Insights",
-    description: "Generate operational reports for stock, dispensing, illness cases, referrals, approvals, and activity.",
+    description: "Create and view reports for stock, medicine usage, illness cases, requests, and activity.",
     primaryAction: "Generate report",
     tabs: ["Stock", "Dispensing", "Illness cases", "Referrals", "Audit"],
     stats: [
@@ -532,7 +634,7 @@ export const pageBlueprints = {
   "/super-admin/alerts": {
     title: "Alerts",
     eyebrow: "Governance",
-    description: "Review operational, inventory, approval, illness spike, and integration alerts.",
+    description: "See important warnings such as low stock, illness spikes, and pending approvals.",
     primaryAction: "Resolve selected",
     tabs: ["Open", "Critical", "Acknowledged", "Resolved"],
     stats: [
@@ -555,11 +657,11 @@ export const pageBlueprints = {
     ],
   },
   "/super-admin/audit-logs": {
-    title: "Audit Logs",
+    title: "Activity History",
     eyebrow: "Governance",
-    description: "Review append-only sensitive administrative activity and state changes.",
+    description: "See who made important system actions and when they happened.",
     primaryAction: "Filter logs",
-    tabs: ["All events", "Approvals", "Users", "Reports", "Inventory"],
+    tabs: ["All", "Approvals", "Users", "Reports", "Inventory"],
     stats: [
       { label: "Events today", value: "86", helper: "12 privileged actions" },
       { label: "Failures", value: "3", helper: "Review endpoint errors" },
@@ -580,11 +682,11 @@ export const pageBlueprints = {
     ],
   },
   "/super-admin/settings": {
-    title: "Settings",
+    title: "System Settings",
     eyebrow: "Governance",
-    description: "View and later control approval policies, thresholds, referral rules, categories, and integrations.",
+    description: "Set system rules for approvals, medicine stock, referrals, categories, and integrations.",
     primaryAction: "Save policy",
-    tabs: ["Policies", "Inventory", "Cases", "Storage", "Integrations"],
+    tabs: ["Policies", "Stock rules", "Cases", "Storage", "Integrations"],
     stats: [
       { label: "Policy groups", value: "6", helper: "Approval, inventory, cases" },
       { label: "Config checks", value: "4", helper: "Firebase, Mapbox, Cloudinary" },
@@ -619,6 +721,205 @@ export function getPageBlueprint(pathname) {
 }
 
 export const quickFilters = ["Today", "7 days", "30 days", "Quarter"];
+
+export const pageGuides = {
+  "/super-admin": {
+    simplePurpose:
+      "Ito ang main dashboard. Dito makikita ng Super Admin kung ano ang kailangan unahin sa buong system.",
+    checkFirst: [
+      "Pending admin requests na kailangan i-review",
+      "Health centers na walang assigned admin",
+      "Critical medicine stock or expiry alerts",
+      "Recent actions na dapat may audit trail",
+    ],
+    aiPreview:
+      "Summarize today: pending approvals, risky centers, low stock medicines, and unusual illness spikes.",
+    aiInsight:
+      "Daily priority: San Jose has high fever cases with low Paracetamol, Tetuan has diarrhea cases with ORS stockout risk, and Guiwan has slow-moving medicine that may be reusable by another barangay.",
+  },
+  "/super-admin/approvals": {
+    simplePurpose:
+      "Dito tinitingnan kung legit ba ang nag-request maging Health Center Admin bago sila bigyan ng account.",
+    checkFirst: [
+      "Kumpleto ba applicant details and proof documents",
+      "Tama ba ang barangay and health center location",
+      "May duplicate ba sa same email or same health center",
+      "Ano ang safest decision: approve, reject, or needs more info",
+    ],
+    aiPreview:
+      "Review pending requests and highlight duplicate, missing proof, and location mismatch risks.",
+    aiInsight:
+      "Focus on requests with missing proof, duplicate health center names, and map pins that do not match the selected barangay.",
+  },
+  "/super-admin/approvals/review": {
+    simplePurpose:
+      "Ito ang detailed review screen ng isang admin signup request bago mag-approve or reject.",
+    checkFirst: [
+      "Match ba ang pangalan sa proof documents",
+      "Tama ba ang selected PSGC address and map pin",
+      "May existing admin or health center na kapareho",
+      "May notes ba para malinaw ang decision history",
+    ],
+    aiPreview:
+      "Create a short risk summary for this request and suggest what the reviewer should verify.",
+    aiInsight:
+      "Before approving, verify the applicant name, authorization proof, barangay address, map pin, and duplicate center warnings.",
+  },
+  "/super-admin/health-centers": {
+    simplePurpose:
+      "Dito mino-monitor ang registered barangay health centers at kung saan sila located sa mapa.",
+    checkFirst: [
+      "Aling centers ang active, unassigned, or may duplicate risk",
+      "Tama ba ang map pin ng health center",
+      "Sino ang primary admin and ilan ang workers",
+      "May inventory or reporting issue ba per center",
+    ],
+    aiPreview:
+      "Summarize barangay coverage gaps and health centers that need admin assignment or location review.",
+    aiInsight:
+      "Sta. Maria needs a primary admin, while Tetuan should be reviewed for possible duplicate health center records.",
+  },
+  "/super-admin/users": {
+    simplePurpose:
+      "Dito mino-monitor ang accounts at roles ng Super Admin, Health Center Admin, at Barangay Health Worker.",
+    checkFirst: [
+      "Tama ba ang role and assignment ng user",
+      "May mismatch ba sa Firebase claim and Firestore profile",
+      "May suspended/disabled accounts na kailangan review",
+      "Hindi ba madi-disable ang last active Super Admin",
+    ],
+    aiPreview:
+      "Find users with role mismatch, pending setup, disabled status, or suspicious assignment issues.",
+    aiInsight:
+      "Two accounts may have claim/profile mismatch. Review pending setup users before adding new worker accounts.",
+  },
+  "/super-admin/inventory": {
+    simplePurpose:
+      "Dito nakikita kung aling gamot ang low stock, expired, expiring soon, or stockout risk.",
+    checkFirst: [
+      "May zero usable stock ba",
+      "May positive stock pero expired naman ba",
+      "Aling centers ang hindi nag-update ng inventory",
+      "Aling gamot ang kailangan i-prioritize for restock or referral",
+    ],
+    aiPreview:
+      "Summarize top stock risks and suggest which centers need restock or medicine referral first.",
+    aiInsight:
+      "Prioritize medicine shortage by matching illness demand to usable stock. A barangay with high cases and low medicine should trigger restock or referral before reports.",
+  },
+  "/super-admin/medicine-catalog": {
+    simplePurpose:
+      "Dito inaayos ang master list ng gamot para pare-pareho ang spelling, dosage, form, at category.",
+    checkFirst: [
+      "May duplicate medicine names ba",
+      "Tama ba ang strength, form, and unit",
+      "May restricted medicine ba na kailangan extra control",
+      "Tama ba ang default low-stock and expiry thresholds",
+    ],
+    aiPreview:
+      "Detect duplicate medicine names and suggest cleaner generic names, forms, and categories.",
+    aiInsight:
+      "Review duplicate medicine names before new inventory is encoded so reports stay clean and searchable.",
+  },
+  "/super-admin/dispensing": {
+    simplePurpose:
+      "Dito nakikita ang medicine usage trend, pero hindi dapat default makita ang patient-identifying details.",
+    checkFirst: [
+      "Aling medicines ang mataas ang usage",
+      "May dispensing logs ba na kailangan correction",
+      "May medicines dispensed without linked case category",
+      "May stock deduction issue ba",
+    ],
+    aiPreview:
+      "Summarize unusual dispensing patterns and logs that need correction or case-category cleanup.",
+    aiInsight:
+      "Several dispensing logs are not linked to case categories. Clean those up before illness analytics are trusted.",
+  },
+  "/super-admin/illness-cases": {
+    simplePurpose:
+      "Dito nakikita ang common recorded cases per barangay, gaya ng fever, cough/colds, diarrhea, hypertension.",
+    checkFirst: [
+      "Top case categories per barangay",
+      "May sudden spike ba na kailangan i-validate",
+      "Masyado bang marami ang Other category",
+      "May small counts ba na dapat i-protect for privacy",
+    ],
+    aiPreview:
+      "Explain illness trends in simple language and flag barangays with spikes or messy Other categories.",
+    aiInsight:
+      "Fever and cough/colds are leading recorded cases. Pair case spikes with available medicine so shortages are caught daily.",
+  },
+  "/super-admin/referrals": {
+    simplePurpose:
+      "Dito mino-monitor kung may health center na humihiram or nagre-request ng gamot sa ibang center.",
+    checkFirst: [
+      "Aling referrals ang pending or expired",
+      "May available stock ba ang destination center",
+      "Na-fulfill ba ang accepted referrals",
+      "May patient data ba na dapat hidden",
+    ],
+    aiPreview:
+      "Summarize pending and expired referrals and suggest which requests need follow-up first.",
+    aiInsight:
+      "Use referrals when one barangay has high cases and low stock while another has unused or slow-moving usable medicine.",
+  },
+  "/super-admin/reports": {
+    simplePurpose:
+      "Dito gumagawa or tumitingin ng reports para sa stock, illness cases, approvals, referrals, users, at audit.",
+    checkFirst: [
+      "Tama ba ang report type and date range",
+      "Aggregate ba ang sensitive health data",
+      "May failed exports ba",
+      "Na-log ba ang report generation sa audit logs",
+    ],
+    aiPreview:
+      "Draft a plain-language report summary based on selected filters and key operational risks.",
+    aiInsight:
+      "Generate aggregate reports first. Sensitive exports should create audit logs and avoid patient-identifying details.",
+  },
+  "/super-admin/alerts": {
+    simplePurpose:
+      "Dito lumalabas ang warnings na kailangan pansinin, tulad ng low stock, pending approval, or illness spike.",
+    checkFirst: [
+      "Aling alerts ang critical",
+      "May repeated alerts ba na same issue",
+      "Resolved na ba talaga or bumalik ang risk",
+      "Sino ang responsible owner",
+    ],
+    aiPreview:
+      "Group related alerts and rank what the Super Admin should handle first.",
+    aiInsight:
+      "Critical stock and approval alerts should be handled first. Repeated alerts may point to unresolved center issues.",
+  },
+  "/super-admin/audit-logs": {
+    simplePurpose:
+      "Ito ang history ng sensitive actions para may accountability kung sino ang nag-approve, nag-change role, or nag-export.",
+    checkFirst: [
+      "May failed privileged action ba",
+      "May role or claim changes ba",
+      "May proof document views or report exports ba",
+      "Walang secrets or raw sensitive files sa logs",
+    ],
+    aiPreview:
+      "Summarize high-risk admin actions and failures without exposing secrets or sensitive documents.",
+    aiInsight:
+      "Review failed privileged actions, role changes, proof document views, and report exports for accountability.",
+  },
+  "/super-admin/settings": {
+    simplePurpose:
+      "Dito ise-set later ang global rules ng system, gaya ng inventory thresholds, expiry windows, referral rules, and integrations.",
+    checkFirst: [
+      "Tama ba ang approval and inventory policy",
+      "Configured ba Firebase, Mapbox, Cloudinary, and future AI backend",
+      "May case category cleanup policy ba",
+      "Audited ba ang global setting changes",
+    ],
+    aiPreview:
+      "Check configuration health and explain which system settings are incomplete or risky.",
+    aiInsight:
+      "Firebase, Mapbox, Cloudinary, and future AI settings should show clear configured or missing status before launch.",
+  },
+};
 
 export const overviewFocus = [
   {

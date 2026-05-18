@@ -164,8 +164,8 @@ export function ChartAreaInteractive() {
   })
 
   return (
-    <Card>
-      <CardHeader>
+    <Card className="rounded-xl shadow-none">
+      <CardHeader className="border-b">
         <CardTitle>Recorded Health Cases</CardTitle>
         <CardDescription>
           <span className="hidden sm:block">

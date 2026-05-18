@@ -37,12 +37,30 @@ export default defineConfig({
   build: {
     rolldownOptions: {
       output: {
-        manualChunks: {
-          vendor: ["react", "react-dom"],
-          firebase: ["firebase/app", "firebase/auth", "firebase/firestore", "firebase/storage"],
-          charts: ["recharts"],
-          dnd: ["@dnd-kit/core", "@dnd-kit/modifiers", "@dnd-kit/sortable", "@dnd-kit/utilities"],
-          table: ["@tanstack/react-table"],
+        manualChunks(id) {
+          if (!id.includes("node_modules")) {
+            return;
+          }
+
+          if (id.includes("react") || id.includes("react-dom")) {
+            return "vendor";
+          }
+
+          if (id.includes("firebase")) {
+            return "firebase";
+          }
+
+          if (id.includes("recharts")) {
+            return "charts";
+          }
+
+          if (id.includes("@dnd-kit")) {
+            return "dnd";
+          }
+
+          if (id.includes("@tanstack/react-table")) {
+            return "table";
+          }
         },
       },
     },
